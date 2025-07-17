@@ -1,108 +1,168 @@
-# 🇺🇦 Lumières d'Ukraine – Plateforme collaborative de partage de livres
+# 🌟 Lumières d'Ukraine
 
-<div align="center">
+> **Partagez la culture ukrainienne à travers les livres**
 
-![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.4.21-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.1-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-</div>
+## 🎯 À propos du projet
 
----
+**Lumières d'Ukraine** est une plateforme moderne dédiée au partage et à la découverte de la culture ukrainienne à travers la littérature. Notre mission est de créer un pont culturel entre l'Ukraine et le monde entier.
 
-## 🌍 Présentation
+### ✨ Fonctionnalités principales
 
-**Lumières d'Ukraine** est une plateforme web collaborative ultra-moderne permettant le partage de livres entre particuliers, la gestion d'événements, et la mise en relation de passionnés de lecture. Le projet est fullstack : il combine un frontend Vue.js, un backend Java/Spring Boot, et une base de données MySQL.
+- 📚 **Bibliothèque Virtuelle** - Collection unique de livres ukrainiens
+- 🌍 **Interface Multilingue** - 5 langues : Français, Anglais, Ukrainien, Allemand, Polonais
+- 🎉 **Événements Culturels** - Rencontres littéraires et événements culturels
+- 🤖 **Assistant IA** - Chatbot intelligent pour guider vos découvertes
+- 🔒 **Sécurité Avancée** - Authentification JWT et protection des données
+- 💙💛 **Communauté** - Rejoignez une communauté passionnée
 
----
+## 🚀 Technologies utilisées
 
-## 🏗️ Architecture du projet
+### Frontend
+- **Vue.js 3** - Framework JavaScript progressif
+- **Tailwind CSS** - Framework CSS utilitaire
+- **Vite** - Outil de build ultra-rapide
+- **Vue Router** - Routage côté client
+- **Pinia** - Gestion d'état
 
-```mermaid
-graph TD;
-  A[Frontend Vue.js (JavaScript)] --API REST--> B[Backend Spring Boot (Java)]
-  B --JPA/Hibernate--> C[(Base de données MySQL)]
-```
+### Backend
+- **Spring Boot 3** - Framework Java
+- **Spring Security** - Sécurité et authentification
+- **Spring Data JPA** - Persistance des données
+- **PostgreSQL** - Base de données
 
-- **Frontend** : Vue.js (JavaScript), Pinia, Tailwind CSS, Vite
-- **Backend** : Java, Spring Boot, Spring Security, JPA/Hibernate
-- **Base de données** : MySQL
+## 📦 Installation
 
----
+### Prérequis
+- Node.js 18+ 
+- Java 17+
+- PostgreSQL 14+
 
-## 📁 Structure des dossiers
-
-```
-Ukraine/
-├── backend/           # Code Java Spring Boot (API REST, sécurité, logique métier)
-├── frontend-vue/      # Application Vue.js (interface utilisateur moderne)
-├── database/          # Scripts SQL, structure et données MySQL
-├── docs/              # Documentation, cahier des charges, MCD
-├── deploy-ovh.sh      # Script de déploiement OVH
-├── setup_database.sql # Script d'initialisation de la base
-├── README.md          # Ce fichier
-└── ...
-```
-
----
-
-## ✨ Fonctionnalités principales
-
-- Interface multilingue (français, anglais, ukrainien, allemand, polonais)
-- Design moderne, animations, responsive, effets visuels Ukraine
-- Authentification sécurisée (JWT)
-- Gestion des utilisateurs, livres, réservations, événements
-- Chatbot, newsletter, micro-interactions
-- API REST performante
-- Base de données relationnelle robuste
-
----
-
-## 🚀 Démarrage rapide
-
-### 1. **Backend (Spring Boot)**
+### Frontend
 ```bash
-cd backend
-./mvnw spring-boot:run
-```
+# Cloner le repository
+git clone https://github.com/yglsan2/Ukraine.git
+cd Ukraine/frontend-vue
 
-### 2. **Frontend (Vue.js)**
-```bash
-cd frontend-vue
+# Installer les dépendances
 npm install
+
+# Lancer le serveur de développement
 npm run dev
 ```
 
-### 3. **Base de données (MySQL)**
-- Importez le script `database/ukraines.sql` ou `setup_database.sql` dans votre MySQL local.
-- Configurez l'URL de connexion dans `backend/src/main/resources/application.properties`.
+### Backend
+```bash
+# Aller dans le dossier backend
+cd backend
 
----
+# Compiler avec Maven
+./mvnw clean install
 
-## 🛠️ Technologies utilisées
-- **Frontend** : Vue.js 3, Pinia, Tailwind CSS, Vite
-- **Backend** : Java 17+, Spring Boot 3, Spring Security, JPA/Hibernate
-- **Database** : MySQL 8+
-- **Déploiement** : OVH, Docker (optionnel)
+# Lancer l'application
+./mvnw spring-boot:run
+```
 
----
+## 🎨 Design & UX
 
-## 📚 Documentation
-- [Cahier des charges](./CAHIER_DES_CHARGES.md)
-- [MCD](./MCD_UKRAINES.md)
-- [Guide de déploiement](./README-DEPLOIEMENT.md)
+Notre interface utilisateur combine modernité et élégance :
 
----
+- **Design Responsive** - Adapté à tous les écrans
+- **Animations Naturelles** - Livres flottants et effets visuels
+- **Couleurs Ukraine** - Bleu et jaune du drapeau ukrainien
+- **Glassmorphism** - Effets de transparence et flou
+- **Micro-interactions** - Feedback visuel intuitif
+
+## 🌐 Déploiement
+
+### Frontend (Vercel/Netlify)
+```bash
+# Build de production
+npm run build
+
+# Déployer le dossier dist/
+```
+
+### Backend (Heroku/Railway)
+```bash
+# Configuration des variables d'environnement
+DATABASE_URL=postgresql://...
+JWT_SECRET=your-secret-key
+
+# Déploiement automatique via Git
+```
+
+## 📁 Structure du projet
+
+```
+Ukraine/
+├── frontend-vue/          # Application Vue.js
+│   ├── src/
+│   │   ├── components/    # Composants réutilisables
+│   │   ├── views/         # Pages de l'application
+│   │   ├── router/        # Configuration des routes
+│   │   └── stores/        # Gestion d'état Pinia
+│   ├── public/            # Assets statiques
+│   └── package.json       # Dépendances frontend
+├── backend/               # API Spring Boot
+│   ├── src/main/java/     # Code source Java
+│   ├── src/main/resources/# Configuration
+│   └── pom.xml           # Dépendances backend
+└── docs/                 # Documentation
+```
 
 ## 🤝 Contribution
-Les contributions sont les bienvenues ! Merci de lire la documentation avant toute PR.
+
+Nous accueillons toutes les contributions ! Voici comment participer :
+
+1. **Fork** le projet
+2. **Créer** une branche feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** vos changements (`git commit -m 'Add AmazingFeature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. **Ouvrir** une Pull Request
+
+### Branches
+- `main` - Code de production stable
+- `develop` - Développement en cours
+- `feature/*` - Nouvelles fonctionnalités
+- `hotfix/*` - Corrections urgentes
+
+## 📝 Roadmap
+
+- [ ] **Système de recommandations** - IA pour suggérer des livres
+- [ ] **Mode hors ligne** - PWA avec cache intelligent
+- [ ] **Audio books** - Livres audio en ukrainien
+- [ ] **Réseau social** - Partage de critiques et discussions
+- [ ] **API publique** - Documentation et accès tiers
+- [ ] **Mobile app** - Applications iOS et Android
+
+## 🏆 Statistiques
+
+- 📚 **500+** Livres partagés
+- 👥 **200+** Membres actifs
+- 🎉 **50+** Événements culturels
+- 🌍 **5** Langues supportées
+
+## 📞 Contact
+
+- **Site web** : [lumières-ukraine.com](https://lumières-ukraine.com)
+- **Email** : contact@lumières-ukraine.com
+- **Discord** : [Rejoindre notre communauté](https://discord.gg/lumieres-ukraine)
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ---
 
-## 🏆 Auteurs
-- Projet réalisé par l'association Lumières d'Ukraine et ses contributeurs.
+<div align="center">
 
----
+**💙💛 Fait avec amour pour la culture ukrainienne 💙💛**
 
-## 💙💛 Gloire à l'Ukraine ! 
+*Soutenez l'Ukraine - Partagez la culture*
+
+</div> 
