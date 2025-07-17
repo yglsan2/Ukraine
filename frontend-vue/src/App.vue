@@ -1,5 +1,6 @@
 <script setup>
 import NavBar from './components/NavBar.vue'
+import SunflowerIcon from './components/icons/SunflowerIcon.vue'
 import { onMounted } from 'vue'
 
 onMounted(() => {
@@ -86,14 +87,16 @@ function startFooterAnimations() {
         <div class="footer-container">
           <!-- Section principale -->
           <div class="footer-main">
-            <div class="footer-brand">
-              <div class="footer-logo">
-                <span class="footer-logo-icon">🇺🇦</span>
-                <div class="footer-logo-text">
-                  <h3 class="footer-title">Lumières d'Ukraine</h3>
-                  <p class="footer-subtitle">Découvrez la richesse culturelle ukrainienne</p>
+                          <div class="footer-brand">
+                <div class="footer-logo">
+                  <div class="footer-logo-icon">
+                    <SunflowerIcon size="medium" variant="icon" :animated="true" />
+                  </div>
+                  <div class="footer-logo-text">
+                    <h3 class="footer-title">Lumières d'Ukraine</h3>
+                    <p class="footer-subtitle">Découvrez la richesse culturelle ukrainienne</p>
+                  </div>
                 </div>
-              </div>
               <p class="footer-description">
                 Notre association dédiée à la promotion de la culture ukrainienne à travers 
                 la littérature, les arts et les échanges culturels.
@@ -158,7 +161,7 @@ function startFooterAnimations() {
               </a>
             </div>
           </div>
-        </div>
+    </div>
         
         <!-- Barre de copyright -->
         <div class="footer-bottom">
@@ -309,10 +312,12 @@ function startFooterAnimations() {
 }
 
 .footer-logo-icon {
-  font-size: 2.5rem;
-  animation: logoPulse 3s ease-in-out infinite;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
 
 @keyframes logoPulse {
   0%, 100% { transform: scale(1); }
@@ -455,7 +460,7 @@ function startFooterAnimations() {
 }
 
 .footer-bottom-links {
-  display: flex;
+    display: flex;
   gap: 2rem;
   flex-wrap: wrap;
 }

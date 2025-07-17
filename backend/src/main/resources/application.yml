@@ -1,0 +1,202 @@
+# Configuration principale de l'application Lumières d'Ukraine
+# ================================================================
+
+# Informations de l'application
+spring:
+  application:
+    name: lumieres-ukraine-backend
+  
+  # Configuration de la base de données PostgreSQL
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lumieres_ukraine
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  
+  # Configuration JPA/Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        batch_versioned_data: true
+  
+  # Configuration des fichiers uploadés
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  
+  # Configuration email
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  
+  # Configuration du cache
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=600s
+
+# Configuration de sécurité JWT
+jwt:
+  secret: ${JWT_SECRET:your-super-secret-jwt-key-here-change-in-production}
+  expiration: ${JWT_EXPIRATION:86400000} # 24 heures en millisecondes
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000} # 7 jours
+
+# Configuration Stripe pour les paiements
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY:}
+  public-key: ${STRIPE_PUBLIC_KEY:}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+
+# Configuration des fichiers
+file:
+  upload:
+    path: ${FILE_UPLOAD_PATH:./uploads}
+    allowed-types: jpg,jpeg,png,gif
+    max-size: 10485760 # 10MB
+
+# Configuration de l'application
+app:
+  # Configuration des langues supportées
+  supported-languages:
+    - fr
+    - en
+    - de
+    - pl
+    - uk
+  
+  # Configuration des délais de réservation
+  reservation:
+    loan-duration-days: 30
+    reservation-expiry-days: 7
+  
+  # Configuration des notifications
+  notification:
+    email:
+      enabled: true
+      from: ${NOTIFICATION_EMAIL_FROM:noreply@lumieres-ukraine.com}
+  
+  # Configuration de la géolocalisation
+  geolocation:
+    default-radius-km: 50
+    max-radius-km: 200
+  
+  # Configuration des cartes d'adhésion
+  membership:
+    card:
+      template-path: templates/membership-card.html
+      output-path: ./generated-cards
+
+# Configuration du serveur
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+# Configuration des logs
+logging:
+  level:
+    com.ukraine: ${LOG_LEVEL:INFO}
+    org.springframework.security: ${SECURITY_LOG_LEVEL:WARN}
+    org.hibernate.SQL: ${SQL_LOG_LEVEL:WARN}
+    org.hibernate.type.descriptor.sql.BasicBinder: ${SQL_PARAM_LOG_LEVEL:WARN}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/lumieres-ukraine.log
+    max-size: 10MB
+    max-history: 30
+
+# Configuration Actuator pour le monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Configuration OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+  info:
+    title: API Lumières d'Ukraine
+    description: API pour le système de prêt de livres entre particuliers
+    version: 1.0.0
+    contact:
+      name: Équipe Lumières d'Ukraine
+      email: contact@lumieres-ukraine.com
+
+# Configuration du profil de développement
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+logging:
+  level:
+    com.ukraine: DEBUG
+    org.springframework.security: DEBUG
+
+# Configuration du profil de production
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+logging:
+  level:
+    com.ukraine: WARN
+    org.springframework.security: WARN 

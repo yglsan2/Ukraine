@@ -1,5 +1,6 @@
 <script setup>
 import NavBar from '@/components/NavBar.vue'
+import SunflowerIcon from '@/components/icons/SunflowerIcon.vue'
 import { ref, onMounted } from 'vue'
 
 const animatedStats = ref({
@@ -180,6 +181,10 @@ onMounted(() => {
             <div class="element element-2">🎭</div>
             <div class="element element-3">🎨</div>
             <div class="element element-4">🎵</div>
+            <!-- Tournesol flottant -->
+            <div class="element element-5 sunflower-element">
+              <SunflowerIcon size="large" variant="full" :animated="true" />
+            </div>
           </div>
         </div>
       </div>
@@ -438,10 +443,16 @@ onMounted(() => {
 .element-2 { top: 25%; right: 0; animation-delay: 1.5s; }
 .element-3 { bottom: 25%; left: 0; animation-delay: 3s; }
 .element-4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 4.5s; }
+.element-5 { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 2.5s; }
 
 @keyframes elementFloat {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* Tournesol */
+.sunflower-element {
+  z-index: 5;
 }
 
 /* Section Fonctionnalités */

@@ -5,6 +5,7 @@ import EventsView from '../views/EventsView.vue'
 import AssociationView from '../views/AssociationView.vue'
 import ChatbotView from '../views/ChatbotView.vue'
 import AboutView from '../views/AboutView.vue'
+import MembershipView from '../views/MembershipView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView
+    },
+    {
+      path: '/membership',
+      name: 'membership',
+      component: MembershipView
     }
   ]
 })

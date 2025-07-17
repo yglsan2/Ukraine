@@ -17,12 +17,10 @@
     </div>
 
     <div class="navbar-container">
-      <!-- Logo animé -->
+      <!-- Logo officiel de l'association -->
       <div class="logo-container">
-        <div class="logo-icon">🇺🇦</div>
-        <div class="logo-text">
-          <span class="logo-title">Lumières</span>
-          <span class="logo-subtitle">d'Ukraine</span>
+        <div class="logo-image">
+          <img src="/images/logo-main.png" alt="Les Lumières d'Ukraine" class="logo-svg" />
         </div>
         <div class="logo-glow"></div>
       </div>
@@ -136,6 +134,7 @@ export default {
         { name: 'Livres', path: '/books', icon: '📚' },
         { name: 'Événements', path: '/events', icon: '🎭' },
         { name: 'Association', path: '/association', icon: '🤝' },
+        { name: 'Adhésion', path: '/membership', icon: '🪪' },
         { name: 'Chatbot', path: '/chatbot', icon: '🤖' }
       ]
     }
@@ -329,51 +328,48 @@ export default {
   height: 100%;
 }
 
-/* Logo animé */
+/* Logo officiel de l'association */
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
 }
 
 .logo-container:hover {
   transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-.logo-icon {
-  font-size: 2.5rem;
-  animation: logoPulse 3s ease-in-out infinite;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-@keyframes logoPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.logo-text {
+.logo-image {
+  height: 50px;
+  width: auto;
   display: flex;
-  flex-direction: column;
-  color: white;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.logo-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  line-height: 1;
-  background: linear-gradient(45deg, #ffffff, #ffd700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.logo-svg {
+  height: 100%;
+  width: auto;
+  max-width: 130px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s ease;
 }
 
-.logo-subtitle {
-  font-size: 0.9rem;
-  font-weight: 400;
-  opacity: 0.8;
+.logo-container:hover .logo-svg {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
 }
 
 .logo-glow {
