@@ -50,29 +50,15 @@
   }
 }
 
-/* Reset complet pour éliminer toutes les marges et limitations */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0 !important;
-  padding: 0;
+  margin: 0;
   font-weight: normal;
 }
 
-html {
-  width: 100vw !important;
-  height: 100vh !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow-x: hidden;
-}
-
 body {
-  width: 100vw !important;
-  height: 100vh !important;
-  margin: 0 !important;
-  padding: 0 !important;
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
@@ -97,5 +83,4 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }

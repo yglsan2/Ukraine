@@ -1,253 +1,328 @@
-<script setup lang="js">
-import { ref, onMounted, computed } from 'vue'
-import { useAppStore } from '@/stores/app.mjs'
+<script setup>
+import NavBar from '@/components/NavBar.vue'
+import { ref, onMounted } from 'vue'
 
-const appStore = useAppStore()
-
-// État réactif
-const totalBooks = ref(0)
-const totalUsers = ref(0)
-const totalExchanges = ref(0)
-
-// Computed
-const recentBooks = computed(() => {
-  return appStore.recentBooks
+const animatedStats = ref({
+  books: 0,
+  members: 0,
+  events: 0,
+  languages: 0
 })
 
-// Méthodes
-const addToFavorites = (book) => {
-  appStore.addToFavorites(book)
-  // Afficher une notification
-  showNotification('Livre ajouté aux favoris !')
+const targetStats = {
+  books: 500,
+  members: 200,
+  events: 50,
+  languages: 5
 }
 
-const showNotification = (message) => {
-  // Ici on pourrait utiliser un système de notifications global
-  console.log(message)
-}
-
-// Initialisation
-onMounted(async () => {
-  // Charger les livres si pas encore fait
-  if (appStore.books.length === 0) {
-    await appStore.loadBooks()
+onMounted(() => {
+  // Animation des statistiques
+  const animateStats = () => {
+    const duration = 2000
+    const steps = 60
+    const stepDuration = duration / steps
+    
+    let step = 0
+    const timer = setInterval(() => {
+      step++
+      const progress = step / steps
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      
+      animatedStats.value.books = Math.floor(targetStats.books * easeOut)
+      animatedStats.value.members = Math.floor(targetStats.members * easeOut)
+      animatedStats.value.events = Math.floor(targetStats.events * easeOut)
+      animatedStats.value.languages = Math.floor(targetStats.languages * easeOut)
+      
+      if (step >= steps) {
+        clearInterval(timer)
+      }
+    }, stepDuration)
   }
   
-  // Mettre à jour les statistiques avec les vraies données
-  totalBooks.value = appStore.totalBooks
-  totalUsers.value = appStore.totalUsers
-  totalExchanges.value = appStore.totalExchanges
+  // Démarrer l'animation après 1 seconde
+  setTimeout(animateStats, 1000)
 })
 </script>
 
 <template>
-  <div class="home">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="container">
-        <div class="row align-items-center min-vh-100">
-          <div class="col-lg-6">
-            <div class="hero-content">
-              <h1 class="hero-title">
-                <span class="text-primary">Lumières</span> d'Ukraine
-              </h1>
-              <p class="hero-subtitle">
-                Partagez et découvrez la culture ukrainienne à travers le partage de livres
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-yellow-50 overflow-hidden">
+    <!-- Navbar -->
+    <NavBar />
+    
+    <!-- Hero Section Ultra-Moderne -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
+      <!-- Arrière-plan animé -->
+      <div class="absolute inset-0">
+        <!-- Particules flottantes -->
+        <div class="absolute top-20 left-10 w-4 h-4 bg-yellow-300 rounded-full animate-ping opacity-60"></div>
+        <div class="absolute top-40 right-20 w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+        <div class="absolute top-60 left-1/4 w-3 h-3 bg-yellow-200 rounded-full animate-pulse"></div>
+        <div class="absolute top-80 right-1/3 w-1 h-1 bg-blue-300 rounded-full animate-ping"></div>
+        <div class="absolute top-32 left-2/3 w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></div>
+        
+                 <!-- Livres flottants géants avec mouvements naturels -->
+         <div class="absolute top-10 left-1/6 animate-float-hero-1">
+           <div class="w-16 h-20 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-lg shadow-2xl transform rotate-12 border-2 border-yellow-200"></div>
+         </div>
+         <div class="absolute top-20 right-1/4 animate-float-hero-2">
+           <div class="w-12 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-2xl transform -rotate-6 border-2 border-blue-300"></div>
+         </div>
+         <div class="absolute top-40 left-3/4 animate-float-hero-3">
+           <div class="w-14 h-18 bg-gradient-to-br from-white to-gray-100 rounded-lg shadow-2xl transform rotate-3 border-2 border-gray-200"></div>
+         </div>
+        
+        <!-- Ondes de lumière -->
+        <div class="absolute inset-0 bg-gradient-radial from-yellow-200/20 via-transparent to-transparent"></div>
+      </div>
+      
+             <!-- Contenu principal -->
+       <div class="relative z-10 text-center max-w-6xl mx-auto w-full">
+                 <!-- Titre principal avec effet de glitch -->
+         <div class="mb-8">
+           <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 relative">
+             <span class="bg-gradient-to-r from-blue-600 via-yellow-400 to-blue-800 bg-clip-text text-transparent">
+               Lumières d'Ukraine
+             </span>
+             <div class="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-3xl blur-2xl opacity-30"></div>
+           </h1>
+          
+                              <!-- Sous-titre avec effets subtils -->
+           <div class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-700 mb-8">
+             <span class="inline-block opacity-80">🌟</span>
+             <span class="bg-gradient-to-r from-blue-700 to-yellow-600 bg-clip-text text-transparent">
+               Partagez la culture ukrainienne à travers les livres
+             </span>
+             <span class="inline-block opacity-80">🌟</span>
+           </div>
+          
+                     <!-- Description -->
+           <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-12 px-4">
+             Découvrez une collection unique de livres ukrainiens, participez à des événements culturels 
+             et rejoignez une communauté passionnée de littérature et de partage.
+           </p>
+        </div>
+        
+                 <!-- Boutons d'action avec effets -->
+         <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-16 px-4">
+           <button class="group relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-400 text-blue-900 font-black text-lg sm:text-xl rounded-3xl shadow-2xl border-4 border-yellow-200/60 transition-all duration-500 transform hover:scale-110 hover:shadow-3xl">
+             <span class="relative z-10 flex items-center gap-2 sm:gap-3">
+               <span class="text-xl sm:text-2xl group-hover:rotate-12 transition-transform duration-300">🚀</span>
+               Commencer l'aventure
+             </span>
+             <div class="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+           </button>
+           
+           <button class="group relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-600 text-yellow-200 font-black text-lg sm:text-xl rounded-3xl shadow-2xl border-4 border-blue-300/60 transition-all duration-500 transform hover:scale-110 hover:shadow-3xl">
+             <span class="relative z-10 flex items-center gap-2 sm:gap-3">
+               <span class="text-xl sm:text-2xl group-hover:rotate-12 transition-transform duration-300">📚</span>
+               Découvrir les livres
+             </span>
+             <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+           </button>
+         </div>
+        
+                 <!-- Indicateur de scroll -->
+         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+           <div class="w-6 h-10 border-2 border-blue-600 rounded-full flex justify-center">
+             <div class="w-1 h-3 bg-blue-600 rounded-full mt-2"></div>
+           </div>
+         </div>
+      </div>
+    </section>
+    
+    <!-- Section Fonctionnalités avec effets glassmorphism -->
+    <section class="py-12 sm:py-16 md:py-20 relative">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-white to-yellow-100/50"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6">
+            <span class="bg-gradient-to-r from-blue-700 via-yellow-600 to-blue-800 bg-clip-text text-transparent">
+              Fonctionnalités Magiques
+            </span>
+          </h2>
+          <p class="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto px-4">
+            Une expérience unique pour découvrir et partager la culture ukrainienne
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <!-- Carte 1 -->
+          <div class="group relative p-6 sm:p-6 sm:p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10 text-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <span class="text-3xl sm:text-3xl sm:text-4xl group-hover:rotate-12 transition-transform duration-300">📚</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Bibliothèque Virtuelle</h3>
+              <p class="text-sm sm:text-base text-sm sm:text-base text-gray-600 leading-relaxed">
+                Explorez notre collection unique de livres ukrainiens, classiques et contemporains, 
+                disponibles en plusieurs langues.
               </p>
-              <div class="hero-stats">
-                <div class="stat-item">
-                  <div class="stat-number">{{ totalBooks }}</div>
-                  <div class="stat-label">Livres disponibles</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-number">{{ totalUsers }}</div>
-                  <div class="stat-label">Membres actifs</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-number">{{ totalExchanges }}</div>
-                  <div class="stat-label">Échanges réalisés</div>
-                </div>
-              </div>
-              <div class="hero-buttons">
-                <router-link to="/explorer" class="btn btn-primary btn-lg me-3">
-                  <i class="fas fa-search me-2"></i>Explorer les livres
-                </router-link>
-                <router-link to="/proposer" class="btn btn-outline-primary btn-lg">
-                  <i class="fas fa-plus me-2"></i>Proposer un livre
-                </router-link>
-              </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="hero-image">
-              <div class="floating-books">
-                <div class="book book-1">
-                  <i class="fas fa-book"></i>
-                </div>
-                <div class="book book-2">
-                  <i class="fas fa-book-open"></i>
-                </div>
-                <div class="book book-3">
-                  <i class="fas fa-bookmark"></i>
-                </div>
+          
+          <!-- Carte 2 -->
+          <div class="group relative p-6 sm:p-6 sm:p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-yellow-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10 text-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <span class="text-3xl sm:text-3xl sm:text-4xl group-hover:rotate-12 transition-transform duration-300">🎉</span>
               </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Événements Culturels</h3>
+              <p class="text-sm sm:text-base text-sm sm:text-base text-gray-600 leading-relaxed">
+                Participez à des rencontres littéraires, des lectures publiques et des événements 
+                culturels ukrainiens.
+              </p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section py-5">
-      <div class="container">
-        <div class="row text-center mb-5">
-          <div class="col-12">
-            <h2 class="section-title">Pourquoi nous rejoindre ?</h2>
-            <p class="section-subtitle">Découvrez les avantages de notre communauté</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-share-alt"></i>
+          
+          <!-- Carte 3 -->
+          <div class="group relative p-6 sm:p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10 text-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <span class="text-3xl sm:text-4xl group-hover:rotate-12 transition-transform duration-300">🤖</span>
               </div>
-              <h3>Partagez vos livres</h3>
-              <p>Donnez une seconde vie à vos livres en les partageant avec la communauté</p>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Assistant IA</h3>
+              <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                Notre chatbot intelligent vous aide à trouver des livres, répond à vos questions 
+                et vous guide dans votre découverte.
+              </p>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-globe"></i>
+          
+          <!-- Carte 4 -->
+          <div class="group relative p-6 sm:p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-yellow-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10 text-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <span class="text-3xl sm:text-4xl group-hover:rotate-12 transition-transform duration-300">🌍</span>
               </div>
-              <h3>Découvrez la culture</h3>
-              <p>Explorez la riche culture ukrainienne à travers la littérature</p>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Multilingue</h3>
+              <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                Interface disponible en français, anglais, ukrainien, allemand et polonais 
+                pour une accessibilité maximale.
+              </p>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-users"></i>
+          
+          <!-- Carte 5 -->
+          <div class="group relative p-6 sm:p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10 text-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <span class="text-3xl sm:text-4xl group-hover:rotate-12 transition-transform duration-300">🔒</span>
               </div>
-              <h3>Rejoignez la communauté</h3>
-              <p>Participez à des événements et rencontrez d'autres passionnés</p>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Sécurisé</h3>
+              <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                Authentification JWT et protection des données pour une expérience 
+                utilisateur sécurisée et confidentielle.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Carte 6 -->
+          <div class="group relative p-6 sm:p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-yellow-400/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative z-10 text-center">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-yellow-300 via-blue-400 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <span class="text-3xl sm:text-4xl group-hover:rotate-12 transition-transform duration-300">💙💛</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Communauté</h3>
+              <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
+                Rejoignez une communauté passionnée de culture ukrainienne, 
+                partagez vos découvertes et créez des liens durables.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- Recent Books Section -->
-    <section class="recent-books-section py-5 bg-light">
-      <div class="container">
-        <div class="row mb-4">
-          <div class="col-12">
-            <h2 class="section-title">Livres récents</h2>
-            <p class="section-subtitle">Découvrez les derniers livres ajoutés</p>
-          </div>
-        </div>
-        <div class="row">
-          <div v-for="book in recentBooks" :key="book.id" class="col-lg-4 col-md-6 mb-4">
-            <div class="book-card">
-              <div class="book-image">
-                <img :src="book.photo" :alt="book.title" class="img-fluid">
-                <div class="book-overlay">
-                  <button class="btn btn-primary btn-sm" @click="addToFavorites(book)">
-                    <i class="fas fa-heart"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="book-content">
-                <h5 class="book-title">{{ book.title }}</h5>
-                <p class="book-author">{{ book.author }}</p>
-                <div class="book-meta">
-                  <span class="badge bg-primary">{{ book.genre }}</span>
-                  <span class="badge bg-secondary">{{ book.language }}</span>
-                </div>
-                <p class="book-description">{{ book.description }}</p>
-                <div class="book-footer">
-                  <small class="text-muted">
-                    <i class="fas fa-map-marker-alt me-1"></i>{{ book.city }}
-                  </small>
-                  <button class="btn btn-outline-primary btn-sm">
-                    <i class="fas fa-eye me-1"></i>Voir détails
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center mt-4">
-          <router-link to="/explorer" class="btn btn-primary btn-lg">
-            Voir tous les livres
-          </router-link>
-        </div>
+    
+    <!-- Section Statistiques avec animation -->
+    <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 relative overflow-hidden">
+      <!-- Particules de fond -->
+      <div class="absolute inset-0">
+        <div class="absolute top-10 left-10 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
+        <div class="absolute top-20 right-20 w-1 h-1 bg-yellow-200 rounded-full animate-bounce"></div>
+        <div class="absolute top-40 left-1/3 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
       </div>
-    </section>
-
-    <!-- Events Section -->
-    <section class="events-section py-5">
-      <div class="container">
-        <div class="row mb-4">
-          <div class="col-12">
-            <h2 class="section-title">Événements à venir</h2>
-            <p class="section-subtitle">Participez à nos événements culturels</p>
-          </div>
+      
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 sm:mb-16 md:mb-20">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6">
+            Notre <span class="text-yellow-300">Impact</span>
+          </h2>
+          <p class="text-lg sm:text-xl md:text-2xl text-white/90 max-w-4xl mx-auto px-4">
+            Découvrez les chiffres qui témoignent de notre engagement pour la culture ukrainienne
+          </p>
         </div>
-        <div class="row">
-          <div class="col-lg-6 mb-4">
-            <div class="event-card">
-              <div class="event-date">
-                <div class="date-day">15</div>
-                <div class="date-month">Juil</div>
-              </div>
-              <div class="event-content">
-                <h4>Club de Lecture</h4>
-                <p>Discussion autour des poèmes de Taras Chevtchenko</p>
-                <div class="event-meta">
-                  <i class="fas fa-clock me-2"></i>19h00
-                  <i class="fas fa-map-marker-alt ms-3 me-2"></i>Nancy
-                </div>
-                <button class="btn btn-primary btn-sm mt-2">Participer</button>
-              </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          <div class="text-center group">
+            <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-yellow-300 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              {{ animatedStats.books }}+
             </div>
+            <div class="text-base sm:text-lg md:text-xl text-white/90 font-semibold">Livres partagés</div>
           </div>
-          <div class="col-lg-6 mb-4">
-            <div class="event-card">
-              <div class="event-date">
-                <div class="date-day">22</div>
-                <div class="date-month">Juil</div>
-              </div>
-              <div class="event-content">
-                <h4>Atelier d'Écriture</h4>
-                <p>Découvrez l'art de l'écriture ukrainienne</p>
-                <div class="event-meta">
-                  <i class="fas fa-clock me-2"></i>14h00
-                  <i class="fas fa-map-marker-alt ms-3 me-2"></i>Paris
-                </div>
-                <button class="btn btn-primary btn-sm mt-2">S'inscrire</button>
-              </div>
+          <div class="text-center group">
+            <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-yellow-300 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              {{ animatedStats.members }}+
             </div>
+            <div class="text-base sm:text-lg md:text-xl text-white/90 font-semibold">Membres actifs</div>
+          </div>
+          <div class="text-center group">
+            <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-yellow-300 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              {{ animatedStats.events }}+
+            </div>
+            <div class="text-base sm:text-lg md:text-xl text-white/90 font-semibold">Événements</div>
+          </div>
+          <div class="text-center group">
+            <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-yellow-300 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+              {{ animatedStats.languages }}
+            </div>
+            <div class="text-base sm:text-lg md:text-xl text-white/90 font-semibold">Langues</div>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section py-5 bg-primary text-white">
-      <div class="container text-center">
-        <h2>Prêt à rejoindre notre communauté ?</h2>
-        <p class="lead mb-4">
-          Inscrivez-vous gratuitement et commencez à partager vos livres dès aujourd'hui
+    
+    <!-- Section Call to Action finale -->
+    <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-yellow-50 via-white to-blue-50 relative">
+      <div class="absolute inset-0">
+                 <!-- Livres flottants de fond -->
+         <div class="absolute bottom-10 left-10 animate-float-final-1">
+           <div class="w-8 h-10 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-sm shadow-lg transform rotate-12"></div>
+         </div>
+         <div class="absolute bottom-20 right-20 animate-float-final-2">
+           <div class="w-6 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-sm shadow-lg transform -rotate-6"></div>
+         </div>
+      </div>
+      
+      <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 sm:mb-8">
+          <span class="bg-gradient-to-r from-blue-700 via-yellow-600 to-blue-800 bg-clip-text text-transparent">
+            Prêt à rejoindre l'aventure ?
+          </span>
+        </h2>
+        <p class="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
+          Commencez dès aujourd'hui à partager et découvrir la richesse de la littérature ukrainienne. 
+          Rejoignez notre communauté et faites partie de cette belle aventure culturelle.
         </p>
-        <div class="cta-buttons">
-          <router-link to="/register" class="btn btn-light btn-lg me-3">
-            <i class="fas fa-user-plus me-2"></i>S'inscrire
-          </router-link>
-          <router-link to="/about" class="btn btn-outline-light btn-lg">
-            <i class="fas fa-info-circle me-2"></i>En savoir plus
-          </router-link>
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+          <button class="group relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:to-yellow-400 text-blue-900 font-black text-lg sm:text-xl rounded-3xl shadow-2xl border-4 border-yellow-200/60 transition-all duration-500 transform hover:scale-110 hover:shadow-3xl">
+            <span class="relative z-10 flex items-center gap-2 sm:gap-3">
+              <span class="text-xl sm:text-2xl group-hover:rotate-12 transition-transform duration-300">🎯</span>
+              Commencer maintenant
+            </span>
+          </button>
+          <button class="group relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-600 text-yellow-200 font-black text-lg sm:text-xl rounded-3xl shadow-2xl border-4 border-blue-300/60 transition-all duration-500 transform hover:scale-110 hover:shadow-3xl">
+            <span class="relative z-10 flex items-center gap-2 sm:gap-3">
+              <span class="text-xl sm:text-2xl group-hover:rotate-12 transition-transform duration-300">ℹ️</span>
+              En savoir plus
+            </span>
+          </button>
         </div>
       </div>
     </section>
@@ -255,726 +330,69 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-/* Hero Section */
-.hero-section {
-  background: linear-gradient(135deg, #0057b8 0%, #1e3a8a 50%, #ffdd00 100%);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
+/* Animations naturelles et variées */
+@keyframes float-hero-1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(12deg); }
+  25% { transform: translateY(-15px) translateX(5px) rotate(18deg); }
+  50% { transform: translateY(-25px) translateX(-3px) rotate(8deg); }
+  75% { transform: translateY(-12px) translateX(2px) rotate(15deg); }
 }
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-  opacity: 0.3;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: white;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.hero-title {
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  line-height: 1.2;
-}
-
-.hero-subtitle {
-  font-size: 1.3rem;
-  margin-bottom: 2rem;
-  opacity: 0.9;
-  line-height: 1.6;
-}
-
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin: 3rem 0;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  min-width: 150px;
-  transition: transform 0.3s ease;
-}
-
-.stat-item:hover {
-  transform: translateY(-5px);
-}
-
-.stat-number {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #ffdd00;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  font-size: 1rem;
-  opacity: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-.hero-buttons .btn {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  min-width: 200px;
-}
-
-.hero-buttons .btn-primary {
-  background: #ffdd00;
-  border-color: #ffdd00;
-  color: #0057b8;
-  box-shadow: 0 4px 15px rgba(255, 221, 0, 0.3);
-}
-
-.hero-buttons .btn-primary:hover {
-  background: #e6c700;
-  border-color: #e6c700;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 221, 0, 0.4);
-}
-
-.hero-buttons .btn-outline-primary {
-  border-color: white;
-  color: white;
-  background: transparent;
-}
-
-.hero-buttons .btn-outline-primary:hover {
-  background: white;
-  color: #0057b8;
-  transform: translateY(-2px);
-}
-
-/* Floating books animation */
-.floating-books {
-  position: relative;
-  height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.book {
-  position: absolute;
-  width: 80px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #0057b8;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  animation: float 6s ease-in-out infinite;
-}
-
-.book-1 {
-  top: 20%;
-  left: 20%;
-  animation-delay: 0s;
-}
-
-.book-2 {
-  top: 40%;
-  right: 30%;
-  animation-delay: 2s;
-}
-
-.book-3 {
-  bottom: 30%;
-  left: 40%;
-  animation-delay: 4s;
-}
-
-/* Features Section */
-.features-section {
-  background: #f8f9fa;
-  padding: 5rem 0;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #0057b8;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.section-subtitle {
-  font-size: 1.2rem;
-  color: #666;
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.feature-card {
-  text-align: center;
-  padding: 2.5rem 1.5rem;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.feature-icon {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(45deg, #0057b8, #ffdd00);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  font-size: 2.5rem;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
-.feature-card:hover .feature-icon {
-  transform: scale(1.1);
-}
-
-.feature-card h3 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #0057b8;
-  margin-bottom: 1rem;
-}
-
-.feature-card p {
-  color: #666;
-  line-height: 1.6;
-  flex-grow: 1;
-}
-
-/* Recent Books Section */
-.recent-books-section {
-  background: white;
-  padding: 5rem 0;
-}
-
-.book-card {
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.book-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.book-image {
-  position: relative;
-  height: 250px;
-  overflow: hidden;
-  background: linear-gradient(45deg, #0057b8, #ffdd00);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.book-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.book-overlay {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.book-card:hover .book-overlay {
-  opacity: 1;
-}
-
-.book-content {
-  padding: 1.5rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.book-title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #0057b8;
-  font-size: 1.2rem;
-}
-
-.book-author {
-  color: #666;
-  margin-bottom: 1rem;
-  font-style: italic;
-}
-
-.book-meta {
-  margin-bottom: 1rem;
-}
-
-.book-meta .badge {
-  margin-right: 0.5rem;
-  font-size: 0.8rem;
-}
-
-.book-description {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 1rem;
-  line-height: 1.4;
-  flex-grow: 1;
-}
-
-.book-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-}
-
-/* Events Section */
-.events-section {
-  background: #f8f9fa;
-  padding: 5rem 0;
-}
-
-.event-card {
-  display: flex;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  height: 100%;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.event-date {
-  background: linear-gradient(45deg, #0057b8, #ffdd00);
-  color: white;
-  padding: 2rem;
-  text-align: center;
-  min-width: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+@keyframes float-hero-2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(-6deg); }
+  30% { transform: translateY(-18px) translateX(-6px) rotate(-2deg); }
+  60% { transform: translateY(-28px) translateX(4px) rotate(-12deg); }
+  90% { transform: translateY(-8px) translateX(-2px) rotate(-8deg); }
 }
-
-.date-day {
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.date-month {
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.event-content {
-  padding: 2rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.event-content h4 {
-  margin-bottom: 0.5rem;
-  color: #0057b8;
-  font-size: 1.3rem;
-}
-
-.event-meta {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-/* Responsive improvements */
-@media (max-width: 1199.98px) {
-  .hero-title {
-    font-size: 3.5rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.2rem;
-  }
-  
-  .stat-number {
-    font-size: 2.5rem;
-  }
-  
-  .hero-stats {
-    gap: 2rem;
-  }
+@keyframes float-hero-3 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(3deg); }
+  20% { transform: translateY(-20px) translateX(3px) rotate(8deg); }
+  40% { transform: translateY(-12px) translateX(-4px) rotate(-2deg); }
+  80% { transform: translateY(-22px) translateX(2px) rotate(6deg); }
 }
 
-@media (max-width: 991.98px) {
-  .hero-title {
-    font-size: 3rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-  
-  .hero-stats {
-    gap: 1.5rem;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .hero-buttons .btn {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .floating-books {
-    display: none;
-  }
+.animate-float-hero-1 {
+  animation: float-hero-1 9s ease-in-out infinite;
 }
-
-@media (max-width: 767.98px) {
-  .hero-section {
-    min-height: 80vh;
-    padding: 2rem 0;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  
-  .hero-stats {
-    flex-direction: column;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-  
-  .stat-item {
-    min-width: auto;
-    width: 100%;
-    max-width: 250px;
-    margin: 0 auto;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-  }
-  
-  .hero-buttons .btn {
-    width: 100%;
-    max-width: 250px;
-  }
-  
-  .feature-card {
-    padding: 2rem 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .feature-icon {
-    width: 80px;
-    height: 80px;
-    font-size: 2rem;
-  }
-  
-  .book-card {
-    margin-bottom: 1rem;
-  }
-  
-  .book-content {
-    padding: 1rem;
-  }
-  
-  .event-card {
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-  
-  .event-date {
-    min-width: auto;
-    padding: 1.5rem;
-    flex-direction: row;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .date-day {
-    font-size: 2rem;
-  }
-  
-  .event-content {
-    padding: 1.5rem;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-  
-  .section-subtitle {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 0.9rem;
-  }
-  
-  .stat-number {
-    font-size: 1.8rem;
-  }
-  
-  .stat-label {
-    font-size: 0.8rem;
-  }
-  
-  .hero-buttons .btn {
-    font-size: 1rem;
-    padding: 0.75rem 1rem;
-  }
-  
-  .section-title {
-    font-size: 1.8rem;
-  }
-  
-  .section-subtitle {
-    font-size: 0.9rem;
-  }
-  
-  .feature-card {
-    padding: 1.5rem 1rem;
-  }
-  
-  .feature-card h3 {
-    font-size: 1.3rem;
-  }
-  
-  .feature-card p {
-    font-size: 0.9rem;
-  }
-  
-  .book-title {
-    font-size: 1.1rem;
-  }
-  
-  .book-author {
-    font-size: 0.9rem;
-  }
-  
-  .book-description {
-    font-size: 0.85rem;
-  }
-  
-  .event-content h4 {
-    font-size: 1.2rem;
-  }
-  
-  .event-meta {
-    font-size: 0.85rem;
-  }
-}
-
-/* Container and layout improvements */
-.container {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-@media (max-width: 575.98px) {
-  .container {
-    padding: 0;
-  }
-}
-
-/* Ensure proper spacing and flex layout */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
-  width: 100%;
-}
-
-@media (max-width: 575.98px) {
-  .row {
-    margin: 0;
-  }
+.animate-float-hero-2 {
+  animation: float-hero-2 7.5s ease-in-out infinite;
 }
-
-.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
-.col-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
-.col-sm-auto, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
-.col-md-auto, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12,
-.col-lg-auto, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12,
-.col-xl-auto {
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+.animate-float-hero-3 {
+  animation: float-hero-3 10s ease-in-out infinite;
 }
 
-@media (max-width: 575.98px) {
-  .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
-  .col-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
-  .col-sm-auto, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
-  .col-md-auto, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12,
-  .col-lg-auto, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12,
-  .col-xl-auto {
-    padding: 0;
-  }
+@keyframes float-final-1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(12deg); }
+  40% { transform: translateY(-8px) translateX(2px) rotate(15deg); }
+  80% { transform: translateY(-4px) translateX(-1px) rotate(10deg); }
 }
-
-/* Ensure proper spacing */
-.py-5 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
+@keyframes float-final-2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(-6deg); }
+  50% { transform: translateY(-6px) translateX(-2px) rotate(-3deg); }
+  90% { transform: translateY(-2px) translateX(1px) rotate(-8deg); }
 }
 
-@media (max-width: 767.98px) {
-  .py-5 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
-  
-  .features-section .container,
-  .recent-books-section .container,
-  .events-section .container {
-    padding: 0 1rem;
-  }
+.animate-float-final-1 {
+  animation: float-final-1 6s ease-in-out infinite;
 }
-
-/* Fix for overlapping elements */
-.navbar {
-  z-index: 1030;
-  width: 100%;
+.animate-float-final-2 {
+  animation: float-final-2 8s ease-in-out infinite;
 }
 
-.main-content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
 
-/* Remove any default margins */
-* {
-  box-sizing: border-box;
-}
 
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
+/* Effets de glassmorphism */
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
-#app {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+/* Ombres personnalisées */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
 }
 
-.home {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+/* Gradient radial */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
 }
 </style>
