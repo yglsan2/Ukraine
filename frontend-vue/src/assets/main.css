@@ -1,0 +1,376 @@
+@import './base.css';
+
+/* Reset global pour éliminer toutes les marges et limitations */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: normal;
+  overflow-x: hidden;
+}
+
+/* Forcer Bootstrap à ne pas ajouter de marges */
+.container,
+.container-fluid,
+.row,
+.col,
+.col-* {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* Éliminer les marges de Bootstrap */
+.container {
+  max-width: 100vw !important;
+  width: 100vw !important;
+}
+
+.container-fluid {
+  max-width: 100vw !important;
+  width: 100vw !important;
+  padding: 0 !important;
+}
+
+/* Éliminer les marges des colonnes */
+.row {
+  margin: 0 !important;
+  width: 100vw !important;
+}
+
+.col,
+.col-* {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Éliminer les marges des éléments Bootstrap */
+.navbar,
+.navbar-nav,
+.navbar-nav .nav-item,
+.navbar-nav .nav-link {
+  margin: 0 !important;
+}
+
+/* Forcer la largeur complète de la navbar */
+.navbar {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.navbar .container-fluid {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 2rem !important;
+}
+
+/* Corriger l'affichage de la navbar */
+.navbar-nav {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.navbar-nav .nav-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.navbar-nav .nav-link {
+  margin: 0 !important;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Corriger l'affichage du brand */
+.navbar-brand {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Corriger l'affichage du toggler */
+.navbar-toggler {
+  margin: 0 !important;
+  padding: 0.25rem 0.5rem !important;
+}
+
+/* Corriger l'affichage du collapse */
+.navbar-collapse {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+/* Responsive optimisé pour TOUS les écrans */
+
+/* Très grands écrans (4K et plus) */
+@media (min-width: 2560px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 4rem !important;
+  }
+  
+  #app {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 4rem !important;
+  }
+}
+
+/* Grands écrans (Full HD et plus) */
+@media (min-width: 1920px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 3rem !important;
+  }
+  
+  #app {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 3rem !important;
+  }
+}
+
+/* Écrans moyens (HD et plus) */
+@media (min-width: 1366px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 2.5rem !important;
+  }
+  
+  #app {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 2.5rem !important;
+  }
+}
+
+/* Écrans standards (1024px et plus) */
+@media (min-width: 1024px) {
+  body {
+    display: block;
+    place-items: normal;
+  }
+
+  #app {
+    display: block;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 2rem !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 2rem !important;
+  }
+}
+
+/* Tablettes */
+@media (max-width: 1199.98px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 1.5rem !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 1.5rem !important;
+  }
+}
+
+/* Tablettes et petits écrans */
+@media (max-width: 991.98px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 1rem !important;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 767.98px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 0.75rem !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 0.75rem !important;
+  }
+}
+
+/* Petits mobiles */
+@media (max-width: 575.98px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 0.5rem !important;
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 375px) {
+  .container,
+  .container-fluid {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 0.25rem !important;
+  }
+  
+  .navbar .container-fluid {
+    padding: 0 0.25rem !important;
+  }
+}
+
+/* --- CORRECTION NAVBAR --- */
+
+/* NAVBAR : largeur auto, padding horizontal, pas de débordement */
+.navbar {
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+  background: linear-gradient(90deg, #0057b7 0%, #fff 50%, #ffd700 100%);
+}
+
+.navbar .container-fluid {
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Espacement horizontal entre les éléments du menu */
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  align-items: center;
+  margin-left: auto;
+}
+
+.navbar-nav .nav-item {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav .nav-link {
+  margin: 0;
+  padding: 0.5rem 0.8rem;
+  font-size: 1.08rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+  background: rgba(0,87,183,0.08);
+}
+
+.navbar-brand {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.3rem;
+}
+
+/* Toggler mobile */
+.navbar-toggler {
+  margin-left: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Responsive : padding réduit sur mobile */
+@media (max-width: 991.98px) {
+  .navbar .container-fluid {
+    padding: 0 1rem;
+  }
+  .navbar-nav {
+    gap: 0.7rem;
+  }
+}
+
+/* --- FIN CORRECTION NAVBAR --- */
