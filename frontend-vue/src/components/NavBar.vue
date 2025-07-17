@@ -1,323 +1,794 @@
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-900/95 via-blue-800/95 to-yellow-400/95 backdrop-blur-3xl shadow-2xl border-b border-yellow-300/30 overflow-hidden">
-    <!-- Particules flottantes -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="floating-particle top-4 left-10 w-2 h-2 bg-yellow-300 rounded-full animate-pulse"></div>
-      <div class="floating-particle top-8 right-20 w-1 h-1 bg-blue-300 rounded-full animate-ping"></div>
-      <div class="floating-particle top-12 left-1/4 w-1.5 h-1.5 bg-white rounded-full animate-bounce"></div>
-      <div class="floating-particle top-6 right-1/3 w-1 h-1 bg-yellow-200 rounded-full animate-pulse"></div>
+  <nav class="navbar" :class="{ 'navbar-scrolled': isScrolled }">
+    <!-- Effet de fond avec particules -->
+    <div class="navbar-background">
+      <div class="bg-particles">
+        <div v-for="i in 20" :key="i" class="particle" :style="getParticleStyle(i)"></div>
+      </div>
+      <div class="bg-gradient"></div>
     </div>
 
-    <!-- Livres flottants dans la navbar avec mouvements naturels -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="floating-book top-2 left-1/4 animate-float-natural-1">
-        <div class="w-5 h-7 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-sm shadow-lg transform rotate-8 border border-yellow-200"></div>
-      </div>
-      <div class="floating-book top-1 right-1/3 animate-float-natural-2">
-        <div class="w-4 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-sm shadow-lg transform -rotate-12 border border-blue-300"></div>
-      </div>
-      <div class="floating-book top-3 left-2/3 animate-float-natural-3">
-        <div class="w-6 h-8 bg-gradient-to-br from-white to-gray-100 rounded-sm shadow-lg transform rotate-5 border border-gray-200"></div>
-      </div>
-      <div class="floating-book top-2 right-1/5 animate-float-natural-4">
-        <div class="w-3 h-5 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-sm shadow-lg transform -rotate-8 border border-yellow-100"></div>
+    <!-- Livres flottants dans la navbar -->
+    <div class="floating-books-nav">
+      <div v-for="i in 5" :key="i" class="nav-book" :style="getNavBookStyle(i)">
+        <div class="book-cover-nav"></div>
+        <div class="book-pages-nav"></div>
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-20 relative z-10">
-      <!-- Logo animé avec effet de lumière -->
-      <div class="flex items-center space-x-4 group cursor-pointer">
-        <div class="relative">
-          <div class="w-16 h-16 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center shadow-2xl animate-pulse group-hover:scale-110 transition-all duration-500 border-2 border-yellow-200/50">
-            <span class="text-4xl drop-shadow-lg animate-bounce">🇺🇦</span>
-          </div>
-          <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
-          <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 text-xs text-yellow-200 font-bold animate-pulse">Lumière</div>
+    <div class="navbar-container">
+      <!-- Logo animé -->
+      <div class="logo-container">
+        <div class="logo-icon">🇺🇦</div>
+        <div class="logo-text">
+          <span class="logo-title">Lumières</span>
+          <span class="logo-subtitle">d'Ukraine</span>
         </div>
-        <div class="relative">
-          <h1 class="text-3xl font-black bg-gradient-to-r from-yellow-300 via-white to-blue-400 bg-clip-text text-transparent tracking-tight drop-shadow-lg animate-pulse">
-            Lumières d'Ukraine
-          </h1>
-          <p class="text-sm text-blue-100/90 font-medium tracking-wider animate-pulse">Partage de culture</p>
-          <div class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-yellow-400 to-blue-500 rounded-full animate-pulse"></div>
-        </div>
+        <div class="logo-glow"></div>
       </div>
 
-      <!-- Navigation principale avec effets -->
-      <div class="hidden lg:flex items-center space-x-1">
-        <router-link
-          v-for="item in navItems"
-          :key="item.path"
-          :to="item.path"
-          class="group relative px-6 py-3 rounded-2xl font-bold text-white/90 hover:text-yellow-300 focus:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/60 transition-all duration-300 flex items-center gap-3 bg-white/5 hover:bg-yellow-400/20 backdrop-blur-md shadow-lg hover:shadow-2xl border border-transparent hover:border-yellow-300/50 transform hover:scale-105"
-          :class="{ 'bg-yellow-400/30 text-yellow-200 shadow-2xl border-yellow-300/70 scale-105': route.path === item.path }"
+      <!-- Navigation principale -->
+      <div class="nav-links" :class="{ 'nav-open': isMenuOpen }">
+        <router-link 
+          v-for="link in navLinks" 
+          :key="link.path"
+          :to="link.path"
+          class="nav-link"
+          :class="{ 'active': $route.path === link.path }"
         >
-          <span class="text-2xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">{{ item.icon }}</span>
-          <span class="relative">
-            {{ item.name }}
-            <span v-if="route.path === item.path" class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-yellow-300 rounded-full shadow-lg"></span>
-          </span>
-          <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-blue-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="link-icon">{{ link.icon }}</span>
+          <span class="link-text">{{ link.name }}</span>
+          <div class="link-hover-effect"></div>
         </router-link>
       </div>
 
-      <!-- Actions à droite avec effets premium -->
-      <div class="flex items-center space-x-4">
-        <!-- Sélecteur de langue avec animation -->
-        <div class="relative">
-          <button
-            @click="toggleLanguageMenu"
-            class="flex items-center gap-3 px-5 py-3 rounded-2xl bg-gradient-to-r from-white/10 to-yellow-400/10 hover:from-yellow-400/20 hover:to-blue-400/20 text-white font-bold shadow-xl border border-yellow-200/30 focus:outline-none focus:ring-2 focus:ring-yellow-300/60 transition-all duration-300 transform hover:scale-105"
-            aria-haspopup="true"
-            :aria-expanded="languageMenuOpen"
-          >
-            <span class="text-2xl">{{ currentLanguage.flag }}</span>
-            <span class="uppercase tracking-widest text-yellow-200">{{ currentLanguage.code }}</span>
-            <svg class="w-5 h-5 ml-1 transition-transform text-yellow-200" :class="{ 'rotate-180': languageMenuOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          
-          <!-- Menu déroulant des langues avec effet glassmorphism -->
-          <transition name="fade-scale">
-            <div
-              v-show="languageMenuOpen"
-              class="absolute right-0 mt-4 w-64 bg-white/95 rounded-3xl shadow-2xl border border-yellow-200/40 overflow-hidden animate-pop-in backdrop-blur-2xl z-50"
-              @click.away="languageMenuOpen = false"
-            >
-              <div class="p-4">
-                <div class="text-sm font-bold text-blue-800 px-3 py-2 uppercase tracking-wider border-b border-yellow-200/30">Choisir une langue</div>
-                <div class="space-y-2 mt-3">
-                  <button
-                    v-for="lang in languages"
-                    :key="lang.code"
-                    @click="selectLanguage(lang)"
-                    class="w-full flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-gradient-to-r hover:from-yellow-100/80 hover:to-blue-100/80 transition-all duration-300 group transform hover:scale-105"
-                    :class="{ 'bg-gradient-to-r from-yellow-200/80 to-blue-200/80 text-blue-900 font-bold shadow-lg': currentLanguage.code === lang.code }"
-                  >
-                    <span class="text-3xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">{{ lang.flag }}</span>
-                    <div class="flex-1 text-left">
-                      <div class="font-semibold text-gray-800">{{ lang.name }}</div>
-                      <div class="text-xs text-gray-600">{{ lang.nativeName }}</div>
-                    </div>
-                    <span v-if="currentLanguage.code === lang.code" class="w-3 h-3 bg-blue-600 rounded-full shadow-lg"></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </transition>
-        </div>
-
-        <!-- Boutons d'authentification avec effets -->
-        <button class="hidden md:inline-block px-6 py-3 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:from-yellow-400 hover:to-yellow-300 text-blue-900 font-black rounded-2xl shadow-xl border-2 border-yellow-200/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
-          Se connecter
-        </button>
-        <button class="hidden md:inline-block px-6 py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-600 text-yellow-200 font-black rounded-2xl shadow-xl border-2 border-blue-300/60 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
-          S'inscrire
-        </button>
-
-        <!-- Menu mobile avec animation -->
-        <button
-          @click="toggleMobileMenu"
-          class="lg:hidden p-4 rounded-2xl bg-gradient-to-r from-white/10 to-yellow-400/10 hover:from-yellow-400/20 hover:to-blue-400/20 text-white shadow-xl border border-yellow-200/30 focus:outline-none focus:ring-2 focus:ring-yellow-300/60 transition-all duration-300 transform hover:scale-105"
-          aria-label="Ouvrir le menu mobile"
-        >
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Menu mobile déroulant avec effets -->
-    <transition name="slide-fade">
-      <div
-        v-show="mobileMenuOpen"
-        class="lg:hidden border-t border-yellow-300/30 bg-gradient-to-br from-blue-900/95 via-blue-800/95 to-yellow-400/95 backdrop-blur-3xl shadow-2xl px-6 py-8 space-y-6 animate-pop-in"
-      >
-        <div class="space-y-3">
-          <router-link
-            v-for="item in navItems"
-            :key="item.path"
-            :to="item.path"
-            @click="mobileMenuOpen = false"
-            class="flex items-center gap-4 px-6 py-4 rounded-2xl font-bold text-white/90 hover:text-yellow-300 bg-white/5 hover:bg-yellow-400/20 backdrop-blur-md shadow-lg border border-transparent hover:border-yellow-300/50 transition-all duration-300 transform hover:scale-105"
-            :class="{ 'bg-yellow-400/30 text-yellow-200 shadow-2xl border-yellow-300/70 scale-105': route.path === item.path }"
-          >
-            <span class="text-3xl">{{ item.icon }}</span>
-            <span>{{ item.name }}</span>
-          </router-link>
-        </div>
-        
-        <div class="pt-6 border-t border-yellow-300/30">
-          <div class="text-lg font-bold text-yellow-200 mb-4 uppercase tracking-wider">Langues disponibles</div>
-          <div class="space-y-3">
-            <button
-              v-for="lang in languages"
+      <!-- Sélecteur de langue premium -->
+      <div class="language-selector">
+        <div class="selector-container" @click="toggleLanguageMenu">
+          <div class="current-language">
+            <span class="flag">{{ currentLanguage.flag }}</span>
+            <span class="code">{{ currentLanguage.code }}</span>
+            <span class="arrow" :class="{ 'rotated': isLanguageMenuOpen }">▼</span>
+          </div>
+          <div class="language-dropdown" :class="{ 'open': isLanguageMenuOpen }">
+            <div 
+              v-for="lang in languages" 
               :key="lang.code"
+              class="language-option"
               @click="selectLanguage(lang)"
-              class="w-full flex items-center gap-4 px-6 py-4 rounded-2xl hover:bg-gradient-to-r hover:from-yellow-100/80 hover:to-blue-100/80 transition-all duration-300 group transform hover:scale-105"
-              :class="{ 'bg-gradient-to-r from-yellow-200/80 to-blue-200/80 text-blue-900 font-bold shadow-lg': currentLanguage.code === lang.code }"
             >
-              <span class="text-3xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">{{ lang.flag }}</span>
-              <div class="flex-1 text-left">
-                <div class="font-semibold">{{ lang.name }}</div>
-                <div class="text-sm text-gray-600">{{ lang.nativeName }}</div>
-              </div>
-              <span v-if="currentLanguage.code === lang.code" class="w-3 h-3 bg-blue-600 rounded-full shadow-lg"></span>
-            </button>
+              <span class="flag">{{ lang.flag }}</span>
+              <span class="name">{{ lang.name }}</span>
+            </div>
           </div>
         </div>
-        
-        <div class="pt-6 border-t border-yellow-300/30 space-y-4">
-          <button class="w-full px-6 py-4 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 hover:from-yellow-400 hover:to-yellow-300 text-blue-900 font-black rounded-2xl shadow-xl border-2 border-yellow-200/60 transition-all duration-300 transform hover:scale-105">
-            Se connecter
-          </button>
-          <button class="w-full px-6 py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:to-blue-600 text-yellow-200 font-black rounded-2xl shadow-xl border-2 border-blue-300/60 transition-all duration-300 transform hover:scale-105">
-            S'inscrire
-          </button>
+      </div>
+
+      <!-- Bouton menu mobile -->
+      <button class="mobile-menu-btn" @click="toggleMenu">
+        <div class="hamburger" :class="{ 'active': isMenuOpen }">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Menu mobile overlay -->
+    <div class="mobile-overlay" :class="{ 'open': isMenuOpen }" @click="closeMenu">
+      <div class="mobile-menu" @click.stop>
+        <div class="mobile-header">
+          <div class="mobile-logo">
+            <span class="logo-icon">🇺🇦</span>
+            <span class="logo-text">Lumières d'Ukraine</span>
+          </div>
+          <button class="close-btn" @click="closeMenu">×</button>
+        </div>
+        <div class="mobile-links">
+          <router-link 
+            v-for="link in navLinks" 
+            :key="link.path"
+            :to="link.path"
+            class="mobile-link"
+            @click="closeMenu"
+          >
+            <span class="link-icon">{{ link.icon }}</span>
+            <span class="link-text">{{ link.name }}</span>
+          </router-link>
+        </div>
+        <div class="mobile-language">
+          <div class="mobile-lang-title">Choisir la langue</div>
+          <div class="mobile-lang-options">
+            <div 
+              v-for="lang in languages" 
+              :key="lang.code"
+              class="mobile-lang-option"
+              @click="selectLanguage(lang); closeMenu()"
+            >
+              <span class="flag">{{ lang.flag }}</span>
+              <span class="name">{{ lang.name }}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </transition>
+    </div>
   </nav>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-const mobileMenuOpen = ref(false)
-const languageMenuOpen = ref(false)
-
-const currentLanguage = ref({
-  code: 'FR',
-  name: 'Français',
-  nativeName: 'Français',
-  flag: '🇫🇷'
-})
-
-const languages = [
-  { code: 'FR', name: 'Français', nativeName: 'Français', flag: '🇫🇷' },
-  { code: 'EN', name: 'Anglais', nativeName: 'English', flag: '🇬🇧' },
-  { code: 'UK', name: 'Ukrainien', nativeName: 'Українська', flag: '🇺🇦' },
-  { code: 'DE', name: 'Allemand', nativeName: 'Deutsch', flag: '🇩🇪' },
-  { code: 'PL', name: 'Polonais', nativeName: 'Polski', flag: '🇵🇱' }
-]
-
-const navItems = [
-  { name: 'Accueil', path: '/', icon: '🏠' },
-  { name: 'Livres', path: '/books', icon: '📚' },
-  { name: 'Événements', path: '/events', icon: '🎉' },
-  { name: 'Association', path: '/association', icon: '🏛️' },
-  { name: 'Chatbot', path: '/chatbot', icon: '🤖' },
-  { name: 'À propos', path: '/about', icon: 'ℹ️' }
-]
-
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-  if (mobileMenuOpen.value) {
-    languageMenuOpen.value = false
+<script>
+export default {
+  name: 'NavBar',
+  data() {
+    return {
+      isScrolled: false,
+      isMenuOpen: false,
+      isLanguageMenuOpen: false,
+      currentLanguage: { flag: '🇫🇷', code: 'FR', name: 'Français' },
+      languages: [
+        { flag: '🇫🇷', code: 'FR', name: 'Français' },
+        { flag: '🇺🇦', code: 'UK', name: 'Українська' },
+        { flag: '🇺🇸', code: 'EN', name: 'English' },
+        { flag: '🇩🇪', code: 'DE', name: 'Deutsch' },
+        { flag: '🇪🇸', code: 'ES', name: 'Español' }
+      ],
+      navLinks: [
+        { name: 'Accueil', path: '/', icon: '🏠' },
+        { name: 'Livres', path: '/books', icon: '📚' },
+        { name: 'Événements', path: '/events', icon: '🎭' },
+        { name: 'Association', path: '/association', icon: '🤝' },
+        { name: 'Chatbot', path: '/chatbot', icon: '🤖' }
+      ]
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+    this.startParticleAnimation();
+    this.startBookAnimation();
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      this.isScrolled = window.scrollY > 50;
+    },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+      this.isLanguageMenuOpen = false;
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
+    },
+    toggleLanguageMenu() {
+      this.isLanguageMenuOpen = !this.isLanguageMenuOpen;
+    },
+    selectLanguage(lang) {
+      this.currentLanguage = lang;
+      this.isLanguageMenuOpen = false;
+      // Ici vous pouvez ajouter la logique de changement de langue
+    },
+    getParticleStyle(index) {
+      const size = Math.random() * 3 + 1;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const delay = Math.random() * 5;
+      return {
+        width: `${size}px`,
+        height: `${size}px`,
+        left: `${x}%`,
+        top: `${y}%`,
+        animationDelay: `${delay}s`
+      };
+    },
+    getNavBookStyle(index) {
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const delay = Math.random() * 8;
+      return {
+        left: `${x}%`,
+        top: `${y}%`,
+        transform: `rotate(${rotation}deg)`,
+        animationDelay: `${delay}s`
+      };
+    },
+    startParticleAnimation() {
+      setInterval(() => {
+        document.querySelectorAll('.bg-particles .particle').forEach(particle => {
+          const x = Math.random() * 100;
+          const y = Math.random() * 100;
+          particle.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      }, 4000);
+    },
+    startBookAnimation() {
+      setInterval(() => {
+        document.querySelectorAll('.nav-book').forEach(book => {
+          const rotation = Math.random() * 360;
+          const scale = 0.6 + Math.random() * 0.4;
+          book.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+        });
+      }, 6000);
+    }
   }
-}
-
-const toggleLanguageMenu = () => {
-  languageMenuOpen.value = !languageMenuOpen.value
-}
-
-const selectLanguage = (lang) => {
-  currentLanguage.value = lang
-  languageMenuOpen.value = false
 }
 </script>
 
 <style scoped>
-.backdrop-blur-3xl {
-  backdrop-filter: blur(48px);
-  -webkit-backdrop-filter: blur(48px);
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  height: 80px;
+  overflow: hidden;
 }
 
-/* Animations naturelles et variées */
-@keyframes float-natural-1 {
-  0%, 100% { transform: translateY(0px) translateX(0px) rotate(8deg); }
-  25% { transform: translateY(-8px) translateX(3px) rotate(12deg); }
-  50% { transform: translateY(-12px) translateX(-2px) rotate(5deg); }
-  75% { transform: translateY(-6px) translateX(1px) rotate(10deg); }
-}
-@keyframes float-natural-2 {
-  0%, 100% { transform: translateY(0px) translateX(0px) rotate(-12deg); }
-  30% { transform: translateY(-10px) translateX(-4px) rotate(-8deg); }
-  60% { transform: translateY(-15px) translateX(2px) rotate(-15deg); }
-  90% { transform: translateY(-5px) translateX(-1px) rotate(-10deg); }
-}
-@keyframes float-natural-3 {
-  0%, 100% { transform: translateY(0px) translateX(0px) rotate(5deg); }
-  20% { transform: translateY(-12px) translateX(2px) rotate(8deg); }
-  40% { transform: translateY(-8px) translateX(-3px) rotate(2deg); }
-  80% { transform: translateY(-14px) translateX(1px) rotate(6deg); }
-}
-@keyframes float-natural-4 {
-  0%, 100% { transform: translateY(0px) translateX(0px) rotate(-8deg); }
-  35% { transform: translateY(-6px) translateX(-2px) rotate(-5deg); }
-  70% { transform: translateY(-10px) translateX(3px) rotate(-12deg); }
-  85% { transform: translateY(-4px) translateX(-1px) rotate(-9deg); }
+.navbar-scrolled {
+  background: rgba(30, 60, 114, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  height: 70px;
 }
 
-.animate-float-natural-1 {
-  animation: float-natural-1 7s ease-in-out infinite;
-}
-.animate-float-natural-2 {
-  animation: float-natural-2 5.5s ease-in-out infinite;
-}
-.animate-float-natural-3 {
-  animation: float-natural-3 8s ease-in-out infinite;
-}
-.animate-float-natural-4 {
-  animation: float-natural-4 6.5s ease-in-out infinite;
-}
-
-@keyframes bounce-x {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(8px); }
-}
-.animate-bounce-x {
-  animation: bounce-x 1.5s infinite;
-}
-
-@keyframes pop-in {
-  0% { opacity: 0; transform: scale(0.9) translateY(-10px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-.animate-pop-in {
-  animation: pop-in 0.4s cubic-bezier(.4,2,.6,1) both;
-}
-
-/* Transitions */
-.fade-scale-enter-active, .fade-scale-leave-active {
-  transition: all 0.3s cubic-bezier(.4,2,.6,1);
-}
-.fade-scale-enter-from, .fade-scale-leave-to {
-  opacity: 0;
-  transform: scale(0.95) translateY(-10px);
-}
-
-.slide-fade-enter-active {
-  transition: all 0.4s cubic-bezier(.4,2,.6,1);
-}
-.slide-fade-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-/* Particules flottantes */
-.floating-particle {
+/* Fond avec particules */
+.navbar-background {
   position: absolute;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bg-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: particleFloat 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-15px) scale(1.2); opacity: 0.8; }
+}
+
+.bg-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(30, 60, 114, 0.9) 0%, 
+    rgba(42, 82, 152, 0.8) 50%, 
+    rgba(0, 86, 179, 0.9) 100%);
+}
+
+/* Livres flottants dans la navbar */
+.floating-books-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.nav-book {
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  animation: navBookFloat 10s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.book-cover-nav {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  border-radius: 2px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.book-pages-nav {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  background: white;
+  border-radius: 1px;
+}
+
+@keyframes navBookFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+.navbar-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+/* Logo animé */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  animation: logoPulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.logo-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(45deg, #ffffff, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-subtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.logo-container:hover .logo-glow {
+  opacity: 1;
+}
+
+/* Navigation principale */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transform: translateY(-2px);
+}
+
+.link-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover .link-icon {
+  transform: scale(1.2);
+}
+
+.link-text {
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link.active .link-text {
+  color: #ffd700;
+}
+
+.link-hover-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav-link:hover .link-hover-effect {
+  left: 100%;
+}
+
+/* Sélecteur de langue premium */
+.language-selector {
+  position: relative;
+}
+
+.selector-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.current-language {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.current-language:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.flag {
+  font-size: 1.2rem;
+}
+
+.code {
+  font-size: 0.9rem;
+}
+
+.arrow {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: rgba(30, 60, 114, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.language-dropdown.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.language-option .flag {
+  font-size: 1.2rem;
+}
+
+.language-option .name {
+  font-weight: 500;
+}
+
+/* Bouton menu mobile */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 24px;
+  height: 20px;
+  position: relative;
+}
+
+.hamburger span {
+  width: 100%;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Menu mobile overlay */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  padding: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.mobile-overlay.open .mobile-menu {
+  transform: translateX(0);
+}
+
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+.mobile-logo .logo-icon {
+  font-size: 2rem;
+}
+
+.mobile-logo .logo-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.mobile-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(10px);
+}
+
+.mobile-link .link-icon {
+  font-size: 1.5rem;
+}
+
+.mobile-language {
+  color: white;
+}
+
+.mobile-lang-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.mobile-lang-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobile-lang-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-lang-option .flag {
+  font-size: 1.5rem;
+}
+
+.mobile-lang-option .name {
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    padding: 0.5rem 1rem;
+  }
+  
+  .link-text {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 1rem;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .language-selector {
+    display: none;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .logo-title {
+    font-size: 1.2rem;
+  }
+  
+  .logo-subtitle {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    height: 70px;
+  }
+  
+  .logo-icon {
+    font-size: 2rem;
+  }
+  
+  .logo-title {
+    font-size: 1rem;
+  }
+  
+  .logo-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .mobile-menu {
+    max-width: 100%;
+  }
 }
 </style> 
