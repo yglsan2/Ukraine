@@ -45,7 +45,7 @@
         <div class="selector-container" @click="toggleLanguageMenu">
           <div class="current-language">
             <span class="flag">{{ currentLanguage.flag }}</span>
-            <span class="code">{{ currentLanguage.code }}</span>
+            <span class="code">{{ currentLanguage.code.toUpperCase() }}</span>
             <span class="arrow" :class="{ 'rotated': isLanguageMenuOpen }">▼</span>
           </div>
           <div class="language-dropdown" :class="{ 'open': isLanguageMenuOpen }">
@@ -56,7 +56,8 @@
               @click="selectLanguage(lang)"
             >
               <span class="flag">{{ lang.flag }}</span>
-              <span class="name">{{ lang.name }}</span>
+              <div class="name">{{ lang.name }}</div>
+              <div class="native-name">{{ lang.nativeName }}</div>
             </div>
           </div>
         </div>
@@ -95,7 +96,7 @@
           </router-link>
         </div>
         <div class="mobile-language">
-          <div class="mobile-lang-title">Choisir la langue</div>
+          <div class="mobile-lang-title">{{ t('nav.selectLanguage') }}</div>
           <div class="mobile-lang-options">
             <div 
               v-for="lang in languages" 
@@ -104,7 +105,7 @@
               @click="selectLanguage(lang); closeMenu()"
             >
               <span class="flag">{{ lang.flag }}</span>
-              <span class="name">{{ lang.name }}</span>
+              <span class="name">{{ lang.nativeName }}</span>
             </div>
           </div>
         </div>
@@ -113,104 +114,193 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: 'NavBar',
-  data() {
-    return {
-      isScrolled: false,
-      isMenuOpen: false,
-      isLanguageMenuOpen: false,
-      currentLanguage: { flag: '🇫🇷', code: 'FR', name: 'Français' },
-      languages: [
-        { flag: '🇫🇷', code: 'FR', name: 'Français' },
-        { flag: '🇺🇦', code: 'UK', name: 'Українська' },
-        { flag: '🇺🇸', code: 'EN', name: 'English' },
-        { flag: '🇩🇪', code: 'DE', name: 'Deutsch' },
-        { flag: '🇪🇸', code: 'ES', name: 'Español' }
-      ],
-      navLinks: [
-        { name: 'Accueil', path: '/', icon: '🏠' },
-        { name: 'Livres', path: '/books', icon: '📚' },
-        { name: 'Événements', path: '/events', icon: '🎭' },
-        { name: 'Association', path: '/association', icon: '🤝' },
-        { name: 'Adhésion', path: '/membership', icon: '🪪' },
-        { name: 'Chatbot', path: '/chatbot', icon: '🤖' }
-      ]
-    }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.startParticleAnimation();
-    this.startBookAnimation();
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      this.isScrolled = window.scrollY > 50;
-    },
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-      this.isLanguageMenuOpen = false;
-    },
-    closeMenu() {
-      this.isMenuOpen = false;
-    },
-    toggleLanguageMenu() {
-      this.isLanguageMenuOpen = !this.isLanguageMenuOpen;
-    },
-    selectLanguage(lang) {
-      this.currentLanguage = lang;
-      this.isLanguageMenuOpen = false;
-      // Ici vous pouvez ajouter la logique de changement de langue
-    },
-    getParticleStyle(index) {
-      const size = Math.random() * 3 + 1;
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      const delay = Math.random() * 5;
-      return {
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${x}%`,
-        top: `${y}%`,
-        animationDelay: `${delay}s`
-      };
-    },
-    getNavBookStyle(index) {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      const rotation = Math.random() * 360;
-      const delay = Math.random() * 8;
-      return {
-        left: `${x}%`,
-        top: `${y}%`,
-        transform: `rotate(${rotation}deg)`,
-        animationDelay: `${delay}s`
-      };
-    },
-    startParticleAnimation() {
-      setInterval(() => {
-        document.querySelectorAll('.bg-particles .particle').forEach(particle => {
-          const x = Math.random() * 100;
-          const y = Math.random() * 100;
-          particle.style.transform = `translate(${x}px, ${y}px)`;
-        });
-      }, 4000);
-    },
-    startBookAnimation() {
-      setInterval(() => {
-        document.querySelectorAll('.nav-book').forEach(book => {
-          const rotation = Math.random() * 360;
-          const scale = 0.6 + Math.random() * 0.4;
-          book.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-        });
-      }, 6000);
-    }
+<script setup>
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { getAvailableLocales, setLocale, getCurrentLocale } from '@/i18n'
+
+const { t, locale } = useI18n()
+
+const isScrolled = ref(false)
+const isMenuOpen = ref(false)
+const isLanguageMenuOpen = ref(false)
+const forceUpdate = ref(0) // Variable pour forcer la mise à jour
+
+const languages = computed(() => getAvailableLocales())
+
+const currentLanguage = computed(() => {
+  const current = getCurrentLocale()
+  return languages.value.find(lang => lang.code === current) || languages.value[0]
+})
+
+const navLinks = ref([
+  { name: t('nav.home'), path: '/', icon: '🏠' },
+  { name: t('nav.books'), path: '/books', icon: '📚' },
+  { name: t('nav.events'), path: '/events', icon: '🎭' },
+  { name: t('nav.association'), path: '/association', icon: '🤝' },
+  { name: t('nav.membership'), path: '/membership', icon: '🪪' },
+  { name: t('nav.chatbot'), path: '/chatbot', icon: '🤖' }
+])
+
+// Fonction pour mettre à jour les liens de navigation
+const updateNavLinks = () => {
+  navLinks.value = [
+    { name: t('nav.home'), path: '/', icon: '🏠' },
+    { name: t('nav.books'), path: '/books', icon: '📚' },
+    { name: t('nav.events'), path: '/events', icon: '🎭' },
+    { name: t('nav.association'), path: '/association', icon: '🤝' },
+    { name: t('nav.membership'), path: '/membership', icon: '🪪' },
+    { name: t('nav.chatbot'), path: '/chatbot', icon: '🤖' }
+  ]
+}
+
+// Écouter les changements de langue
+watch(locale, (newLocale) => {
+  console.log('Langue changée vers:', newLocale)
+  forceUpdate.value++ // Forcer la mise à jour
+  updateNavLinks() // Mettre à jour les liens de navigation
+})
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+  
+  // Fermer le dropdown de langue lors du défilement
+  if (isLanguageMenuOpen.value) {
+    isLanguageMenuOpen.value = false
   }
 }
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+  isLanguageMenuOpen.value = false
+}
+
+const closeMenu = () => {
+  isMenuOpen.value = false
+}
+
+const toggleLanguageMenu = () => {
+  console.log('toggleLanguageMenu appelée')
+  console.log('État actuel:', isLanguageMenuOpen.value)
+  isLanguageMenuOpen.value = !isLanguageMenuOpen.value
+  console.log('Nouvel état:', isLanguageMenuOpen.value)
+  
+  // Positionner le dropdown dynamiquement
+  if (isLanguageMenuOpen.value) {
+    nextTick(() => {
+      const selector = document.querySelector('.language-selector')
+      const dropdown = document.querySelector('.language-dropdown')
+      if (selector && dropdown) {
+        const rect = selector.getBoundingClientRect()
+        const navbarHeight = 80 // Hauteur de la navbar
+        const scrollY = window.scrollY
+        
+        // Calculer la position optimale
+        const topPosition = rect.bottom + 10
+        const rightPosition = window.innerWidth - rect.right
+        
+        // Vérifier si le dropdown dépasse le bas de l'écran
+        const dropdownHeight = 300 // Hauteur maximale du dropdown
+        const viewportHeight = window.innerHeight
+        const spaceBelow = viewportHeight - topPosition
+        
+        if (spaceBelow < dropdownHeight) {
+          // Positionner au-dessus du sélecteur si pas assez d'espace en dessous
+          dropdown.style.top = `${rect.top - dropdownHeight - 10}px`
+        } else {
+          // Positionner en dessous du sélecteur
+          dropdown.style.top = `${topPosition}px`
+        }
+        
+        dropdown.style.right = `${rightPosition}px`
+      }
+    })
+  }
+}
+
+const selectLanguage = (lang) => {
+  console.log('Changement de langue vers:', lang.code)
+  setLocale(lang.code)
+  isLanguageMenuOpen.value = false
+  
+  // Forcer la mise à jour de l'interface
+  nextTick(() => {
+    updateNavLinks()
+    forceUpdate.value++
+  })
+}
+
+const getParticleStyle = (index) => {
+  const size = Math.random() * 3 + 1
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const delay = Math.random() * 5
+  return {
+    width: `${size}px`,
+    height: `${size}px`,
+    left: `${x}%`,
+    top: `${y}%`,
+    animationDelay: `${delay}s`
+  }
+}
+
+const getNavBookStyle = (index) => {
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const rotation = Math.random() * 360
+  const delay = Math.random() * 8
+  return {
+    left: `${x}%`,
+    top: `${y}%`,
+    transform: `rotate(${rotation}deg)`,
+    animationDelay: `${delay}s`
+  }
+}
+
+const startParticleAnimation = () => {
+  setInterval(() => {
+    document.querySelectorAll('.bg-particles .particle').forEach(particle => {
+      const x = Math.random() * 100
+      const y = Math.random() * 100
+      particle.style.transform = `translate(${x}px, ${y}px)`
+    })
+  }, 3000)
+}
+
+const startBookAnimation = () => {
+  setInterval(() => {
+    document.querySelectorAll('.floating-books-nav .nav-book').forEach(book => {
+      const rotation = Math.random() * 360
+      const scale = 0.8 + Math.random() * 0.4
+      book.style.transform = `rotate(${rotation}deg) scale(${scale})`
+    })
+  }, 5000)
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+  startParticleAnimation()
+  startBookAnimation()
+  
+  // Gestionnaire de clic global pour fermer le dropdown de langue
+  document.addEventListener('click', (event) => {
+    const languageSelector = document.querySelector('.language-selector')
+    if (languageSelector && !languageSelector.contains(event.target)) {
+      isLanguageMenuOpen.value = false
+    }
+  })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+  // Nettoyer le gestionnaire de clic global
+  document.removeEventListener('click', (event) => {
+    const languageSelector = document.querySelector('.language-selector')
+    if (languageSelector && !languageSelector.contains(event.target)) {
+      isLanguageMenuOpen.value = false
+    }
+  })
+})
 </script>
 
 <style scoped>
@@ -322,10 +412,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
   height: 100%;
+  gap: 1rem;
 }
 
 /* Logo officiel de l'association */
@@ -394,7 +485,10 @@ export default {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .nav-link {
@@ -405,10 +499,12 @@ export default {
   color: white;
   text-decoration: none;
   font-weight: 600;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   border-radius: 25px;
   transition: all 0.3s ease;
   overflow: hidden;
+  white-space: nowrap;
+  min-width: fit-content;
 }
 
 .nav-link:hover,
@@ -419,8 +515,9 @@ export default {
 }
 
 .link-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .nav-link:hover .link-icon {
@@ -428,8 +525,9 @@ export default {
 }
 
 .link-text {
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-link.active .link-text {
@@ -453,6 +551,7 @@ export default {
 /* Sélecteur de langue premium */
 .language-selector {
   position: relative;
+  z-index: 1001;
 }
 
 .selector-container {
@@ -497,24 +596,25 @@ export default {
 }
 
 .language-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 0.5rem;
+  position: fixed;
   background: rgba(30, 60, 114, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
-  transform: translateY(-10px);
+  transform: translateY(-20px) scale(0.95);
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
   min-width: 200px;
+  z-index: 10000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .language-dropdown.open {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   opacity: 1;
   visibility: visible;
 }
@@ -522,15 +622,21 @@ export default {
 .language-option {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   padding: 1rem 1.5rem;
   color: white;
-  cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.language-option:last-child {
+  border-bottom: none;
 }
 
 .language-option:hover {
   background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
 }
 
 .language-option .flag {
@@ -538,7 +644,13 @@ export default {
 }
 
 .language-option .name {
-  font-weight: 500;
+  font-weight: 600;
+  flex: 1;
+}
+
+.language-option .native-name {
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
 /* Bouton menu mobile */
@@ -726,17 +838,50 @@ export default {
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  .navbar-container {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  
   .nav-links {
-    gap: 1rem;
+    gap: 0.5rem;
   }
   
   .nav-link {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
   }
   
   .link-text {
-    display: none;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: 0.5rem;
+  }
+  
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .link-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    gap: 0.25rem;
+  }
+  
+  .nav-link {
+    padding: 0.5rem 0.5rem;
+  }
+  
+  .link-text {
+    font-size: 0.75rem;
   }
 }
 

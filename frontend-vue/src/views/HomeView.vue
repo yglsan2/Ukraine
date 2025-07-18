@@ -1,7 +1,11 @@
 <script setup>
 import NavBar from '@/components/NavBar.vue'
 import SunflowerIcon from '@/components/icons/SunflowerIcon.vue'
-import { ref, onMounted } from 'vue'
+import InteractiveMap from '@/components/InteractiveMap.vue'
+import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const animatedStats = ref({
   books: 0,
@@ -17,44 +21,44 @@ const targetStats = {
   languages: 5
 }
 
-const features = ref([
+const features = computed(() => [
   {
     icon: '📚',
-    title: 'Bibliothèque Virtuelle',
-    description: 'Accédez à notre collection exclusive de livres ukrainiens'
+    title: t('home.features.virtualLibrary.title'),
+    description: t('home.features.virtualLibrary.description')
   },
   {
     icon: '🎭',
-    title: 'Événements Culturels',
-    description: 'Participez à nos rencontres et spectacles'
+    title: t('home.features.culturalEvents.title'),
+    description: t('home.features.culturalEvents.description')
   },
   {
     icon: '🎨',
-    title: 'Expositions d\'Art',
-    description: 'Découvrez les artistes ukrainiens contemporains'
+    title: t('home.features.artExhibitions.title'),
+    description: t('home.features.artExhibitions.description')
   },
   {
     icon: '🎵',
-    title: 'Musique Traditionnelle',
-    description: 'Écoutez et apprenez la musique ukrainienne'
+    title: t('home.features.traditionalMusic.title'),
+    description: t('home.features.traditionalMusic.description')
   },
   {
     icon: '🌍',
-    title: 'Échanges Culturels',
-    description: 'Connectez-vous avec la communauté ukrainienne'
+    title: t('home.features.culturalExchange.title'),
+    description: t('home.features.culturalExchange.description')
   },
   {
     icon: '💡',
-    title: 'Apprentissage',
-    description: 'Cours de langue et d\'histoire ukrainienne'
+    title: t('home.features.learning.title'),
+    description: t('home.features.learning.description')
   }
 ])
 
-const stats = ref([
-  { value: 1500, label: 'Membres' },
-  { value: 500, label: 'Livres' },
-  { value: 50, label: 'Événements' },
-  { value: 100, label: 'Artistes' }
+const stats = computed(() => [
+  { value: 1500, label: t('home.stats.members') },
+  { value: 500, label: t('home.stats.books') },
+  { value: 50, label: t('home.stats.events') },
+  { value: 100, label: t('home.stats.artists') }
 ])
 
 const getParticleStyle = (index) => {
@@ -156,20 +160,18 @@ onMounted(() => {
       <div class="hero-content">
         <div class="hero-text">
           <h1 class="hero-title">
-            <span class="title-line">Lumières</span>
-            <span class="title-line">d'Ukraine</span>
+            <span class="title-line">{{ t('home.hero.title') }}</span>
           </h1>
           <p class="hero-subtitle">
-            Découvrez la richesse culturelle et la beauté de l'Ukraine à travers nos livres, 
-            nos événements et notre communauté passionnée
+            {{ t('home.hero.subtitle') }}
           </p>
           <div class="hero-buttons">
             <button class="btn-primary">
-              <span class="btn-text">Explorer</span>
+              <span class="btn-text">{{ t('home.hero.exploreButton') }}</span>
               <span class="btn-icon">→</span>
             </button>
             <button class="btn-secondary">
-              <span class="btn-text">Rejoindre</span>
+              <span class="btn-text">{{ t('home.hero.joinButton') }}</span>
               <span class="btn-icon">❤</span>
             </button>
           </div>
@@ -193,8 +195,8 @@ onMounted(() => {
     <!-- Section Fonctionnalités -->
     <section class="features-section">
       <div class="section-header">
-        <h2 class="section-title">Nos Services</h2>
-        <p class="section-subtitle">Une expérience culturelle unique</p>
+        <h2 class="section-title">{{ t('home.features.title') }}</h2>
+        <p class="section-subtitle">{{ t('home.features.subtitle') }}</p>
       </div>
       
       <div class="features-grid">
@@ -223,10 +225,10 @@ onMounted(() => {
     <!-- Section Call-to-Action -->
     <section class="cta-section">
       <div class="cta-content">
-        <h2 class="cta-title">Prêt à découvrir l'Ukraine ?</h2>
-        <p class="cta-subtitle">Rejoignez notre communauté et partagez votre passion</p>
+        <h2 class="cta-title">{{ t('home.cta.title') }}</h2>
+        <p class="cta-subtitle">{{ t('home.cta.subtitle') }}</p>
         <button class="cta-button">
-          <span class="button-text">Commencer l'aventure</span>
+          <span class="button-text">{{ t('home.cta.button') }}</span>
           <span class="button-sparkle">✨</span>
         </button>
       </div>

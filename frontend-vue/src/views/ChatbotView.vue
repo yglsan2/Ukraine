@@ -167,7 +167,10 @@
 
 <script setup lang="ts">
 import { ref, nextTick, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/NavBar.vue'
+
+const { t } = useI18n()
 
 const chatContainer = ref<HTMLElement>()
 const newMessage = ref('')

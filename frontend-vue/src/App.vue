@@ -1,10 +1,22 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import NavBar from './components/NavBar.vue'
 import SunflowerIcon from './components/icons/SunflowerIcon.vue'
-import { onMounted } from 'vue'
+import NotificationToast from './components/NotificationToast.vue'
+import { onMounted, ref } from 'vue'
+
+const { t } = useI18n()
+const notificationToast = ref(null)
 
 onMounted(() => {
   startFooterAnimations();
+  // Exposer les notifications globalement
+  window.$notify = {
+    success: (title, message) => notificationToast.value?.success(title, message),
+    error: (title, message) => notificationToast.value?.error(title, message),
+    warning: (title, message) => notificationToast.value?.warning(title, message),
+    info: (title, message) => notificationToast.value?.info(title, message)
+  }
 });
 
 function getFooterParticleStyle(index) {
@@ -65,6 +77,9 @@ function startFooterAnimations() {
       <router-view />
     </main>
     
+    <!-- Composant de notifications -->
+    <NotificationToast ref="notificationToast" />
+    
     <!-- Footer magnifique -->
     <footer class="footer">
       <!-- Effet de fond avec particules -->
@@ -93,48 +108,45 @@ function startFooterAnimations() {
                     <SunflowerIcon size="medium" variant="icon" :animated="true" />
                   </div>
                   <div class="footer-logo-text">
-                    <h3 class="footer-title">Lumières d'Ukraine</h3>
-                    <p class="footer-subtitle">Découvrez la richesse culturelle ukrainienne</p>
+                    <h3 class="footer-title">{{ t('footer.title') }}</h3>
+                    <p class="footer-subtitle">{{ t('footer.subtitle') }}</p>
                   </div>
                 </div>
-              <p class="footer-description">
-                Notre association dédiée à la promotion de la culture ukrainienne à travers 
-                la littérature, les arts et les échanges culturels.
-              </p>
+              <p class="footer-description">{{ t('footer.description') }}</p>
             </div>
             
             <!-- Liens rapides -->
             <div class="footer-links">
               <div class="footer-section">
-                <h4 class="footer-section-title">Navigation</h4>
+                <h4 class="footer-section-title">{{ t('footer.navigation') }}</h4>
                 <ul class="footer-link-list">
-                  <li><router-link to="/" class="footer-link">Accueil</router-link></li>
-                  <li><router-link to="/books" class="footer-link">Livres</router-link></li>
-                  <li><router-link to="/events" class="footer-link">Événements</router-link></li>
-                  <li><router-link to="/association" class="footer-link">Association</router-link></li>
-                  <li><router-link to="/chatbot" class="footer-link">Chatbot</router-link></li>
+                  <li><router-link to="/" class="footer-link">{{ t('nav.home') }}</router-link></li>
+                  <li><router-link to="/books" class="footer-link">{{ t('nav.books') }}</router-link></li>
+                  <li><router-link to="/events" class="footer-link">{{ t('nav.events') }}</router-link></li>
+                  <li><router-link to="/association" class="footer-link">{{ t('nav.association') }}</router-link></li>
+                  <li><router-link to="/chatbot" class="footer-link">{{ t('nav.chatbot') }}</router-link></li>
                 </ul>
               </div>
               
               <div class="footer-section">
-                <h4 class="footer-section-title">Ressources</h4>
+                <h4 class="footer-section-title">{{ t('footer.resources') }}</h4>
                 <ul class="footer-link-list">
-                  <li><a href="#" class="footer-link">Bibliothèque</a></li>
-                  <li><a href="#" class="footer-link">Expositions</a></li>
-                  <li><a href="#" class="footer-link">Musique</a></li>
-                  <li><a href="#" class="footer-link">Artistes</a></li>
-                  <li><a href="#" class="footer-link">Histoire</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.library') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.exhibitions') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.music') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.artists') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.history') }}</a></li>
                 </ul>
               </div>
               
               <div class="footer-section">
-                <h4 class="footer-section-title">Communauté</h4>
+                <h4 class="footer-section-title">{{ t('footer.community') }}</h4>
                 <ul class="footer-link-list">
-                  <li><a href="#" class="footer-link">Adhésion</a></li>
-                  <li><a href="#" class="footer-link">Bénévolat</a></li>
-                  <li><a href="#" class="footer-link">Donations</a></li>
-                  <li><a href="#" class="footer-link">Partenaires</a></li>
-                  <li><a href="#" class="footer-link">Contact</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.membership') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.volunteering') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.donations') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.partners') }}</a></li>
+                  <li><a href="#" class="footer-link">{{ t('footer.contact') }}</a></li>
                 </ul>
               </div>
             </div>
@@ -142,7 +154,7 @@ function startFooterAnimations() {
           
           <!-- Section réseaux sociaux -->
           <div class="footer-social">
-            <h4 class="footer-section-title">Suivez-nous</h4>
+            <h4 class="footer-section-title">{{ t('footer.followUs') }}</h4>
             <div class="social-links">
               <a href="#" class="social-link" title="Facebook">
                 <span class="social-icon">📘</span>
@@ -167,12 +179,12 @@ function startFooterAnimations() {
         <div class="footer-bottom">
           <div class="footer-bottom-content">
             <p class="copyright">
-              © 2024 Lumières d'Ukraine. Tous droits réservés.
+              © 2024 Lumières d'Ukraine. {{ t('footer.allRightsReserved') }}.
             </p>
             <div class="footer-bottom-links">
-              <a href="#" class="footer-bottom-link">Mentions légales</a>
-              <a href="#" class="footer-bottom-link">Politique de confidentialité</a>
-              <a href="#" class="footer-bottom-link">Conditions d'utilisation</a>
+              <a href="#" class="footer-bottom-link">{{ t('footer.legalNotices') }}</a>
+              <a href="#" class="footer-bottom-link">{{ t('footer.privacyPolicy') }}</a>
+              <a href="#" class="footer-bottom-link">{{ t('footer.termsOfUse') }}</a>
             </div>
           </div>
         </div>
