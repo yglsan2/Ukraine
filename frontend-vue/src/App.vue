@@ -9,61 +9,61 @@ const { t } = useI18n()
 const notificationToast = ref(null)
 
 onMounted(() => {
-  startFooterAnimations();
+  startFooterAnimations()
   // Exposer les notifications globalement
   window.$notify = {
     success: (title, message) => notificationToast.value?.success(title, message),
     error: (title, message) => notificationToast.value?.error(title, message),
     warning: (title, message) => notificationToast.value?.warning(title, message),
-    info: (title, message) => notificationToast.value?.info(title, message)
+    info: (title, message) => notificationToast.value?.info(title, message),
   }
-});
+})
 
 function getFooterParticleStyle(index) {
-  const size = Math.random() * 3 + 1;
-  const x = Math.random() * 100;
-  const y = Math.random() * 100;
-  const delay = Math.random() * 8;
+  const size = Math.random() * 3 + 1
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const delay = Math.random() * 8
   return {
     width: `${size}px`,
     height: `${size}px`,
     left: `${x}%`,
     top: `${y}%`,
-    animationDelay: `${delay}s`
-  };
+    animationDelay: `${delay}s`,
+  }
 }
 
 function getFooterBookStyle(index) {
-  const x = Math.random() * 100;
-  const y = Math.random() * 100;
-  const rotation = Math.random() * 360;
-  const delay = Math.random() * 12;
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const rotation = Math.random() * 360
+  const delay = Math.random() * 12
   return {
     left: `${x}%`,
     top: `${y}%`,
     transform: `rotate(${rotation}deg)`,
-    animationDelay: `${delay}s`
-  };
+    animationDelay: `${delay}s`,
+  }
 }
 
 function startFooterAnimations() {
   // Animation des particules du footer
   setInterval(() => {
-    document.querySelectorAll('.footer-particle').forEach(particle => {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      particle.style.transform = `translate(${x}px, ${y}px)`;
-    });
-  }, 5000);
-  
+    document.querySelectorAll('.footer-particle').forEach((particle) => {
+      const x = Math.random() * 100
+      const y = Math.random() * 100
+      particle.style.transform = `translate(${x}px, ${y}px)`
+    })
+  }, 5000)
+
   // Animation des livres du footer
   setInterval(() => {
-    document.querySelectorAll('.footer-book').forEach(book => {
-      const rotation = Math.random() * 360;
-      const scale = 0.4 + Math.random() * 0.3;
-      book.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-    });
-  }, 8000);
+    document.querySelectorAll('.footer-book').forEach((book) => {
+      const rotation = Math.random() * 360
+      const scale = 0.4 + Math.random() * 0.3
+      book.style.transform = `rotate(${rotation}deg) scale(${scale})`
+    })
+  }, 8000)
 }
 </script>
 
@@ -71,25 +71,30 @@ function startFooterAnimations() {
   <div id="app">
     <!-- Navbar -->
     <NavBar />
-    
+
     <!-- Contenu principal -->
     <main class="main-content">
       <router-view />
     </main>
-    
+
     <!-- Composant de notifications -->
     <NotificationToast ref="notificationToast" />
-    
+
     <!-- Footer magnifique -->
     <footer class="footer">
       <!-- Effet de fond avec particules -->
       <div class="footer-background">
         <div class="footer-particles">
-          <div v-for="i in 15" :key="i" class="footer-particle" :style="getFooterParticleStyle(i)"></div>
+          <div
+            v-for="i in 15"
+            :key="i"
+            class="footer-particle"
+            :style="getFooterParticleStyle(i)"
+          ></div>
         </div>
         <div class="footer-gradient"></div>
       </div>
-      
+
       <!-- Livres flottants dans le footer -->
       <div class="footer-floating-books">
         <div v-for="i in 6" :key="i" class="footer-book" :style="getFooterBookStyle(i)">
@@ -97,61 +102,97 @@ function startFooterAnimations() {
           <div class="footer-book-pages"></div>
         </div>
       </div>
-      
+
       <div class="footer-content">
         <div class="footer-container">
           <!-- Section principale -->
           <div class="footer-main">
-                          <div class="footer-brand">
-                <div class="footer-logo">
-                  <div class="footer-logo-icon">
-                    <SunflowerIcon size="medium" variant="icon" :animated="true" />
-                  </div>
-                  <div class="footer-logo-text">
-                    <h3 class="footer-title">{{ t('footer.title') }}</h3>
-                    <p class="footer-subtitle">{{ t('footer.subtitle') }}</p>
-                  </div>
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <div class="footer-logo-icon">
+                  <SunflowerIcon size="medium" variant="icon" :animated="true" />
                 </div>
+                <div class="footer-logo-text">
+                  <h3 class="footer-title">{{ t('footer.title') }}</h3>
+                  <p class="footer-subtitle">{{ t('footer.subtitle') }}</p>
+                </div>
+              </div>
               <p class="footer-description">{{ t('footer.description') }}</p>
             </div>
-            
+
             <!-- Liens rapides -->
             <div class="footer-links">
               <div class="footer-section">
                 <h4 class="footer-section-title">{{ t('footer.navigation') }}</h4>
                 <ul class="footer-link-list">
-                  <li><router-link to="/" class="footer-link">{{ t('nav.home') }}</router-link></li>
-                  <li><router-link to="/books" class="footer-link">{{ t('nav.books') }}</router-link></li>
-                  <li><router-link to="/events" class="footer-link">{{ t('nav.events') }}</router-link></li>
-                  <li><router-link to="/association" class="footer-link">{{ t('nav.association') }}</router-link></li>
-                  <li><router-link to="/chatbot" class="footer-link">{{ t('nav.chatbot') }}</router-link></li>
+                  <li>
+                    <router-link to="/" class="footer-link">{{ t('nav.home') }}</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/books" class="footer-link">{{ t('nav.books') }}</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/events" class="footer-link">{{
+                      t('nav.events')
+                    }}</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/association" class="footer-link">{{
+                      t('nav.association')
+                    }}</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/chatbot" class="footer-link">{{
+                      t('nav.chatbot')
+                    }}</router-link>
+                  </li>
                 </ul>
               </div>
-              
+
               <div class="footer-section">
                 <h4 class="footer-section-title">{{ t('footer.resources') }}</h4>
                 <ul class="footer-link-list">
-                  <li><a href="#" class="footer-link">{{ t('footer.library') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.exhibitions') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.music') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.artists') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.history') }}</a></li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.library') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.exhibitions') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.music') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.artists') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.history') }}</a>
+                  </li>
                 </ul>
               </div>
-              
+
               <div class="footer-section">
                 <h4 class="footer-section-title">{{ t('footer.community') }}</h4>
                 <ul class="footer-link-list">
-                  <li><a href="#" class="footer-link">{{ t('footer.membership') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.volunteering') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.donations') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.partners') }}</a></li>
-                  <li><a href="#" class="footer-link">{{ t('footer.contact') }}</a></li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.membership') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.volunteering') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.donations') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.partners') }}</a>
+                  </li>
+                  <li>
+                    <a href="#" class="footer-link">{{ t('footer.contact') }}</a>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
-          
+
           <!-- Section réseaux sociaux -->
           <div class="footer-social">
             <h4 class="footer-section-title">{{ t('footer.followUs') }}</h4>
@@ -173,8 +214,8 @@ function startFooterAnimations() {
               </a>
             </div>
           </div>
-    </div>
-        
+        </div>
+
         <!-- Barre de copyright -->
         <div class="footer-bottom">
           <div class="footer-bottom-content">
@@ -235,8 +276,15 @@ function startFooterAnimations() {
 }
 
 @keyframes footerParticleFloat {
-  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.2; }
-  50% { transform: translateY(-25px) scale(1.3); opacity: 0.6; }
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-25px) scale(1.3);
+    opacity: 0.6;
+  }
 }
 
 .footer-gradient {
@@ -245,8 +293,9 @@ function startFooterAnimations() {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
-              radial-gradient(circle at 70% 80%, rgba(0, 86, 179, 0.3) 0%, transparent 50%);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(0, 86, 179, 0.3) 0%, transparent 50%);
 }
 
 /* Livres flottants dans le footer */
@@ -288,8 +337,13 @@ function startFooterAnimations() {
 }
 
 @keyframes footerBookFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-30px) rotate(5deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(5deg);
+  }
 }
 
 /* Contenu du footer */
@@ -329,11 +383,14 @@ function startFooterAnimations() {
   justify-content: center;
 }
 
-
-
 @keyframes logoPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .footer-title {
@@ -472,7 +529,7 @@ function startFooterAnimations() {
 }
 
 .footer-bottom-links {
-    display: flex;
+  display: flex;
   gap: 2rem;
   flex-wrap: wrap;
 }
@@ -497,12 +554,12 @@ function startFooterAnimations() {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  
+
   .footer-brand {
     max-width: 100%;
     text-align: center;
   }
-  
+
   .footer-logo {
     justify-content: center;
   }
@@ -512,25 +569,25 @@ function startFooterAnimations() {
   .footer-content {
     padding: 3rem 1rem 1.5rem;
   }
-  
+
   .footer-links {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .footer-bottom-content {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .footer-bottom-links {
     justify-content: center;
   }
-  
+
   .social-links {
     gap: 1rem;
   }
-  
+
   .social-link {
     width: 45px;
     height: 45px;
@@ -541,24 +598,24 @@ function startFooterAnimations() {
   .footer-main {
     gap: 2rem;
   }
-  
+
   .footer-title {
     font-size: 1.3rem;
   }
-  
+
   .footer-section-title {
     font-size: 1rem;
   }
-  
+
   .social-links {
     gap: 0.75rem;
   }
-  
+
   .social-link {
     width: 40px;
     height: 40px;
   }
-  
+
   .social-icon {
     font-size: 1.2rem;
   }

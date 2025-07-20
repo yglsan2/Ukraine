@@ -1,11 +1,6 @@
 <template>
   <div class="sunflower-container" :class="sizeClass" :style="customStyle">
-    <img 
-      :src="sunflowerSrc" 
-      :alt="alt" 
-      class="sunflower-image"
-      :class="{ 'animated': animated }"
-    />
+    <img :src="sunflowerSrc" :alt="alt" class="sunflower-image" :class="{ animated: animated }" />
   </div>
 </template>
 
@@ -16,41 +11,39 @@ export default {
     size: {
       type: String,
       default: 'medium',
-      validator: value => ['small', 'medium', 'large', 'xlarge'].includes(value)
+      validator: (value) => ['small', 'medium', 'large', 'xlarge'].includes(value),
     },
     animated: {
       type: Boolean,
-      default: true
+      default: true,
     },
     alt: {
       type: String,
-      default: 'Tournesol'
+      default: 'Tournesol',
     },
     variant: {
       type: String,
       default: 'full',
-      validator: value => ['full', 'icon'].includes(value)
-    }
+      validator: (value) => ['full', 'icon'].includes(value),
+    },
   },
   computed: {
     sizeClass() {
       return `sunflower-${this.size}`
     },
     sunflowerSrc() {
-      return this.variant === 'full' 
-        ? '/images/sunflower-new.png' 
-        : '/images/sunflower-new.png'
+      return this.variant === 'full' ? '/images/sunflower-new.png' : '/images/sunflower-new.png'
     },
     customStyle() {
       const sizes = {
         small: { width: '30px', height: '30px' },
         medium: { width: '50px', height: '50px' },
         large: { width: '100px', height: '100px' },
-        xlarge: { width: '150px', height: '150px' }
+        xlarge: { width: '150px', height: '150px' },
       }
       return sizes[this.size] || sizes.medium
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -79,8 +72,12 @@ export default {
 }
 
 @keyframes sunflowerRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Tailles spécifiques */
@@ -92,4 +89,4 @@ export default {
 .sunflower-xlarge .sunflower-image {
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
-</style> 
+</style>

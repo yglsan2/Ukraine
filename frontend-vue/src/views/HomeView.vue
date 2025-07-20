@@ -11,101 +11,101 @@ const animatedStats = ref({
   books: 0,
   members: 0,
   events: 0,
-  languages: 0
+  languages: 0,
 })
 
 const targetStats = {
   books: 500,
   members: 200,
   events: 50,
-  languages: 5
+  languages: 5,
 }
 
 const features = computed(() => [
   {
     icon: '📚',
     title: t('home.features.virtualLibrary.title'),
-    description: t('home.features.virtualLibrary.description')
+    description: t('home.features.virtualLibrary.description'),
   },
   {
     icon: '🎭',
     title: t('home.features.culturalEvents.title'),
-    description: t('home.features.culturalEvents.description')
+    description: t('home.features.culturalEvents.description'),
   },
   {
     icon: '🎨',
     title: t('home.features.artExhibitions.title'),
-    description: t('home.features.artExhibitions.description')
+    description: t('home.features.artExhibitions.description'),
   },
   {
     icon: '🎵',
     title: t('home.features.traditionalMusic.title'),
-    description: t('home.features.traditionalMusic.description')
+    description: t('home.features.traditionalMusic.description'),
   },
   {
     icon: '🌍',
     title: t('home.features.culturalExchange.title'),
-    description: t('home.features.culturalExchange.description')
+    description: t('home.features.culturalExchange.description'),
   },
   {
     icon: '💡',
     title: t('home.features.learning.title'),
-    description: t('home.features.learning.description')
-  }
+    description: t('home.features.learning.description'),
+  },
 ])
 
 const stats = computed(() => [
   { value: 1500, label: t('home.stats.members') },
   { value: 500, label: t('home.stats.books') },
   { value: 50, label: t('home.stats.events') },
-  { value: 100, label: t('home.stats.artists') }
+  { value: 100, label: t('home.stats.artists') },
 ])
 
 const getParticleStyle = (index) => {
-  const size = Math.random() * 4 + 2;
-  const x = Math.random() * 100;
-  const y = Math.random() * 100;
-  const delay = Math.random() * 20;
+  const size = Math.random() * 4 + 2
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const delay = Math.random() * 20
   return {
     width: `${size}px`,
     height: `${size}px`,
     left: `${x}%`,
     top: `${y}%`,
-    animationDelay: `${delay}s`
-  };
+    animationDelay: `${delay}s`,
+  }
 }
 
 const getBookStyle = (index) => {
-  const x = Math.random() * 100;
-  const y = Math.random() * 100;
-  const rotation = Math.random() * 360;
-  const delay = Math.random() * 10;
+  const x = Math.random() * 100
+  const y = Math.random() * 100
+  const rotation = Math.random() * 360
+  const delay = Math.random() * 10
   return {
     left: `${x}%`,
     top: `${y}%`,
     transform: `rotate(${rotation}deg)`,
-    animationDelay: `${delay}s`
-  };
+    animationDelay: `${delay}s`,
+  }
 }
 
 const startAnimations = () => {
   // Animation des particules
   setInterval(() => {
-    document.querySelectorAll('.particle').forEach(particle => {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      particle.style.transform = `translate(${x}px, ${y}px)`;
-    });
-  }, 3000);
-  
+    document.querySelectorAll('.particle').forEach((particle) => {
+      const x = Math.random() * 100
+      const y = Math.random() * 100
+      particle.style.transform = `translate(${x}px, ${y}px)`
+    })
+  }, 3000)
+
   // Animation des livres
   setInterval(() => {
-    document.querySelectorAll('.book').forEach(book => {
-      const rotation = Math.random() * 360;
-      const scale = 0.8 + Math.random() * 0.4;
-      book.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-    });
-  }, 5000);
+    document.querySelectorAll('.book').forEach((book) => {
+      const rotation = Math.random() * 360
+      const scale = 0.8 + Math.random() * 0.4
+      book.style.transform = `rotate(${rotation}deg) scale(${scale})`
+    })
+  }, 5000)
 }
 
 onMounted(() => {
@@ -114,27 +114,27 @@ onMounted(() => {
     const duration = 2000
     const steps = 60
     const stepDuration = duration / steps
-    
+
     let step = 0
     const timer = setInterval(() => {
       step++
       const progress = step / steps
       const easeOut = 1 - Math.pow(1 - progress, 3)
-      
+
       animatedStats.value.books = Math.floor(targetStats.books * easeOut)
       animatedStats.value.members = Math.floor(targetStats.members * easeOut)
       animatedStats.value.events = Math.floor(targetStats.events * easeOut)
       animatedStats.value.languages = Math.floor(targetStats.languages * easeOut)
-      
+
       if (step >= steps) {
         clearInterval(timer)
       }
     }, stepDuration)
   }
-  
+
   // Démarrer l'animation après 1 seconde
   setTimeout(animateStats, 1000)
-  
+
   // Démarrer les autres animations
   startAnimations()
 })
@@ -176,7 +176,7 @@ onMounted(() => {
             </button>
           </div>
         </div>
-        
+
         <div class="hero-visual">
           <div class="floating-elements">
             <div class="element element-1">📚</div>
@@ -198,7 +198,7 @@ onMounted(() => {
         <h2 class="section-title">{{ t('home.features.title') }}</h2>
         <p class="section-subtitle">{{ t('home.features.subtitle') }}</p>
       </div>
-      
+
       <div class="features-grid">
         <div class="feature-card" v-for="(feature, index) in features" :key="index">
           <div class="card-icon">{{ feature.icon }}</div>
@@ -264,8 +264,15 @@ onMounted(() => {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-  50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.8;
+  }
 }
 
 /* Livres flottants */
@@ -306,8 +313,13 @@ onMounted(() => {
 }
 
 @keyframes bookFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-30px) rotate(5deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(5deg);
+  }
 }
 
 /* Section Hero */
@@ -352,8 +364,13 @@ onMounted(() => {
 }
 
 @keyframes titleGlow {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.2); }
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
 }
 
 .hero-subtitle {
@@ -370,7 +387,8 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-.btn-primary, .btn-secondary {
+.btn-primary,
+.btn-secondary {
   padding: 1rem 2rem;
   border: none;
   border-radius: 50px;
@@ -441,15 +459,43 @@ onMounted(() => {
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
 
-.element-1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
-.element-2 { top: 25%; right: 0; animation-delay: 1.5s; }
-.element-3 { bottom: 25%; left: 0; animation-delay: 3s; }
-.element-4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 4.5s; }
-.element-5 { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 2.5s; }
+.element-1 {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 0s;
+}
+.element-2 {
+  top: 25%;
+  right: 0;
+  animation-delay: 1.5s;
+}
+.element-3 {
+  bottom: 25%;
+  left: 0;
+  animation-delay: 3s;
+}
+.element-4 {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 4.5s;
+}
+.element-5 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 2.5s;
+}
 
 @keyframes elementFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(10deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
 }
 
 /* Tournesol */
@@ -636,8 +682,13 @@ onMounted(() => {
 }
 
 @keyframes sparkle {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.2) rotate(180deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
 }
 
 /* Responsive Design */
@@ -647,23 +698,23 @@ onMounted(() => {
     gap: 2rem;
     text-align: center;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-buttons {
     justify-content: center;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .stats-container {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .cta-title {
     font-size: 2.5rem;
   }
@@ -673,15 +724,15 @@ onMounted(() => {
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .cta-title {
     font-size: 2rem;
   }
-  
+
   .stats-container {
     grid-template-columns: 1fr;
   }

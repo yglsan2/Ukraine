@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50">
     <!-- Navbar -->
     <NavBar />
-    
+
     <!-- Header -->
     <div class="pt-20 pb-12 bg-gradient-to-r from-ukraine-lightBlue to-ukraine-blue">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,12 +37,14 @@
         <div class="h-96 overflow-y-auto p-6 space-y-4" ref="chatContainer">
           <!-- Message de bienvenue -->
           <div class="flex items-start space-x-3">
-            <div class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0">
+            <div
+              class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0"
+            >
               <span class="text-white text-sm">🤖</span>
             </div>
             <div class="bg-gray-100 rounded-2xl rounded-tl-md px-4 py-3 max-w-xs lg:max-w-md">
               <p class="text-gray-800">
-                Bonjour ! Je suis votre assistant spécialisé dans la littérature ukrainienne. 
+                Bonjour ! Je suis votre assistant spécialisé dans la littérature ukrainienne.
                 Comment puis-je vous aider aujourd'hui ?
               </p>
             </div>
@@ -54,21 +56,23 @@
             :key="message.id"
             class="flex items-start space-x-3 justify-end"
           >
-            <div class="bg-ukraine-blue text-white rounded-2xl rounded-tr-md px-4 py-3 max-w-xs lg:max-w-md">
+            <div
+              class="bg-ukraine-blue text-white rounded-2xl rounded-tr-md px-4 py-3 max-w-xs lg:max-w-md"
+            >
               <p>{{ message.text }}</p>
             </div>
-            <div class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0">
+            <div
+              class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0"
+            >
               <span class="text-white text-sm">👤</span>
             </div>
           </div>
 
           <!-- Réponses du bot -->
-          <div
-            v-for="message in botMessages"
-            :key="message.id"
-            class="flex items-start space-x-3"
-          >
-            <div class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0">
+          <div v-for="message in botMessages" :key="message.id" class="flex items-start space-x-3">
+            <div
+              class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0"
+            >
               <span class="text-white text-sm">🤖</span>
             </div>
             <div class="bg-gray-100 rounded-2xl rounded-tl-md px-4 py-3 max-w-xs lg:max-w-md">
@@ -78,14 +82,22 @@
 
           <!-- Indicateur de frappe -->
           <div v-if="isTyping" class="flex items-start space-x-3">
-            <div class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0">
+            <div
+              class="w-8 h-8 bg-ukraine-blue rounded-full flex items-center justify-center flex-shrink-0"
+            >
               <span class="text-white text-sm">🤖</span>
             </div>
             <div class="bg-gray-100 rounded-2xl rounded-tl-md px-4 py-3">
               <div class="flex space-x-1">
                 <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div
+                  class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style="animation-delay: 0.1s"
+                ></div>
+                <div
+                  class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  style="animation-delay: 0.2s"
+                ></div>
               </div>
             </div>
           </div>
@@ -114,7 +126,7 @@
               type="text"
               placeholder="Tapez votre message..."
               class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ukraine-blue focus:border-transparent"
-            >
+            />
             <button
               @click="sendMessage(newMessage)"
               :disabled="!newMessage.trim()"
@@ -132,7 +144,9 @@
       <!-- Fonctionnalités -->
       <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="card p-6 text-center">
-          <div class="w-12 h-12 bg-ukraine-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div
+            class="w-12 h-12 bg-ukraine-blue/10 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
             <span class="text-2xl">📚</span>
           </div>
           <h3 class="text-lg font-semibold text-gray-900 mb-2">Recherche de Livres</h3>
@@ -142,17 +156,19 @@
         </div>
 
         <div class="card p-6 text-center">
-          <div class="w-12 h-12 bg-ukraine-yellow/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div
+            class="w-12 h-12 bg-ukraine-yellow/10 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
             <span class="text-2xl">🌍</span>
           </div>
           <h3 class="text-lg font-semibold text-gray-900 mb-2">Culture Ukrainienne</h3>
-          <p class="text-gray-600 text-sm">
-            Découvrez l'histoire et la culture ukrainienne
-          </p>
+          <p class="text-gray-600 text-sm">Découvrez l'histoire et la culture ukrainienne</p>
         </div>
 
         <div class="card p-6 text-center">
-          <div class="w-12 h-12 bg-ukraine-lightBlue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div
+            class="w-12 h-12 bg-ukraine-lightBlue/10 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
             <span class="text-2xl">🎯</span>
           </div>
           <h3 class="text-lg font-semibold text-gray-900 mb-2">Recommandations</h3>
@@ -176,19 +192,20 @@ const chatContainer = ref<HTMLElement>()
 const newMessage = ref('')
 const isTyping = ref(false)
 
-const userMessages = ref([
-  { id: 1, text: 'Pouvez-vous me recommander des livres ukrainiens ?' }
-])
+const userMessages = ref([{ id: 1, text: 'Pouvez-vous me recommander des livres ukrainiens ?' }])
 
 const botMessages = ref([
-  { id: 1, text: 'Bien sûr ! Je peux vous recommander plusieurs livres ukrainiens selon vos préférences. Que recherchez-vous ? De la poésie, des romans, de l\'histoire ?' }
+  {
+    id: 1,
+    text: "Bien sûr ! Je peux vous recommander plusieurs livres ukrainiens selon vos préférences. Que recherchez-vous ? De la poésie, des romans, de l'histoire ?",
+  },
 ])
 
 const quickSuggestions = [
   'Livres de poésie',
   'Romans ukrainiens',
-  'Histoire de l\'Ukraine',
-  'Auteurs célèbres'
+  "Histoire de l'Ukraine",
+  'Auteurs célèbres',
 ]
 
 const sendMessage = async (message: string) => {
@@ -197,7 +214,7 @@ const sendMessage = async (message: string) => {
   // Ajouter le message de l'utilisateur
   userMessages.value.push({
     id: Date.now(),
-    text: message
+    text: message,
   })
 
   // Vider le champ de saisie
@@ -205,20 +222,20 @@ const sendMessage = async (message: string) => {
 
   // Simuler la frappe du bot
   isTyping.value = true
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 1000))
   isTyping.value = false
 
   // Ajouter la réponse du bot
   const responses = [
     'Excellente question ! Laissez-moi vous aider avec cela.',
     'Je peux vous recommander plusieurs ouvrages sur ce sujet.',
-    'C\'est un thème très intéressant de la littérature ukrainienne.',
-    'Voici ce que je peux vous dire à ce sujet...'
+    "C'est un thème très intéressant de la littérature ukrainienne.",
+    'Voici ce que je peux vous dire à ce sujet...',
   ]
-  
+
   botMessages.value.push({
     id: Date.now(),
-    text: responses[Math.floor(Math.random() * responses.length)]
+    text: responses[Math.floor(Math.random() * responses.length)],
   })
 
   // Faire défiler vers le bas
@@ -240,4 +257,4 @@ onMounted(() => {
 .font-display {
   font-family: 'Poppins', system-ui, sans-serif;
 }
-</style> 
+</style>

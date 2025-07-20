@@ -27,12 +27,12 @@
 
       <!-- Navigation principale -->
       <div class="nav-links" :class="{ 'nav-open': isMenuOpen }">
-        <router-link 
-          v-for="link in navLinks" 
+        <router-link
+          v-for="link in navLinks"
           :key="link.path"
           :to="link.path"
           class="nav-link"
-          :class="{ 'active': $route.path === link.path }"
+          :class="{ active: $route.path === link.path }"
         >
           <span class="link-icon">{{ link.icon }}</span>
           <span class="link-text">{{ link.name }}</span>
@@ -46,11 +46,11 @@
           <div class="current-language">
             <span class="flag">{{ currentLanguage.flag }}</span>
             <span class="code">{{ currentLanguage.code.toUpperCase() }}</span>
-            <span class="arrow" :class="{ 'rotated': isLanguageMenuOpen }">▼</span>
+            <span class="arrow" :class="{ rotated: isLanguageMenuOpen }">▼</span>
           </div>
-          <div class="language-dropdown" :class="{ 'open': isLanguageMenuOpen }">
-            <div 
-              v-for="lang in languages" 
+          <div class="language-dropdown" :class="{ open: isLanguageMenuOpen }">
+            <div
+              v-for="lang in languages"
               :key="lang.code"
               class="language-option"
               @click="selectLanguage(lang)"
@@ -65,7 +65,7 @@
 
       <!-- Bouton menu mobile -->
       <button class="mobile-menu-btn" @click="toggleMenu">
-        <div class="hamburger" :class="{ 'active': isMenuOpen }">
+        <div class="hamburger" :class="{ active: isMenuOpen }">
           <span></span>
           <span></span>
           <span></span>
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Menu mobile overlay -->
-    <div class="mobile-overlay" :class="{ 'open': isMenuOpen }" @click="closeMenu">
+    <div class="mobile-overlay" :class="{ open: isMenuOpen }" @click="closeMenu">
       <div class="mobile-menu" @click.stop>
         <div class="mobile-header">
           <div class="mobile-logo">
@@ -84,8 +84,8 @@
           <button class="close-btn" @click="closeMenu">×</button>
         </div>
         <div class="mobile-links">
-          <router-link 
-            v-for="link in navLinks" 
+          <router-link
+            v-for="link in navLinks"
             :key="link.path"
             :to="link.path"
             class="mobile-link"
@@ -98,11 +98,11 @@
         <div class="mobile-language">
           <div class="mobile-lang-title">{{ t('nav.selectLanguage') }}</div>
           <div class="mobile-lang-options">
-            <div 
-              v-for="lang in languages" 
+            <div
+              v-for="lang in languages"
               :key="lang.code"
               class="mobile-lang-option"
-              @click="selectLanguage(lang); closeMenu()"
+              @click="selectLanguageAndCloseMenu(lang)"
             >
               <span class="flag">{{ lang.flag }}</span>
               <span class="name">{{ lang.nativeName }}</span>
@@ -130,7 +130,7 @@ const languages = computed(() => getAvailableLocales())
 
 const currentLanguage = computed(() => {
   const current = getCurrentLocale()
-  return languages.value.find(lang => lang.code === current) || languages.value[0]
+  return languages.value.find((lang) => lang.code === current) || languages.value[0]
 })
 
 const navLinks = ref([
@@ -139,7 +139,7 @@ const navLinks = ref([
   { name: t('nav.events'), path: '/events', icon: '🎭' },
   { name: t('nav.association'), path: '/association', icon: '🤝' },
   { name: t('nav.membership'), path: '/membership', icon: '🪪' },
-  { name: t('nav.chatbot'), path: '/chatbot', icon: '🤖' }
+  { name: t('nav.chatbot'), path: '/chatbot', icon: '🤖' },
 ])
 
 // Fonction pour mettre à jour les liens de navigation
@@ -150,7 +150,7 @@ const updateNavLinks = () => {
     { name: t('nav.events'), path: '/events', icon: '🎭' },
     { name: t('nav.association'), path: '/association', icon: '🤝' },
     { name: t('nav.membership'), path: '/membership', icon: '🪪' },
-    { name: t('nav.chatbot'), path: '/chatbot', icon: '🤖' }
+    { name: t('nav.chatbot'), path: '/chatbot', icon: '🤖' },
   ]
 }
 
@@ -163,7 +163,7 @@ watch(locale, (newLocale) => {
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
-  
+
   // Fermer le dropdown de langue lors du défilement
   if (isLanguageMenuOpen.value) {
     isLanguageMenuOpen.value = false
@@ -184,7 +184,7 @@ const toggleLanguageMenu = () => {
   console.log('État actuel:', isLanguageMenuOpen.value)
   isLanguageMenuOpen.value = !isLanguageMenuOpen.value
   console.log('Nouvel état:', isLanguageMenuOpen.value)
-  
+
   // Positionner le dropdown dynamiquement
   if (isLanguageMenuOpen.value) {
     nextTick(() => {
@@ -194,16 +194,16 @@ const toggleLanguageMenu = () => {
         const rect = selector.getBoundingClientRect()
         const navbarHeight = 80 // Hauteur de la navbar
         const scrollY = window.scrollY
-        
+
         // Calculer la position optimale
         const topPosition = rect.bottom + 10
         const rightPosition = window.innerWidth - rect.right
-        
+
         // Vérifier si le dropdown dépasse le bas de l'écran
         const dropdownHeight = 300 // Hauteur maximale du dropdown
         const viewportHeight = window.innerHeight
         const spaceBelow = viewportHeight - topPosition
-        
+
         if (spaceBelow < dropdownHeight) {
           // Positionner au-dessus du sélecteur si pas assez d'espace en dessous
           dropdown.style.top = `${rect.top - dropdownHeight - 10}px`
@@ -211,7 +211,7 @@ const toggleLanguageMenu = () => {
           // Positionner en dessous du sélecteur
           dropdown.style.top = `${topPosition}px`
         }
-        
+
         dropdown.style.right = `${rightPosition}px`
       }
     })
@@ -222,7 +222,7 @@ const selectLanguage = (lang) => {
   console.log('Changement de langue vers:', lang.code)
   setLocale(lang.code)
   isLanguageMenuOpen.value = false
-  
+
   // Forcer la mise à jour de l'interface
   nextTick(() => {
     updateNavLinks()
@@ -230,6 +230,10 @@ const selectLanguage = (lang) => {
   })
 }
 
+const selectLanguageAndCloseMenu = (lang) => {
+  selectLanguage(lang)
+  closeMenu()
+}
 const getParticleStyle = (index) => {
   const size = Math.random() * 3 + 1
   const x = Math.random() * 100
@@ -240,7 +244,7 @@ const getParticleStyle = (index) => {
     height: `${size}px`,
     left: `${x}%`,
     top: `${y}%`,
-    animationDelay: `${delay}s`
+    animationDelay: `${delay}s`,
   }
 }
 
@@ -253,13 +257,13 @@ const getNavBookStyle = (index) => {
     left: `${x}%`,
     top: `${y}%`,
     transform: `rotate(${rotation}deg)`,
-    animationDelay: `${delay}s`
+    animationDelay: `${delay}s`,
   }
 }
 
 const startParticleAnimation = () => {
   setInterval(() => {
-    document.querySelectorAll('.bg-particles .particle').forEach(particle => {
+    document.querySelectorAll('.bg-particles .particle').forEach((particle) => {
       const x = Math.random() * 100
       const y = Math.random() * 100
       particle.style.transform = `translate(${x}px, ${y}px)`
@@ -269,7 +273,7 @@ const startParticleAnimation = () => {
 
 const startBookAnimation = () => {
   setInterval(() => {
-    document.querySelectorAll('.floating-books-nav .nav-book').forEach(book => {
+    document.querySelectorAll('.floating-books-nav .nav-book').forEach((book) => {
       const rotation = Math.random() * 360
       const scale = 0.8 + Math.random() * 0.4
       book.style.transform = `rotate(${rotation}deg) scale(${scale})`
@@ -281,7 +285,7 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   startParticleAnimation()
   startBookAnimation()
-  
+
   // Gestionnaire de clic global pour fermer le dropdown de langue
   document.addEventListener('click', (event) => {
     const languageSelector = document.querySelector('.language-selector')
@@ -347,8 +351,15 @@ onBeforeUnmount(() => {
 }
 
 @keyframes particleFloat {
-  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.3; }
-  50% { transform: translateY(-15px) scale(1.2); opacity: 0.8; }
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-15px) scale(1.2);
+    opacity: 0.8;
+  }
 }
 
 .bg-gradient {
@@ -357,10 +368,12 @@ onBeforeUnmount(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, 
-    rgba(30, 60, 114, 0.9) 0%, 
-    rgba(42, 82, 152, 0.8) 50%, 
-    rgba(0, 86, 179, 0.9) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(30, 60, 114, 0.9) 0%,
+    rgba(42, 82, 152, 0.8) 50%,
+    rgba(0, 86, 179, 0.9) 100%
+  );
 }
 
 /* Livres flottants dans la navbar */
@@ -402,8 +415,13 @@ onBeforeUnmount(() => {
 }
 
 @keyframes navBookFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(3deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(3deg);
+  }
 }
 
 .navbar-container {
@@ -843,15 +861,15 @@ onBeforeUnmount(() => {
     max-width: 100%;
     padding: 0 0.5rem;
   }
-  
+
   .nav-links {
     gap: 0.5rem;
   }
-  
+
   .nav-link {
     padding: 0.5rem 0.75rem;
   }
-  
+
   .link-text {
     font-size: 0.85rem;
   }
@@ -861,11 +879,11 @@ onBeforeUnmount(() => {
   .nav-links {
     gap: 0.5rem;
   }
-  
+
   .nav-link {
     padding: 0.5rem 0.75rem;
   }
-  
+
   .link-text {
     font-size: 0.8rem;
   }
@@ -875,11 +893,11 @@ onBeforeUnmount(() => {
   .nav-links {
     gap: 0.25rem;
   }
-  
+
   .nav-link {
     padding: 0.5rem 0.5rem;
   }
-  
+
   .link-text {
     font-size: 0.75rem;
   }
@@ -889,23 +907,23 @@ onBeforeUnmount(() => {
   .navbar-container {
     padding: 0 1rem;
   }
-  
+
   .nav-links {
     display: none;
   }
-  
+
   .language-selector {
     display: none;
   }
-  
+
   .mobile-menu-btn {
     display: block;
   }
-  
+
   .logo-title {
     font-size: 1.2rem;
   }
-  
+
   .logo-subtitle {
     font-size: 0.8rem;
   }
@@ -915,21 +933,21 @@ onBeforeUnmount(() => {
   .navbar {
     height: 70px;
   }
-  
+
   .logo-icon {
     font-size: 2rem;
   }
-  
+
   .logo-title {
     font-size: 1rem;
   }
-  
+
   .logo-subtitle {
     font-size: 0.7rem;
   }
-  
+
   .mobile-menu {
     max-width: 100%;
   }
 }
-</style> 
+</style>

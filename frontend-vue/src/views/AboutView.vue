@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50">
     <!-- Navbar -->
     <NavBar />
-    
+
     <!-- Header -->
     <div class="pt-20 pb-12 bg-gradient-to-r from-ukraine-darkBlue to-ukraine-blue">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,7 +36,9 @@
             </p>
           </div>
           <div class="relative">
-            <div class="bg-gradient-to-br from-ukraine-blue/20 to-ukraine-yellow/20 rounded-2xl p-8">
+            <div
+              class="bg-gradient-to-br from-ukraine-blue/20 to-ukraine-yellow/20 rounded-2xl p-8"
+            >
               <div class="text-center">
                 <span class="text-6xl mb-4 block">📖</span>
                 <h3 class="text-2xl font-semibold text-gray-900 mb-4">
@@ -63,10 +65,12 @@
             {{ t('about.vision.description') }}
           </p>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="card p-8 text-center">
-            <div class="w-16 h-16 bg-ukraine-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div
+              class="w-16 h-16 bg-ukraine-blue/10 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
               <span class="text-3xl">🌍</span>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-4">
@@ -76,9 +80,11 @@
               {{ t('about.vision.accessibility.description') }}
             </p>
           </div>
-          
+
           <div class="card p-8 text-center">
-            <div class="w-16 h-16 bg-ukraine-yellow/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div
+              class="w-16 h-16 bg-ukraine-yellow/10 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
               <span class="text-3xl">🤝</span>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-4">
@@ -88,9 +94,11 @@
               {{ t('about.vision.community.description') }}
             </p>
           </div>
-          
+
           <div class="card p-8 text-center">
-            <div class="w-16 h-16 bg-ukraine-lightBlue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div
+              class="w-16 h-16 bg-ukraine-lightBlue/10 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
               <span class="text-3xl">💡</span>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-4">
@@ -115,10 +123,12 @@
             {{ t('about.technologies.description') }}
           </p>
         </div>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
-            <div class="w-20 h-20 bg-ukraine-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-20 h-20 bg-ukraine-blue/10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">⚡</span>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
@@ -128,9 +138,11 @@
               {{ t('about.technologies.vue.description') }}
             </p>
           </div>
-          
+
           <div class="text-center">
-            <div class="w-20 h-20 bg-ukraine-yellow/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-20 h-20 bg-ukraine-yellow/10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">🎨</span>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
@@ -140,9 +152,11 @@
               {{ t('about.technologies.tailwind.description') }}
             </p>
           </div>
-          
+
           <div class="text-center">
-            <div class="w-20 h-20 bg-ukraine-lightBlue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-20 h-20 bg-ukraine-lightBlue/10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">☕</span>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
@@ -152,9 +166,11 @@
               {{ t('about.technologies.spring.description') }}
             </p>
           </div>
-          
+
           <div class="text-center">
-            <div class="w-20 h-20 bg-ukraine-darkBlue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-20 h-20 bg-ukraine-darkBlue/10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">🗄️</span>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
@@ -179,7 +195,7 @@
             {{ t('about.achievements.description') }}
           </p>
         </div>
-        
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
             <div class="text-4xl md:text-5xl font-bold text-white mb-2">500+</div>

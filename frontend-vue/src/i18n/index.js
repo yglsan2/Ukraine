@@ -10,7 +10,7 @@ const messages = {
   en,
   uk,
   de,
-  pl
+  pl,
 }
 
 // Détection automatique de la langue
@@ -19,12 +19,12 @@ function getDefaultLocale() {
   if (savedLocale && messages[savedLocale]) {
     return savedLocale
   }
-  
+
   const browserLocale = navigator.language.split('-')[0]
   if (messages[browserLocale]) {
     return browserLocale
   }
-  
+
   return 'fr' // Langue par défaut
 }
 
@@ -35,7 +35,7 @@ const i18n = createI18n({
   messages,
   globalInjection: true,
   silentTranslationWarn: true,
-  allowComposition: true
+  allowComposition: true,
 })
 
 // Fonction pour changer de langue
@@ -60,12 +60,12 @@ export function getCurrentLocale() {
 
 // Fonction pour obtenir toutes les langues disponibles
 export function getAvailableLocales() {
-  return Object.keys(messages).map(code => ({
+  return Object.keys(messages).map((code) => ({
     code,
     name: messages[code].meta.languageName,
     nativeName: messages[code].meta.nativeName,
-    flag: messages[code].meta.flag
+    flag: messages[code].meta.flag,
   }))
 }
 
-export default i18n 
+export default i18n

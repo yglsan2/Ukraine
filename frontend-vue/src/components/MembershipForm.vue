@@ -4,123 +4,123 @@
       <h2 class="form-title">Bulletin d'Adhésion</h2>
       <p class="form-subtitle">Rejoignez l'association Les Lumières d'Ukraine</p>
     </div>
-    
+
     <div class="form-content">
       <!-- Formulaire interactif -->
       <div class="interactive-form">
         <form @submit.prevent="submitForm" class="membership-form">
           <div class="form-section">
             <h3 class="section-title">Informations Personnelles</h3>
-            
+
             <div class="form-row">
               <div class="form-group">
                 <label for="lastName" class="form-label">Nom *</label>
-                <input 
+                <input
                   id="lastName"
                   v-model="formData.lastName"
-                  type="text" 
-                  class="form-input" 
+                  type="text"
+                  class="form-input"
                   required
                   placeholder="Votre nom"
                 />
               </div>
-              
+
               <div class="form-group">
                 <label for="firstName" class="form-label">Prénom *</label>
-                <input 
+                <input
                   id="firstName"
                   v-model="formData.firstName"
-                  type="text" 
-                  class="form-input" 
+                  type="text"
+                  class="form-input"
                   required
                   placeholder="Votre prénom"
                 />
               </div>
             </div>
-            
+
             <div class="form-group">
               <label for="address" class="form-label">Adresse *</label>
-              <input 
+              <input
                 id="address"
                 v-model="formData.address"
-                type="text" 
-                class="form-input" 
+                type="text"
+                class="form-input"
                 required
                 placeholder="Votre adresse complète"
               />
             </div>
-            
+
             <div class="form-row">
               <div class="form-group">
                 <label for="postalCode" class="form-label">Code Postal *</label>
-                <input 
+                <input
                   id="postalCode"
                   v-model="formData.postalCode"
-                  type="text" 
-                  class="form-input" 
+                  type="text"
+                  class="form-input"
                   required
                   placeholder="54000"
                 />
               </div>
-              
+
               <div class="form-group">
                 <label for="city" class="form-label">Ville *</label>
-                <input 
+                <input
                   id="city"
                   v-model="formData.city"
-                  type="text" 
-                  class="form-input" 
+                  type="text"
+                  class="form-input"
                   required
                   placeholder="Nancy"
                 />
               </div>
             </div>
-            
+
             <div class="form-group">
               <label for="birthDate" class="form-label">Date de naissance *</label>
-              <input 
+              <input
                 id="birthDate"
                 v-model="formData.birthDate"
-                type="date" 
-                class="form-input" 
+                type="date"
+                class="form-input"
                 required
               />
             </div>
-            
+
             <div class="form-group">
               <label for="phone" class="form-label">Téléphone *</label>
-              <input 
+              <input
                 id="phone"
                 v-model="formData.phone"
-                type="tel" 
-                class="form-input" 
+                type="tel"
+                class="form-input"
                 required
                 placeholder="03 83 12 34 56"
               />
             </div>
-            
+
             <div class="form-group">
               <label for="email" class="form-label">Email *</label>
-              <input 
+              <input
                 id="email"
                 v-model="formData.email"
-                type="email" 
-                class="form-input" 
+                type="email"
+                class="form-input"
                 required
                 placeholder="votre.email@example.com"
               />
             </div>
           </div>
-          
+
           <div class="form-section">
             <h3 class="section-title">Adhésion</h3>
-            
+
             <div class="form-group">
               <label for="membershipType" class="form-label">Type d'adhésion *</label>
-              <select 
+              <select
                 id="membershipType"
                 v-model="formData.membershipType"
-                class="form-select" 
+                class="form-select"
                 required
               >
                 <option value="">Choisissez un type</option>
@@ -130,7 +130,7 @@
                 <option value="senior">Adhésion senior (20€/an)</option>
               </select>
             </div>
-            
+
             <div class="form-group">
               <label class="form-label">Montant de la cotisation</label>
               <div class="membership-amount">
@@ -139,27 +139,27 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-section">
             <h3 class="section-title">Déclaration</h3>
-            
+
             <div class="declaration-box">
               <p class="declaration-text">
-                Je déclare par la présente souhaiter devenir membre de l'association 
-                Les Lumières d'Ukraine à Nancy.
+                Je déclare par la présente souhaiter devenir membre de l'association Les Lumières
+                d'Ukraine à Nancy.
               </p>
               <p class="declaration-text">
-                J'ai pris bonne note des droits et des devoirs des membres de l'association, 
-                et accepte de verser ma cotisation due pour l'année en cours.
+                J'ai pris bonne note des droits et des devoirs des membres de l'association, et
+                accepte de verser ma cotisation due pour l'année en cours.
               </p>
             </div>
-            
+
             <div class="form-group checkbox-group">
               <label class="checkbox-label">
-                <input 
+                <input
                   v-model="formData.agreement"
-                  type="checkbox" 
-                  class="form-checkbox" 
+                  type="checkbox"
+                  class="form-checkbox"
                   required
                 />
                 <span class="checkbox-text">
@@ -168,13 +168,13 @@
               </label>
             </div>
           </div>
-          
+
           <div class="form-actions">
             <button type="submit" class="submit-btn" :disabled="!isFormValid">
               <span class="btn-icon">📝</span>
               <span class="btn-text">Soumettre l'adhésion</span>
             </button>
-            
+
             <button type="button" @click="previewForm" class="preview-btn">
               <span class="btn-icon">👁️</span>
               <span class="btn-text">Aperçu du bulletin</span>
@@ -182,7 +182,7 @@
           </div>
         </form>
       </div>
-      
+
       <!-- Aperçu du bulletin -->
       <div v-if="showPreview" class="form-preview">
         <div class="preview-header">
@@ -213,8 +213,8 @@ export default {
         phone: '',
         email: '',
         membershipType: '',
-        agreement: false
-      }
+        agreement: false,
+      },
     }
   },
   computed: {
@@ -222,17 +222,19 @@ export default {
       return '/images/membership-form.svg'
     },
     isFormValid() {
-      return this.formData.lastName && 
-             this.formData.firstName && 
-             this.formData.address && 
-             this.formData.postalCode && 
-             this.formData.city && 
-             this.formData.birthDate && 
-             this.formData.phone && 
-             this.formData.email && 
-             this.formData.membershipType && 
-             this.formData.agreement
-    }
+      return (
+        this.formData.lastName &&
+        this.formData.firstName &&
+        this.formData.address &&
+        this.formData.postalCode &&
+        this.formData.city &&
+        this.formData.birthDate &&
+        this.formData.phone &&
+        this.formData.email &&
+        this.formData.membershipType &&
+        this.formData.agreement
+      )
+    },
   },
   methods: {
     getMembershipAmount() {
@@ -240,7 +242,7 @@ export default {
         individual: 25,
         family: 40,
         student: 15,
-        senior: 20
+        senior: 20,
       }
       return amounts[this.formData.membershipType] || 0
     },
@@ -248,13 +250,13 @@ export default {
       if (this.isFormValid) {
         // Logique pour soumettre le formulaire
         console.log('Soumission du formulaire:', this.formData)
-        alert('Votre demande d\'adhésion a été soumise avec succès !')
+        alert("Votre demande d'adhésion a été soumise avec succès !")
       }
     },
     previewForm() {
       this.showPreview = true
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -273,7 +275,7 @@ export default {
 .form-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #0057B8;
+  color: #0057b8;
   margin-bottom: 0.5rem;
 }
 
@@ -302,10 +304,10 @@ export default {
 .section-title {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #0057B8;
+  color: #0057b8;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #FFD700;
+  border-bottom: 2px solid #ffd700;
 }
 
 .form-row {
@@ -338,7 +340,7 @@ export default {
 .form-input:focus,
 .form-select:focus {
   outline: none;
-  border-color: #0057B8;
+  border-color: #0057b8;
   box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.1);
 }
 
@@ -347,7 +349,7 @@ export default {
   align-items: baseline;
   gap: 0.5rem;
   padding: 1rem;
-  background: linear-gradient(135deg, #0057B8, #1e3c72);
+  background: linear-gradient(135deg, #0057b8, #1e3c72);
   color: white;
   border-radius: 8px;
 }
@@ -366,7 +368,7 @@ export default {
   background: #f8f9fa;
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #0057B8;
+  border-left: 4px solid #0057b8;
   margin-bottom: 1rem;
 }
 
@@ -462,7 +464,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #0057B8, #1e3c72);
+  background: linear-gradient(135deg, #0057b8, #1e3c72);
   color: white;
 }
 
@@ -508,25 +510,25 @@ export default {
   .membership-form-container {
     padding: 1rem;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
   }
-  
+
   .form-actions {
     flex-direction: column;
   }
-  
+
   .submit-btn,
   .preview-btn {
     width: 100%;
     justify-content: center;
   }
-  
+
   .preview-header {
     padding: 1rem;
   }
-  
+
   .preview-content {
     padding: 1rem;
   }
@@ -537,4 +539,4 @@ export default {
     grid-template-columns: 1fr 1fr;
   }
 }
-</style> 
+</style>

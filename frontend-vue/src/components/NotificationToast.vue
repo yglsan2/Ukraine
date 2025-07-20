@@ -10,8 +10,8 @@
             'bg-green-500 text-white': notification.type === 'success',
             'bg-red-500 text-white': notification.type === 'error',
             'bg-yellow-500 text-white': notification.type === 'warning',
-            'bg-blue-500 text-white': notification.type === 'info'
-          }
+            'bg-blue-500 text-white': notification.type === 'info',
+          },
         ]"
       >
         <!-- Icône -->
@@ -20,7 +20,7 @@
             {{ getIcon(notification.type) }}
           </span>
         </div>
-        
+
         <!-- Contenu -->
         <div class="flex-1">
           <h4 class="font-medium text-sm">
@@ -30,7 +30,7 @@
             {{ notification.message }}
           </p>
         </div>
-        
+
         <!-- Bouton fermer -->
         <button
           @click="removeNotification(notification.id)"
@@ -53,22 +53,22 @@ let nextId = 1
 function addNotification({ type = 'info', title, message = '', duration = 5000 }) {
   const id = nextId++
   const notification = { id, type, title, message }
-  
+
   notifications.value.push(notification)
-  
+
   // Auto-remove après la durée spécifiée
   if (duration > 0) {
     setTimeout(() => {
       removeNotification(id)
     }, duration)
   }
-  
+
   return id
 }
 
 // Fonction pour supprimer une notification
 function removeNotification(id) {
-  const index = notifications.value.findIndex(n => n.id === id)
+  const index = notifications.value.findIndex((n) => n.id === id)
   if (index > -1) {
     notifications.value.splice(index, 1)
   }
@@ -80,7 +80,7 @@ function getIcon(type) {
     success: '✅',
     error: '❌',
     warning: '⚠️',
-    info: 'ℹ️'
+    info: 'ℹ️',
   }
   return icons[type] || icons.info
 }
@@ -109,7 +109,7 @@ defineExpose({
   success,
   error,
   warning,
-  info
+  info,
 })
 </script>
 
@@ -132,4 +132,4 @@ defineExpose({
 .notification-move {
   transition: transform 0.3s ease;
 }
-</style> 
+</style>

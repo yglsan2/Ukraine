@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50">
     <!-- Navbar -->
     <NavBar />
-    
+
     <!-- Header -->
     <div class="pt-20 pb-12 bg-gradient-to-r from-ukraine-blue to-ukraine-lightBlue">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +28,7 @@
               type="text"
               :placeholder="t('books.search')"
               class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ukraine-blue focus:border-transparent"
-            >
+            />
             <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
           </div>
 
@@ -75,7 +75,8 @@
       <!-- Statistiques -->
       <div class="mb-8 text-center">
         <p class="text-gray-600">
-          {{ filteredBooks.length }} {{ t('book') }}{{ filteredBooks.length > 1 ? 's' : '' }} {{ t('found') }}{{ filteredBooks.length > 1 ? 's' : '' }}
+          {{ filteredBooks.length }} {{ t('book') }}{{ filteredBooks.length > 1 ? 's' : '' }}
+          {{ t('found') }}{{ filteredBooks.length > 1 ? 's' : '' }}
         </p>
       </div>
 
@@ -89,16 +90,19 @@
         >
           <!-- Image du livre -->
           <div class="relative overflow-hidden rounded-t-xl">
-            <div class="aspect-[3/4] bg-gradient-to-br from-ukraine-blue/20 to-ukraine-yellow/20 flex items-center justify-center">
+            <div
+              class="aspect-[3/4] bg-gradient-to-br from-ukraine-blue/20 to-ukraine-yellow/20 flex items-center justify-center"
+            >
               <span class="text-6xl">📖</span>
             </div>
             <div class="absolute top-3 right-3">
-              <span class="px-2 py-1 text-xs font-medium rounded-full"
+              <span
+                class="px-2 py-1 text-xs font-medium rounded-full"
                 :class="{
                   'bg-ukraine-blue/20 text-ukraine-blue': book.language === 'ukrainien',
                   'bg-ukraine-yellow/20 text-ukraine-darkYellow': book.language === 'francais',
                   'bg-green-100 text-green-800': book.language === 'anglais',
-                  'bg-purple-100 text-purple-800': book.language === 'allemand'
+                  'bg-purple-100 text-purple-800': book.language === 'allemand',
                 }"
               >
                 {{ book.language }}
@@ -113,11 +117,13 @@
 
           <!-- Informations du livre -->
           <div class="p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-ukraine-blue transition-colors">
+            <h3
+              class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-ukraine-blue transition-colors"
+            >
               {{ book.title }}
             </h3>
             <p class="text-gray-600 mb-3">{{ book.author }}</p>
-            
+
             <div class="flex items-center justify-between mb-4">
               <span class="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full">
                 {{ book.category }}
@@ -133,14 +139,14 @@
 
             <!-- Actions -->
             <div class="flex items-center justify-between">
-              <button 
+              <button
                 @click.stop="reserveBook(book)"
                 class="btn-primary text-sm px-4 py-2"
                 :disabled="book.reserved"
               >
                 {{ book.reserved ? t('books.book.reserved') : t('books.book.reserve') }}
               </button>
-              <button 
+              <button
                 @click.stop="showBookDetails(book)"
                 class="text-ukraine-blue hover:text-ukraine-darkBlue transition-colors"
               >
@@ -154,27 +160,27 @@
       <!-- Pagination -->
       <div class="mt-12 flex justify-center">
         <nav class="flex items-center space-x-2">
-          <button 
+          <button
             @click="currentPage--"
             :disabled="currentPage === 1"
             class="px-3 py-2 text-gray-500 hover:text-ukraine-blue transition-colors disabled:opacity-50"
           >
             {{ t('actions.previous') }}
           </button>
-          <button 
-            v-for="page in totalPages" 
+          <button
+            v-for="page in totalPages"
             :key="page"
             @click="currentPage = page"
             :class="[
               'px-3 py-2 rounded-lg transition-colors',
-              currentPage === page 
-                ? 'bg-ukraine-blue text-white' 
-                : 'text-gray-700 hover:text-ukraine-blue'
+              currentPage === page
+                ? 'bg-ukraine-blue text-white'
+                : 'text-gray-700 hover:text-ukraine-blue',
             ]"
           >
             {{ page }}
           </button>
-          <button 
+          <button
             @click="currentPage++"
             :disabled="currentPage === totalPages"
             class="px-3 py-2 text-gray-500 hover:text-ukraine-blue transition-colors disabled:opacity-50"
@@ -186,7 +192,10 @@
     </div>
 
     <!-- Modal Ajouter un livre -->
-    <div v-if="showAddBookModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+      v-if="showAddBookModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+    >
       <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div class="p-6 border-b border-gray-200">
           <div class="flex items-center justify-between">
@@ -196,31 +205,37 @@
             </button>
           </div>
         </div>
-        
+
         <form @submit.prevent="addBook" class="p-6 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('books.modal.form.title') }} *</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >{{ t('books.modal.form.title') }} *</label
+              >
               <input
                 v-model="newBook.title"
                 type="text"
                 required
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ukraine-blue focus:border-transparent"
-              >
+              />
             </div>
-            
+
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('books.modal.form.author') }} *</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >{{ t('books.modal.form.author') }} *</label
+              >
               <input
                 v-model="newBook.author"
                 type="text"
                 required
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ukraine-blue focus:border-transparent"
-              >
+              />
             </div>
-            
+
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('books.modal.form.category') }} *</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >{{ t('books.modal.form.category') }} *</label
+              >
               <select
                 v-model="newBook.category"
                 required
@@ -236,9 +251,11 @@
                 <option value="art">{{ t('art') }}</option>
               </select>
             </div>
-            
+
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('language') }} *</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >{{ t('language') }} *</label
+              >
               <select
                 v-model="newBook.language"
                 required
@@ -251,9 +268,11 @@
                 <option value="allemand">{{ t('allemand') }}</option>
               </select>
             </div>
-            
+
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('condition') }} *</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >{{ t('condition') }} *</label
+              >
               <select
                 v-model="newBook.condition"
                 required
@@ -266,21 +285,25 @@
                 <option value="Moyen">{{ t('average') }}</option>
               </select>
             </div>
-            
+
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('publicationYear') }}</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{
+                t('publicationYear')
+              }}</label>
               <input
                 v-model="newBook.year"
                 type="number"
                 min="1800"
                 max="2024"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ukraine-blue focus:border-transparent"
-              >
+              />
             </div>
           </div>
-          
+
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">{{ t('description') }}</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">{{
+              t('description')
+            }}</label>
             <textarea
               v-model="newBook.description"
               rows="4"
@@ -288,7 +311,7 @@
               placeholder="Description du livre..."
             ></textarea>
           </div>
-          
+
           <div class="flex justify-end space-x-4 pt-4">
             <button
               type="button"
@@ -297,10 +320,7 @@
             >
               {{ t('cancel') }}
             </button>
-            <button
-              type="submit"
-              class="btn-primary px-6 py-3"
-            >
+            <button type="submit" class="btn-primary px-6 py-3">
               {{ t('addBook') }}
             </button>
           </div>
@@ -309,7 +329,10 @@
     </div>
 
     <!-- Modal Détails du livre -->
-    <div v-if="selectedBook" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+      v-if="selectedBook"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+    >
       <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div class="p-6 border-b border-gray-200">
           <div class="flex items-center justify-between">
@@ -319,52 +342,63 @@
             </button>
           </div>
         </div>
-        
+
         <div class="p-6">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Image -->
             <div class="md:col-span-1">
-              <div class="aspect-[3/4] bg-gradient-to-br from-ukraine-blue/20 to-ukraine-yellow/20 rounded-xl flex items-center justify-center">
+              <div
+                class="aspect-[3/4] bg-gradient-to-br from-ukraine-blue/20 to-ukraine-yellow/20 rounded-xl flex items-center justify-center"
+              >
                 <span class="text-8xl">📖</span>
               </div>
             </div>
-            
+
             <!-- Informations -->
             <div class="md:col-span-2 space-y-6">
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ selectedBook.title }}</h2>
                 <p class="text-lg text-gray-600 mb-4">{{ t('by') }} {{ selectedBook.author }}</p>
-                
+
                 <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="px-3 py-1 text-sm font-medium bg-ukraine-blue/20 text-ukraine-blue rounded-full">
+                  <span
+                    class="px-3 py-1 text-sm font-medium bg-ukraine-blue/20 text-ukraine-blue rounded-full"
+                  >
                     {{ selectedBook.category }}
                   </span>
-                  <span class="px-3 py-1 text-sm font-medium bg-ukraine-yellow/20 text-ukraine-darkYellow rounded-full">
+                  <span
+                    class="px-3 py-1 text-sm font-medium bg-ukraine-yellow/20 text-ukraine-darkYellow rounded-full"
+                  >
                     {{ selectedBook.language }}
                   </span>
-                  <span class="px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full">
+                  <span
+                    class="px-3 py-1 text-sm font-medium bg-green-100 text-green-800 rounded-full"
+                  >
                     {{ selectedBook.condition }}
                   </span>
-                  <span v-if="selectedBook.year" class="px-3 py-1 text-sm font-medium bg-purple-100 text-purple-800 rounded-full">
+                  <span
+                    v-if="selectedBook.year"
+                    class="px-3 py-1 text-sm font-medium bg-purple-100 text-purple-800 rounded-full"
+                  >
                     {{ selectedBook.year }}
                   </span>
                 </div>
               </div>
-              
+
               <div>
                 <h4 class="text-lg font-semibold text-gray-900 mb-2">{{ t('description') }}</h4>
                 <p class="text-gray-600">{{ selectedBook.description }}</p>
               </div>
-              
+
               <div class="flex items-center justify-between pt-4">
-                <button 
+                <button
                   @click="reserveBook(selectedBook)"
                   class="btn-primary px-6 py-3"
                   :disabled="selectedBook.reserved"
                 >
                   {{ selectedBook.reserved ? t('alreadyReserved') : t('reserveThisBook') }}
                 </button>
-                
+
                 <div class="flex items-center space-x-4">
                   <span class="text-sm text-gray-500">
                     {{ t('addedOn') }} {{ formatDate(selectedBook.addedDate) }}
@@ -402,7 +436,7 @@ const newBook = ref({
   language: '',
   condition: '',
   year: '',
-  description: ''
+  description: '',
 })
 
 // Données de test enrichies
@@ -415,9 +449,10 @@ const books = ref([
     language: 'ukrainien',
     condition: 'Très bon',
     year: 1963,
-    description: 'Un roman poignant sur la famine en Ukraine dans les années 1930, connu sous le nom d\'Holodomor. L\'auteur décrit avec une précision historique et une sensibilité littéraire les souffrances du peuple ukrainien.',
+    description:
+      "Un roman poignant sur la famine en Ukraine dans les années 1930, connu sous le nom d'Holodomor. L'auteur décrit avec une précision historique et une sensibilité littéraire les souffrances du peuple ukrainien.",
     reserved: false,
-    addedDate: '2024-01-15'
+    addedDate: '2024-01-15',
   },
   {
     id: 2,
@@ -427,21 +462,23 @@ const books = ref([
     language: 'ukrainien',
     condition: 'Excellent',
     year: 1840,
-    description: 'Recueil de poèmes célébrant la liberté et l\'indépendance ukrainienne. Chevtchenko, considéré comme le père de la littérature ukrainienne moderne, exprime l\'âme et les aspirations du peuple ukrainien.',
+    description:
+      "Recueil de poèmes célébrant la liberté et l'indépendance ukrainienne. Chevtchenko, considéré comme le père de la littérature ukrainienne moderne, exprime l'âme et les aspirations du peuple ukrainien.",
     reserved: false,
-    addedDate: '2024-01-10'
+    addedDate: '2024-01-10',
   },
   {
     id: 3,
-    title: 'Histoire de l\'Ukraine',
+    title: "Histoire de l'Ukraine",
     author: 'Mykhailo Hrushevsky',
     category: 'histoire',
     language: 'francais',
     condition: 'Bon',
     year: 1913,
-    description: 'Une histoire complète de l\'Ukraine de ses origines à nos jours. Cette œuvre monumentale reste une référence incontournable pour comprendre l\'histoire ukrainienne.',
+    description:
+      "Une histoire complète de l'Ukraine de ses origines à nos jours. Cette œuvre monumentale reste une référence incontournable pour comprendre l'histoire ukrainienne.",
     reserved: true,
-    addedDate: '2024-01-05'
+    addedDate: '2024-01-05',
   },
   {
     id: 4,
@@ -451,9 +488,10 @@ const books = ref([
     language: 'ukrainien',
     condition: 'Moyen',
     year: 1890,
-    description: 'Recueil de contes traditionnels ukrainiens pour enfants. Ces histoires transmettent les valeurs et la culture ukrainienne aux plus jeunes.',
+    description:
+      'Recueil de contes traditionnels ukrainiens pour enfants. Ces histoires transmettent les valeurs et la culture ukrainienne aux plus jeunes.',
     reserved: false,
-    addedDate: '2024-01-20'
+    addedDate: '2024-01-20',
   },
   {
     id: 5,
@@ -463,9 +501,10 @@ const books = ref([
     language: 'anglais',
     condition: 'Excellent',
     year: 1955,
-    description: 'Exploration approfondie de la culture et des traditions ukrainiennes. L\'auteur analyse les influences byzantines, slaves et européennes sur la culture ukrainienne.',
+    description:
+      "Exploration approfondie de la culture et des traditions ukrainiennes. L'auteur analyse les influences byzantines, slaves et européennes sur la culture ukrainienne.",
     reserved: false,
-    addedDate: '2024-01-12'
+    addedDate: '2024-01-12',
   },
   {
     id: 6,
@@ -475,45 +514,49 @@ const books = ref([
     language: 'ukrainien',
     condition: 'Très bon',
     year: 1928,
-    description: 'Poèmes inspirés par la région du Donbass et ses habitants. L\'auteur célèbre la beauté de cette terre et la résilience de son peuple.',
+    description:
+      "Poèmes inspirés par la région du Donbass et ses habitants. L'auteur célèbre la beauté de cette terre et la résilience de son peuple.",
     reserved: false,
-    addedDate: '2024-01-18'
+    addedDate: '2024-01-18',
   },
   {
     id: 7,
-    title: 'L\'Ukraine et l\'Europe',
+    title: "L'Ukraine et l'Europe",
     author: 'Mykola Kostomarov',
     category: 'politique',
     language: 'francais',
     condition: 'Bon',
     year: 1860,
-    description: 'Analyse des relations entre l\'Ukraine et l\'Europe à travers l\'histoire. L\'auteur examine les influences mutuelles et les perspectives d\'avenir.',
+    description:
+      "Analyse des relations entre l'Ukraine et l'Europe à travers l'histoire. L'auteur examine les influences mutuelles et les perspectives d'avenir.",
     reserved: false,
-    addedDate: '2024-01-08'
+    addedDate: '2024-01-08',
   },
   {
     id: 8,
-    title: 'L\'Art Ukrainien Moderne',
+    title: "L'Art Ukrainien Moderne",
     author: 'Oleksandr Murashko',
     category: 'art',
     language: 'ukrainien',
     condition: 'Excellent',
     year: 1910,
-    description: 'Présentation de l\'art ukrainien moderne et de ses représentants. L\'ouvrage inclut de nombreuses reproductions d\'œuvres d\'art.',
+    description:
+      "Présentation de l'art ukrainien moderne et de ses représentants. L'ouvrage inclut de nombreuses reproductions d'œuvres d'art.",
     reserved: false,
-    addedDate: '2024-01-22'
-  }
+    addedDate: '2024-01-22',
+  },
 ])
 
 const filteredBooks = computed(() => {
-  return books.value.filter(book => {
-    const matchesSearch = !searchQuery.value || 
+  return books.value.filter((book) => {
+    const matchesSearch =
+      !searchQuery.value ||
       book.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       book.author.toLowerCase().includes(searchQuery.value.toLowerCase())
-    
+
     const matchesCategory = !selectedCategory.value || book.category === selectedCategory.value
     const matchesLanguage = !selectedLanguage.value || book.language === selectedLanguage.value
-    
+
     return matchesSearch && matchesCategory && matchesLanguage
   })
 })
@@ -544,14 +587,14 @@ function addBook() {
     id: books.value.length + 1,
     ...newBook.value,
     reserved: false,
-    addedDate: new Date().toISOString().split('T')[0]
+    addedDate: new Date().toISOString().split('T')[0],
   }
-  
+
   books.value.push(book)
   showAddBookModal.value = false
-  
+
   window.$notify?.success(t('bookAdded'), `${book.title} ${t('addedToLibrary')}`)
-  
+
   // Reset form
   newBook.value = {
     title: '',
@@ -560,7 +603,7 @@ function addBook() {
     language: '',
     condition: '',
     year: '',
-    description: ''
+    description: '',
   }
 }
 
@@ -569,7 +612,7 @@ function formatDate(dateString) {
   return date.toLocaleDateString('fr-FR', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   })
 }
 </script>
@@ -585,4 +628,4 @@ function formatDate(dateString) {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-</style> 
+</style>

@@ -13,39 +13,39 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/books',
       name: 'books',
-      component: BooksView
+      component: BooksView,
     },
     {
       path: '/events',
       name: 'events',
-      component: EventsView
+      component: EventsView,
     },
     {
       path: '/association',
       name: 'association',
-      component: AssociationView
+      component: AssociationView,
     },
     {
       path: '/chatbot',
       name: 'chatbot',
-      component: ChatbotView
+      component: ChatbotView,
     },
     {
       path: '/about',
       name: 'about',
-      component: AboutView
+      component: AboutView,
     },
     {
       path: '/membership',
       name: 'membership',
-      component: MembershipView
-    }
-  ]
+      component: MembershipView,
+    },
+  ],
 })
 
-export default router 
+export default router

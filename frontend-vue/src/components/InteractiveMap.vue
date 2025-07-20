@@ -4,16 +4,16 @@
       <h3 class="map-title">Carte Interactive</h3>
       <p class="map-subtitle">Découvrez nos activités par région</p>
     </div>
-    
+
     <div class="map-wrapper">
       <!-- Carte de la France stylisée -->
       <div class="france-map">
         <!-- Régions avec points d'activité -->
-        <div 
-          v-for="region in regions" 
+        <div
+          v-for="region in regions"
           :key="region.id"
           class="region-point"
-          :class="{ 'active': selectedRegion?.id === region.id }"
+          :class="{ active: selectedRegion?.id === region.id }"
           :style="{ left: region.x + '%', top: region.y + '%' }"
           @click="selectRegion(region)"
           @mouseenter="hoverRegion(region)"
@@ -23,34 +23,38 @@
             <span class="marker-icon">{{ region.icon }}</span>
             <span class="marker-count">{{ region.activityCount }}</span>
           </div>
-          
+
           <!-- Tooltip -->
           <div v-if="hoveredRegion?.id === region.id" class="region-tooltip">
             <h4>{{ region.name }}</h4>
             <p>{{ region.activityCount }} activité{{ region.activityCount > 1 ? 's' : '' }}</p>
             <div class="tooltip-activities">
-              <div v-for="activity in region.activities.slice(0, 3)" :key="activity.id" class="tooltip-activity">
+              <div
+                v-for="activity in region.activities.slice(0, 3)"
+                :key="activity.id"
+                class="tooltip-activity"
+              >
                 <span class="activity-icon">{{ activity.icon }}</span>
                 <span class="activity-name">{{ activity.name }}</span>
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- Lignes de connexion entre régions -->
         <svg class="connection-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <line 
-            v-for="connection in connections" 
+          <line
+            v-for="connection in connections"
             :key="connection.id"
-            :x1="connection.from.x" 
-            :y1="connection.from.y" 
-            :x2="connection.to.x" 
+            :x1="connection.from.x"
+            :y1="connection.from.y"
+            :x2="connection.to.x"
             :y2="connection.to.y"
             class="connection-line"
           />
         </svg>
       </div>
-      
+
       <!-- Panneau d'informations -->
       <div class="map-info-panel">
         <div v-if="selectedRegion" class="region-info">
@@ -58,7 +62,7 @@
             <h4 class="region-name">{{ selectedRegion.name }}</h4>
             <button @click="selectedRegion = null" class="close-btn">×</button>
           </div>
-          
+
           <div class="region-stats">
             <div class="stat-item">
               <span class="stat-icon">📚</span>
@@ -82,12 +86,12 @@
               </div>
             </div>
           </div>
-          
+
           <div class="region-activities">
             <h5>Activités récentes</h5>
             <div class="activity-list">
-              <div 
-                v-for="activity in selectedRegion.activities" 
+              <div
+                v-for="activity in selectedRegion.activities"
                 :key="activity.id"
                 class="activity-item"
               >
@@ -99,12 +103,10 @@
               </div>
             </div>
           </div>
-          
-          <button class="btn-primary w-full mt-4">
-            Voir toutes les activités
-          </button>
+
+          <button class="btn-primary w-full mt-4">Voir toutes les activités</button>
         </div>
-        
+
         <div v-else class="map-instructions">
           <div class="instruction-icon">🗺️</div>
           <h4>Explorez la carte</h4>
@@ -137,8 +139,8 @@ const regions = ref([
       { id: 1, name: 'Soirée Culturelle Nancy', icon: '🎭', date: '15 fév 2024' },
       { id: 2, name: 'Cours de Langue Strasbourg', icon: '📚', date: '20 fév 2024' },
       { id: 3, name: 'Exposition Metz', icon: '🎨', date: '25 fév 2024' },
-      { id: 4, name: 'Collecte de Dons', icon: '🤝', date: '1 mars 2024' }
-    ]
+      { id: 4, name: 'Collecte de Dons', icon: '🤝', date: '1 mars 2024' },
+    ],
   },
   {
     id: 'ile-de-france',
@@ -153,8 +155,8 @@ const regions = ref([
     activities: [
       { id: 5, name: 'Festival Cinéma Paris', icon: '🎬', date: '1 mars 2024' },
       { id: 6, name: 'Conférence Sorbonne', icon: '🎓', date: '5 mars 2024' },
-      { id: 7, name: 'Exposition Louvre', icon: '🎨', date: '10 mars 2024' }
-    ]
+      { id: 7, name: 'Exposition Louvre', icon: '🎨', date: '10 mars 2024' },
+    ],
   },
   {
     id: 'auvergne-rhone-alpes',
@@ -168,12 +170,12 @@ const regions = ref([
     membersCount: 98,
     activities: [
       { id: 8, name: 'Exposition Lyon', icon: '🎨', date: '10 mars 2024' },
-      { id: 9, name: 'Concert Grenoble', icon: '🎵', date: '15 mars 2024' }
-    ]
+      { id: 9, name: 'Concert Grenoble', icon: '🎵', date: '15 mars 2024' },
+    ],
   },
   {
     id: 'provence-alpes-cote-azur',
-    name: 'Provence-Alpes-Côte d\'Azur',
+    name: "Provence-Alpes-Côte d'Azur",
     x: 75,
     y: 80,
     icon: '🌊',
@@ -183,8 +185,8 @@ const regions = ref([
     membersCount: 67,
     activities: [
       { id: 10, name: 'Festival Marseille', icon: '🎭', date: '20 mars 2024' },
-      { id: 11, name: 'Exposition Nice', icon: '🎨', date: '25 mars 2024' }
-    ]
+      { id: 11, name: 'Exposition Nice', icon: '🎨', date: '25 mars 2024' },
+    ],
   },
   {
     id: 'occitanie',
@@ -196,10 +198,8 @@ const regions = ref([
     booksCount: 23,
     eventsCount: 3,
     membersCount: 45,
-    activities: [
-      { id: 12, name: 'Conférence Toulouse', icon: '🎓', date: '30 mars 2024' }
-    ]
-  }
+    activities: [{ id: 12, name: 'Conférence Toulouse', icon: '🎓', date: '30 mars 2024' }],
+  },
 ])
 
 // Connexions entre régions
@@ -208,7 +208,7 @@ const connections = ref([
   { id: 2, from: { x: 85, y: 45 }, to: { x: 70, y: 65 } },
   { id: 3, from: { x: 45, y: 35 }, to: { x: 70, y: 65 } },
   { id: 4, from: { x: 70, y: 65 }, to: { x: 75, y: 80 } },
-  { id: 5, from: { x: 55, y: 75 }, to: { x: 75, y: 80 } }
+  { id: 5, from: { x: 55, y: 75 }, to: { x: 75, y: 80 } },
 ])
 
 function selectRegion(region) {
@@ -379,8 +379,13 @@ function hoverRegion(region) {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 .map-info-panel {
@@ -536,21 +541,27 @@ function hoverRegion(region) {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
   .map-wrapper {
     grid-template-columns: 1fr;
   }
-  
+
   .map-info-panel {
     order: -1;
   }
-  
+
   .france-map {
     height: 300px;
   }
 }
-</style> 
+</style>

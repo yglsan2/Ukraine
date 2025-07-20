@@ -8,7 +8,7 @@
         Verso
       </button>
     </div>
-    
+
     <div class="card-display">
       <div class="card-wrapper" :class="{ flipped: !showFront }">
         <!-- Recto de la carte -->
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Verso de la carte -->
         <div class="card-side card-back">
           <div class="card-back-content">
@@ -67,7 +67,12 @@
             <div class="card-back-footer">
               <div class="barcode">
                 <div class="barcode-lines">
-                  <div v-for="i in 20" :key="i" class="barcode-line" :style="{ height: Math.random() * 40 + 20 + 'px' }"></div>
+                  <div
+                    v-for="i in 20"
+                    :key="i"
+                    class="barcode-line"
+                    :style="{ height: Math.random() * 40 + 20 + 'px' }"
+                  ></div>
                 </div>
                 <p class="barcode-number">{{ memberData.memberNumber || '2024-001' }}</p>
               </div>
@@ -76,7 +81,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="card-actions">
       <button @click="downloadCard" class="action-btn download-btn">
         <span class="btn-icon">📥</span>
@@ -99,30 +104,30 @@
         <form @submit.prevent="sendEmail">
           <div class="form-group">
             <label for="email">Email de l'abonné:</label>
-            <input 
-              type="email" 
-              id="email" 
-              v-model="emailData.email" 
-              required 
+            <input
+              type="email"
+              id="email"
+              v-model="emailData.email"
+              required
               placeholder="exemple@email.com"
             />
           </div>
           <div class="form-group">
             <label for="subject">Sujet:</label>
-            <input 
-              type="text" 
-              id="subject" 
-              v-model="emailData.subject" 
-              required 
+            <input
+              type="text"
+              id="subject"
+              v-model="emailData.subject"
+              required
               placeholder="Votre carte d'adhésion - Les Lumières d'Ukraine"
             />
           </div>
           <div class="form-group">
             <label for="message">Message:</label>
-            <textarea 
-              id="message" 
-              v-model="emailData.message" 
-              rows="4" 
+            <textarea
+              id="message"
+              v-model="emailData.message"
+              rows="4"
               placeholder="Message personnalisé..."
             ></textarea>
           </div>
@@ -152,9 +157,9 @@ export default {
         postalCode: '54000',
         city: 'Nancy',
         phone: '03 83 12 34 56',
-        email: 'jean.dupont@email.com'
-      })
-    }
+        email: 'jean.dupont@email.com',
+      }),
+    },
   },
   data() {
     return {
@@ -162,7 +167,7 @@ export default {
       showEmailModal: false,
       emailData: {
         email: '',
-        subject: 'Votre carte d\'adhésion - Les Lumières d\'Ukraine',
+        subject: "Votre carte d'adhésion - Les Lumières d'Ukraine",
         message: `Bonjour ${this.memberData.firstName || 'Jean'} ${this.memberData.name || 'Dupont'},
 
 Nous avons le plaisir de vous confirmer votre adhésion à l'association "Les Lumières d'Ukraine".
@@ -173,14 +178,14 @@ Vous trouverez ci-joint votre carte d'adhésion recto-verso.
 
 Bienvenue dans notre association !
 
-L'équipe des Lumières d'Ukraine`
-      }
+L'équipe des Lumières d'Ukraine`,
+      },
     }
   },
   computed: {
     cardFrontSrc() {
       return '/images/membership-card-front.png'
-    }
+    },
   },
   methods: {
     downloadCard() {
@@ -188,27 +193,27 @@ L'équipe des Lumières d'Ukraine`
       console.log('Téléchargement de la carte...')
       alert('Fonctionnalité de téléchargement en cours de développement')
     },
-    
+
     sendCardToMember() {
       this.emailData.email = this.memberData.email || 'exemple@email.com'
       this.showEmailModal = true
     },
-    
+
     closeEmailModal() {
       this.showEmailModal = false
     },
-    
+
     sendEmail() {
       // Logique simplifiée pour l'envoi d'email
       console.log('Envoi de la carte par email...')
-      alert('Fonctionnalité d\'envoi par email en cours de développement')
+      alert("Fonctionnalité d'envoi par email en cours de développement")
       this.closeEmailModal()
     },
-    
+
     printCard() {
       window.print()
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -278,7 +283,7 @@ L'équipe des Lumières d'Ukraine`
 
 .card-back {
   transform: rotateY(180deg);
-  background: linear-gradient(135deg, #0057B8, #1e3c72);
+  background: linear-gradient(135deg, #0057b8, #1e3c72);
 }
 
 .card-image {
@@ -355,7 +360,7 @@ L'équipe des Lumières d'Ukraine`
 .card-back-header h3 {
   margin: 0;
   font-size: 1.2rem;
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .card-back-header p {
@@ -381,7 +386,7 @@ L'équipe des Lumières d'Ukraine`
 
 .detail-label {
   font-weight: bold;
-  color: #0057B8;
+  color: #0057b8;
 }
 
 .detail-value {
@@ -431,7 +436,7 @@ L'équipe des Lumières d'Ukraine`
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #0057B8, #1e3c72);
+  background: linear-gradient(135deg, #0057b8, #1e3c72);
   border: none;
   border-radius: 25px;
   color: white;
@@ -502,7 +507,7 @@ L'équipe des Lumières d'Ukraine`
 
 .email-modal h3 {
   margin: 0 0 1.5rem 0;
-  color: #0057B8;
+  color: #0057b8;
   text-align: center;
 }
 
@@ -530,7 +535,7 @@ L'équipe des Lumières d'Ukraine`
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #0057B8;
+  border-color: #0057b8;
   box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.1);
 }
 
@@ -574,31 +579,31 @@ L'équipe des Lumières d'Ukraine`
   .membership-card-container {
     padding: 1rem;
   }
-  
+
   .card-wrapper {
     width: 300px;
     height: 188px;
   }
-  
+
   .member-details {
     font-size: 0.7rem;
   }
-  
+
   .card-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .action-btn {
     width: 200px;
     justify-content: center;
   }
-  
+
   .email-modal {
     margin: 1rem;
     padding: 1.5rem;
   }
-  
+
   .modal-actions {
     flex-direction: column;
   }
@@ -610,18 +615,18 @@ L'équipe des Lumières d'Ukraine`
   .email-modal-overlay {
     display: none;
   }
-  
+
   .card-wrapper {
     transform: none !important;
   }
-  
+
   .card-side {
     position: relative;
     margin-bottom: 2rem;
   }
-  
+
   .card-back {
     transform: none;
   }
 }
-</style> 
+</style>

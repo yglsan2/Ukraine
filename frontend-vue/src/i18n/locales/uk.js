@@ -2,9 +2,9 @@ export default {
   meta: {
     languageName: 'Українська',
     nativeName: 'Українська',
-    flag: '🇺🇦'
+    flag: '🇺🇦',
   },
-  
+
   // Navigation
   nav: {
     home: 'Головна',
@@ -14,58 +14,59 @@ export default {
     chatbot: 'Чат-бот',
     about: 'Про нас',
     membership: 'Членство',
-    selectLanguage: 'Вибрати мову'
+    selectLanguage: 'Вибрати мову',
   },
-  
+
   // Home page
   home: {
     hero: {
       title: 'Світла України',
-      subtitle: 'Відкрийте культурне багатство та красу України через наші книги, події та пристрасну спільноту',
+      subtitle:
+        'Відкрийте культурне багатство та красу України через наші книги, події та пристрасну спільноту',
       exploreButton: 'Дослідити',
-      joinButton: 'Приєднатися'
+      joinButton: 'Приєднатися',
     },
     features: {
       title: 'Наші Послуги',
       subtitle: 'Унікальний культурний досвід',
       virtualLibrary: {
         title: 'Віртуальна Бібліотека',
-        description: 'Отримайте доступ до нашої ексклюзивної колекції українських книг'
+        description: 'Отримайте доступ до нашої ексклюзивної колекції українських книг',
       },
       culturalEvents: {
         title: 'Культурні Події',
-        description: 'Беріть участь у наших зустрічах та виставах'
+        description: 'Беріть участь у наших зустрічах та виставах',
       },
       artExhibitions: {
         title: 'Художні Виставки',
-        description: 'Відкрийте сучасних українських митців'
+        description: 'Відкрийте сучасних українських митців',
       },
       traditionalMusic: {
         title: 'Традиційна Музика',
-        description: 'Слухайте та вивчайте українську музику'
+        description: 'Слухайте та вивчайте українську музику',
       },
       culturalExchange: {
         title: 'Культурний Обмін',
-        description: 'З\'єднайтеся з українською спільнотою'
+        description: "З'єднайтеся з українською спільнотою",
       },
       learning: {
         title: 'Навчання',
-        description: 'Курси української мови та історії'
-      }
+        description: 'Курси української мови та історії',
+      },
     },
     stats: {
       members: 'Члени',
       books: 'Книги',
       events: 'Події',
-      artists: 'Митці'
+      artists: 'Митці',
     },
     cta: {
       title: 'Готові відкрити Україну?',
       subtitle: 'Приєднуйтесь до нашої спільноти та поділіться своєю пристрастю',
-      button: 'Почати пригоду'
-    }
+      button: 'Почати пригоду',
+    },
   },
-  
+
   // Books page
   books: {
     title: 'Українська Бібліотека',
@@ -82,14 +83,14 @@ export default {
         culture: 'Культура',
         youth: 'Молодь',
         politics: 'Політика',
-        art: 'Мистецтво'
+        art: 'Мистецтво',
       },
       languages: {
         ukrainian: 'Українська',
         french: 'Французька',
         english: 'Англійська',
-        german: 'Німецька'
-      }
+        german: 'Німецька',
+      },
     },
     book: {
       reserve: 'Забронювати',
@@ -99,8 +100,8 @@ export default {
         excellent: 'Відмінно',
         veryGood: 'Дуже добре',
         good: 'Добре',
-        fair: 'Задовільно'
-      }
+        fair: 'Задовільно',
+      },
     },
     modal: {
       addBook: 'Додати книгу',
@@ -118,26 +119,27 @@ export default {
         selectCondition: 'Виберіть стан',
         descriptionPlaceholder: 'Опис книги...',
         cancel: 'Скасувати',
-        add: 'Додати книгу'
-      }
+        add: 'Додати книгу',
+      },
     },
     notifications: {
       bookReserved: 'Книгу заброньовано!',
       bookAdded: 'Книгу додано!',
       bookReservedMessage: 'додано до ваших бронювань.',
-      bookAddedMessage: 'додано до бібліотеки.'
-    }
+      bookAddedMessage: 'додано до бібліотеки.',
+    },
   },
-  
+
   // Events page
   events: {
     title: 'Українські Події',
-    subtitle: 'Відкрийте та беріть участь у культурних, освітніх та солідарних подіях нашої спільноти',
+    subtitle:
+      'Відкрийте та беріть участь у культурних, освітніх та солідарних подіях нашої спільноти',
     search: 'Пошук події...',
     addEvent: 'Додати подію',
     viewMode: {
       list: 'Список',
-      calendar: 'Календар'
+      calendar: 'Календар',
     },
     filters: {
       allCategories: 'Всі категорії',
@@ -148,22 +150,22 @@ export default {
         solidarity: 'Солідарність',
         festival: 'Фестиваль',
         conference: 'Конференція',
-        exhibition: 'Виставка'
+        exhibition: 'Виставка',
       },
       locations: {
         nancy: 'Нансі',
         paris: 'Париж',
         lyon: 'Ліон',
         marseille: 'Марсель',
-        online: 'Онлайн'
-      }
+        online: 'Онлайн',
+      },
     },
     event: {
       register: 'Зареєструватися',
       registered: 'Зареєстровано',
       view: 'Детальніше',
       attendees: 'учасник',
-      attendeesPlural: 'учасників'
+      attendeesPlural: 'учасників',
     },
     modal: {
       addEvent: 'Додати подію',
@@ -179,24 +181,24 @@ export default {
         selectCategory: 'Виберіть категорію',
         descriptionPlaceholder: 'Опис події...',
         cancel: 'Скасувати',
-        add: 'Додати подію'
-      }
+        add: 'Додати подію',
+      },
     },
     notifications: {
       eventRegistered: 'Реєстрація успішна!',
       eventCreated: 'Подію створено!',
       eventRegisteredMessage: 'Ви зареєстровані на',
-      eventCreatedMessage: 'додано до календаря.'
-    }
+      eventCreatedMessage: 'додано до календаря.',
+    },
   },
-  
+
   // Membership page
   membership: {
     title: 'Членство',
     subtitle: 'Приєднуйтесь до нашої асоціації та підтримуйте українську культуру',
     form: {
       personalInfo: 'Особиста інформація',
-      firstName: 'Ім\'я',
+      firstName: "Ім'я",
       lastName: 'Прізвище',
       email: 'Електронна пошта',
       phone: 'Телефон',
@@ -211,9 +213,9 @@ export default {
         family: 'Сімейний',
         student: 'Студентський',
         senior: 'Старший',
-        benefactor: 'Благодійник'
+        benefactor: 'Благодійник',
       },
-      submit: 'Подати заявку на членство'
+      submit: 'Подати заявку на членство',
     },
     card: {
       title: 'Картка Члена',
@@ -221,51 +223,53 @@ export default {
       membershipNumber: 'Номер членства',
       validUntil: 'Дійсна до',
       download: 'Завантажити',
-      print: 'Друкувати'
-    }
+      print: 'Друкувати',
+    },
   },
-  
+
   // Association page
   association: {
     title: 'Наша Асоціація',
     subtitle: 'Дізнайтеся про нашу місію та цінності',
     mission: {
       title: 'Наша Місія',
-      description: 'Сприяти українській культурі у Франції та забезпечувати культурний обмін між нашими двома країнами.'
+      description:
+        'Сприяти українській культурі у Франції та забезпечувати культурний обмін між нашими двома країнами.',
     },
     values: {
       title: 'Наші Цінності',
       culturalHeritage: 'Культурна Спадщина',
       solidarity: 'Солідарність',
       education: 'Освіта',
-      diversity: 'Різноманітність'
+      diversity: 'Різноманітність',
     },
     team: {
       title: 'Наша Команда',
       president: 'Президент',
       vicePresident: 'Віце-президент',
       secretary: 'Секретар',
-      treasurer: 'Скарбник'
-    }
+      treasurer: 'Скарбник',
+    },
   },
-  
+
   // About page
   about: {
     title: 'Про Нас',
     subtitle: 'Дізнайтеся більше про нашу асоціацію',
     history: {
       title: 'Наша Історія',
-      description: 'Заснована в 2020 році, наша асоціація зобов\'язується сприяти українській культурі у Франції.'
+      description:
+        "Заснована в 2020 році, наша асоціація зобов'язується сприяти українській культурі у Франції.",
     },
     objectives: {
       title: 'Наші Цілі',
       culturalPromotion: 'Сприяти українській культурі',
       languageLearning: 'Сприяти вивченню української мови',
       culturalExchange: 'Організовувати культурний обмін',
-      solidarity: 'Підтримувати ініціативи солідарності'
-    }
+      solidarity: 'Підтримувати ініціативи солідарності',
+    },
   },
-  
+
   // Chatbot
   chatbot: {
     title: 'Віртуальний Помічник',
@@ -273,14 +277,15 @@ export default {
     placeholder: 'Введіть ваше повідомлення...',
     send: 'Надіслати',
     thinking: 'Думаю...',
-    error: 'Сталася помилка. Спробуйте ще раз.'
+    error: 'Сталася помилка. Спробуйте ще раз.',
   },
-  
+
   // Footer
   footer: {
     title: 'Світла України',
     subtitle: 'Відкрийте українське культурне багатство',
-    description: 'Наша асоціація, присвячена просуванню української культури через літературу, мистецтво та культурний обмін.',
+    description:
+      'Наша асоціація, присвячена просуванню української культури через літературу, мистецтво та культурний обмін.',
     navigation: 'Навігація',
     resources: 'Ресурси',
     community: 'Спільнота',
@@ -303,17 +308,17 @@ export default {
     allRightsReserved: 'Всі права захищені',
     legalNotices: 'Правові повідомлення',
     privacyPolicy: 'Політика конфіденційності',
-    termsOfUse: 'Умови використання'
+    termsOfUse: 'Умови використання',
   },
-  
+
   // Notifications
   notifications: {
     success: 'Успіх',
     error: 'Помилка',
     warning: 'Попередження',
-    info: 'Інформація'
+    info: 'Інформація',
   },
-  
+
   // Common actions
   actions: {
     save: 'Зберегти',
@@ -327,6 +332,6 @@ export default {
     previous: 'Попередній',
     loading: 'Завантаження...',
     noResults: 'Результатів не знайдено',
-    errorOccurred: 'Сталася помилка'
-  }
-} 
+    errorOccurred: 'Сталася помилка',
+  },
+}

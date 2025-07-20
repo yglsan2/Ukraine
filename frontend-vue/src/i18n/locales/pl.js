@@ -2,9 +2,9 @@ export default {
   meta: {
     languageName: 'Polski',
     nativeName: 'Polski',
-    flag: '🇵🇱'
+    flag: '🇵🇱',
   },
-  
+
   // Navigation
   nav: {
     home: 'Strona główna',
@@ -14,58 +14,59 @@ export default {
     chatbot: 'Chatbot',
     about: 'O nas',
     membership: 'Członkostwo',
-    selectLanguage: 'Wybierz język'
+    selectLanguage: 'Wybierz język',
   },
-  
+
   // Home page
   home: {
     hero: {
       title: 'Światła Ukrainy',
-      subtitle: 'Odkryj bogactwo kulturowe i piękno Ukrainy poprzez nasze książki, wydarzenia i pasjonującą społeczność',
+      subtitle:
+        'Odkryj bogactwo kulturowe i piękno Ukrainy poprzez nasze książki, wydarzenia i pasjonującą społeczność',
       exploreButton: 'Eksploruj',
-      joinButton: 'Dołącz'
+      joinButton: 'Dołącz',
     },
     features: {
       title: 'Nasze Usługi',
       subtitle: 'Unikalne doświadczenie kulturowe',
       virtualLibrary: {
         title: 'Wirtualna Biblioteka',
-        description: 'Uzyskaj dostęp do naszej ekskluzywnej kolekcji ukraińskich książek'
+        description: 'Uzyskaj dostęp do naszej ekskluzywnej kolekcji ukraińskich książek',
       },
       culturalEvents: {
         title: 'Wydarzenia Kulturalne',
-        description: 'Weź udział w naszych spotkaniach i przedstawieniach'
+        description: 'Weź udział w naszych spotkaniach i przedstawieniach',
       },
       artExhibitions: {
         title: 'Wystawy Sztuki',
-        description: 'Odkryj współczesnych ukraińskich artystów'
+        description: 'Odkryj współczesnych ukraińskich artystów',
       },
       traditionalMusic: {
         title: 'Muzyka Tradycyjna',
-        description: 'Słuchaj i ucz się ukraińskiej muzyki'
+        description: 'Słuchaj i ucz się ukraińskiej muzyki',
       },
       culturalExchange: {
         title: 'Wymiana Kulturalna',
-        description: 'Połącz się z ukraińską społecznością'
+        description: 'Połącz się z ukraińską społecznością',
       },
       learning: {
         title: 'Nauka',
-        description: 'Kursy języka ukraińskiego i historii'
-      }
+        description: 'Kursy języka ukraińskiego i historii',
+      },
     },
     stats: {
       members: 'Członkowie',
       books: 'Książki',
       events: 'Wydarzenia',
-      artists: 'Artyści'
+      artists: 'Artyści',
     },
     cta: {
       title: 'Gotowy odkryć Ukrainę?',
       subtitle: 'Dołącz do naszej społeczności i podziel się swoją pasją',
-      button: 'Rozpocznij przygodę'
-    }
+      button: 'Rozpocznij przygodę',
+    },
   },
-  
+
   // Books page
   books: {
     title: 'Ukraińska Biblioteka',
@@ -82,14 +83,14 @@ export default {
         culture: 'Kultura',
         youth: 'Młodzież',
         politics: 'Polityka',
-        art: 'Sztuka'
+        art: 'Sztuka',
       },
       languages: {
         ukrainian: 'Ukraiński',
         french: 'Francuski',
         english: 'Angielski',
-        german: 'Niemiecki'
-      }
+        german: 'Niemiecki',
+      },
     },
     book: {
       reserve: 'Zarezerwuj',
@@ -99,8 +100,8 @@ export default {
         excellent: 'Doskonałe',
         veryGood: 'Bardzo dobre',
         good: 'Dobre',
-        fair: 'Dostateczne'
-      }
+        fair: 'Dostateczne',
+      },
     },
     modal: {
       addBook: 'Dodaj książkę',
@@ -118,26 +119,27 @@ export default {
         selectCondition: 'Wybierz stan',
         descriptionPlaceholder: 'Opis książki...',
         cancel: 'Anuluj',
-        add: 'Dodaj książkę'
-      }
+        add: 'Dodaj książkę',
+      },
     },
     notifications: {
       bookReserved: 'Książka zarezerwowana!',
       bookAdded: 'Książka dodana!',
       bookReservedMessage: 'została dodana do Twoich rezerwacji.',
-      bookAddedMessage: 'została dodana do biblioteki.'
-    }
+      bookAddedMessage: 'została dodana do biblioteki.',
+    },
   },
-  
+
   // Events page
   events: {
     title: 'Ukraińskie Wydarzenia',
-    subtitle: 'Odkryj i weź udział w kulturalnych, edukacyjnych i solidarnościowych wydarzeniach naszej społeczności',
+    subtitle:
+      'Odkryj i weź udział w kulturalnych, edukacyjnych i solidarnościowych wydarzeniach naszej społeczności',
     search: 'Szukaj wydarzenia...',
     addEvent: 'Dodaj wydarzenie',
     viewMode: {
       list: 'Lista',
-      calendar: 'Kalendarz'
+      calendar: 'Kalendarz',
     },
     filters: {
       allCategories: 'Wszystkie kategorie',
@@ -148,22 +150,22 @@ export default {
         solidarity: 'Solidarność',
         festival: 'Festival',
         conference: 'Konferencja',
-        exhibition: 'Wystawa'
+        exhibition: 'Wystawa',
       },
       locations: {
         nancy: 'Nancy',
         paris: 'Paryż',
         lyon: 'Lyon',
         marseille: 'Marsylia',
-        online: 'Online'
-      }
+        online: 'Online',
+      },
     },
     event: {
       register: 'Zarejestruj się',
       registered: 'Zarejestrowany',
       view: 'Zobacz więcej',
       attendees: 'uczestnik',
-      attendeesPlural: 'uczestników'
+      attendeesPlural: 'uczestników',
     },
     modal: {
       addEvent: 'Dodaj wydarzenie',
@@ -179,17 +181,17 @@ export default {
         selectCategory: 'Wybierz kategorię',
         descriptionPlaceholder: 'Opis wydarzenia...',
         cancel: 'Anuluj',
-        add: 'Dodaj wydarzenie'
-      }
+        add: 'Dodaj wydarzenie',
+      },
     },
     notifications: {
       eventRegistered: 'Rejestracja udana!',
       eventCreated: 'Wydarzenie utworzone!',
       eventRegisteredMessage: 'Jesteś zarejestrowany na',
-      eventCreatedMessage: 'zostało dodane do kalendarza.'
-    }
+      eventCreatedMessage: 'zostało dodane do kalendarza.',
+    },
   },
-  
+
   // Membership page
   membership: {
     title: 'Członkostwo',
@@ -211,9 +213,9 @@ export default {
         family: 'Rodzinne',
         student: 'Studenckie',
         senior: 'Senior',
-        benefactor: 'Dobroczyńca'
+        benefactor: 'Dobroczyńca',
       },
-      submit: 'Złóż wniosek o członkostwo'
+      submit: 'Złóż wniosek o członkostwo',
     },
     card: {
       title: 'Karta Członka',
@@ -221,51 +223,53 @@ export default {
       membershipNumber: 'Numer członkostwa',
       validUntil: 'Ważne do',
       download: 'Pobierz',
-      print: 'Drukuj'
-    }
+      print: 'Drukuj',
+    },
   },
-  
+
   // Association page
   association: {
     title: 'Nasze Stowarzyszenie',
     subtitle: 'Odkryj naszą misję i wartości',
     mission: {
       title: 'Nasza Misja',
-      description: 'Promowanie ukraińskiej kultury we Francji i wspieranie wymiany kulturalnej między naszymi dwoma krajami.'
+      description:
+        'Promowanie ukraińskiej kultury we Francji i wspieranie wymiany kulturalnej między naszymi dwoma krajami.',
     },
     values: {
       title: 'Nasze Wartości',
       culturalHeritage: 'Dziedzictwo Kulturowe',
       solidarity: 'Solidarność',
       education: 'Edukacja',
-      diversity: 'Różnorodność'
+      diversity: 'Różnorodność',
     },
     team: {
       title: 'Nasz Zespół',
       president: 'Prezes',
       vicePresident: 'Wiceprezes',
       secretary: 'Sekretarz',
-      treasurer: 'Skarbnik'
-    }
+      treasurer: 'Skarbnik',
+    },
   },
-  
+
   // About page
   about: {
     title: 'O Nas',
     subtitle: 'Dowiedz się więcej o naszym stowarzyszeniu',
     history: {
       title: 'Nasza Historia',
-      description: 'Założone w 2020 roku, nasze stowarzyszenie zobowiązuje się do promowania ukraińskiej kultury we Francji.'
+      description:
+        'Założone w 2020 roku, nasze stowarzyszenie zobowiązuje się do promowania ukraińskiej kultury we Francji.',
     },
     objectives: {
       title: 'Nasze Cele',
       culturalPromotion: 'Promowanie ukraińskiej kultury',
       languageLearning: 'Ułatwianie nauki języka ukraińskiego',
       culturalExchange: 'Organizowanie wymiany kulturalnej',
-      solidarity: 'Wspieranie inicjatyw solidarnościowych'
-    }
+      solidarity: 'Wspieranie inicjatyw solidarnościowych',
+    },
   },
-  
+
   // Chatbot
   chatbot: {
     title: 'Asystent Wirtualny',
@@ -273,14 +277,15 @@ export default {
     placeholder: 'Wpisz swoją wiadomość...',
     send: 'Wyślij',
     thinking: 'Myślę...',
-    error: 'Wystąpił błąd. Spróbuj ponownie.'
+    error: 'Wystąpił błąd. Spróbuj ponownie.',
   },
-  
+
   // Footer
   footer: {
     title: 'Światła Ukrainy',
     subtitle: 'Odkryj ukraińskie bogactwo kulturowe',
-    description: 'Nasze stowarzyszenie poświęcone promowaniu ukraińskiej kultury poprzez literaturę, sztukę i wymianę kulturalną.',
+    description:
+      'Nasze stowarzyszenie poświęcone promowaniu ukraińskiej kultury poprzez literaturę, sztukę i wymianę kulturalną.',
     navigation: 'Nawigacja',
     resources: 'Zasoby',
     community: 'Społeczność',
@@ -303,17 +308,17 @@ export default {
     allRightsReserved: 'Wszystkie prawa zastrzeżone',
     legalNotices: 'Informacje prawne',
     privacyPolicy: 'Polityka prywatności',
-    termsOfUse: 'Warunki użytkowania'
+    termsOfUse: 'Warunki użytkowania',
   },
-  
+
   // Notifications
   notifications: {
     success: 'Sukces',
     error: 'Błąd',
     warning: 'Ostrzeżenie',
-    info: 'Informacja'
+    info: 'Informacja',
   },
-  
+
   // Common actions
   actions: {
     save: 'Zapisz',
@@ -327,6 +332,6 @@ export default {
     previous: 'Poprzedni',
     loading: 'Ładowanie...',
     noResults: 'Nie znaleziono wyników',
-    errorOccurred: 'Wystąpił błąd'
-  }
-} 
+    errorOccurred: 'Wystąpił błąd',
+  },
+}
