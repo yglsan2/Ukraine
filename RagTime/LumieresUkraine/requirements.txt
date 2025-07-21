@@ -1,0 +1,28 @@
+# Dépendances pour RagTime - Spécialiste des livres des Lumières d'Ukraine
+
+# Modèle d'embeddings pour la recherche sémantique
+sentence-transformers==2.2.2
+
+# Calculs numériques et algèbre linéaire
+numpy==1.24.3
+
+# Requêtes HTTP pour l'API backend
+requests==2.31.0
+
+# Traitement de texte et expressions régulières
+regex==2023.8.8
+
+# Sérialisation des données
+pickle-mixin==1.0.2
+
+# Gestion des dates et heures
+python-dateutil==2.8.2
+
+# Interface en ligne de commande
+click==8.1.7
+
+# Coloration du terminal (optionnel)
+colorama==0.4.6
+
+# Barre de progression (optionnel)
+tqdm==4.66.1 

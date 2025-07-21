@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "La Guerre et la Paix",
+    "author": "Léon Tolstoï",
+    "genre": "Roman historique",
+    "description": "Un chef-d'œuvre de la littérature russe qui explore les thèmes de la guerre napoléonienne, de l'amour, de la famille et de la destinée humaine. L'histoire suit plusieurs familles aristocratiques russes pendant l'invasion napoléonienne de 1812.",
+    "language": "Français",
+    "city": "Kiev",
+    "status": "Disponible"
+  },
+  {
+    "id": 2,
+    "title": "Les Fleurs du Mal",
+    "author": "Charles Baudelaire",
+    "genre": "Poésie",
+    "description": "Recueil de poèmes révolutionnaire qui explore les thèmes de la beauté, de la décadence, de l'amour et de la mort. Baudelaire y exprime sa vision du monde moderne et ses contradictions.",
+    "language": "Français",
+    "city": "Paris",
+    "status": "Disponible"
+  }
+]

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RagTime Chatbot - Les Lumières d'Ukraine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chatbot-container {
+            width: 90%;
+            max-width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .chatbot-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .chatbot-header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e9ecef;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 0 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 15px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ccc;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .send-button:hover {
+            transform: scale(1.1);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background: #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #667eea;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(20px);
+        }
+
+        .book-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .book-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .book-score {
+            color: #667eea;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <h1>🤖 RagTime Assistant</h1>
+            <p>Découvrez notre bibliothèque ukrainienne</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                <p>👋 Bonjour ! Je suis RagTime, votre assistant pour découvrir la littérature ukrainienne.</p>
+                <p>Posez-moi vos questions sur nos livres !</p>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Posez votre question..." maxlength="500">
+                <button class="send-button" id="sendButton">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <div class="ai-toggle">
+                <span>IA enrichie</span>
+                <div class="toggle-switch" id="aiToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class RagTimeChatbot {
+            constructor() {
+                this.apiUrl = 'http://localhost:5000/api';
+                this.messages = [];
+                this.isTyping = false;
+                this.aiEnabled = true;
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.checkApiHealth();
+            }
+
+            initializeElements() {
+                this.chatMessages = document.getElementById('chatMessages');
+                this.chatInput = document.getElementById('chatInput');
+                this.sendButton = document.getElementById('sendButton');
+                this.typingIndicator = document.getElementById('typingIndicator');
+                this.statusIndicator = document.getElementById('statusIndicator');
+                this.aiToggle = document.getElementById('aiToggle');
+            }
+
+            bindEvents() {
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+                this.chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                this.aiToggle.addEventListener('click', () => {
+                    this.aiEnabled = !this.aiEnabled;
+                    this.aiToggle.classList.toggle('active', this.aiEnabled);
+                });
+
+                // Activer l'IA par défaut
+                this.aiToggle.classList.add('active');
+            }
+
+            async checkApiHealth() {
+                try {
+                    const response = await fetch(`${this.apiUrl}/health`);
+                    if (response.ok) {
+                        this.statusIndicator.style.background = '#2ecc71';
+                    } else {
+                        this.statusIndicator.style.background = '#e74c3c';
+                    }
+                } catch (error) {
+                    this.statusIndicator.style.background = '#e74c3c';
+                    console.error('Erreur connexion API:', error);
+                }
+            }
+
+            async sendMessage() {
+                const message = this.chatInput.value.trim();
+                if (!message || this.isTyping) return;
+
+                // Ajouter le message utilisateur
+                this.addMessage(message, 'user');
+                this.chatInput.value = '';
+                this.sendButton.disabled = true;
+
+                // Afficher l'indicateur de frappe
+                this.showTyping();
+
+                try {
+                    const response = await this.callRagTimeAPI(message);
+                    this.hideTyping();
+                    this.addBotResponse(response);
+                } catch (error) {
+                    this.hideTyping();
+                    this.addMessage('Désolé, une erreur s\'est produite. Veuillez réessayer.', 'bot');
+                    console.error('Erreur API:', error);
+                }
+
+                this.sendButton.disabled = false;
+                this.chatInput.focus();
+            }
+
+            async callRagTimeAPI(query) {
+                const response = await fetch(`${this.apiUrl}/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        useAI: this.aiEnabled,
+                        maxResults: 5
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                return await response.json();
+            }
+
+            addMessage(content, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = sender === 'user' ? '👤' : '🤖';
+
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.textContent = content;
+
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            addBotResponse(apiResponse) {
+                if (!apiResponse.success) {
+                    this.addMessage('Désolé, je n\'ai pas pu traiter votre demande.', 'bot');
+                    return;
+                }
+
+                // Ajouter la réponse principale
+                if (apiResponse.response) {
+                    this.addMessage(apiResponse.response, 'bot');
+                }
+
+                // Ajouter les livres trouvés
+                if (apiResponse.books && apiResponse.books.length > 0) {
+                    const booksMessage = this.formatBooksMessage(apiResponse.books);
+                    this.addMessage(booksMessage, 'bot');
+                }
+
+                // Ajouter les informations de timing
+                if (apiResponse.timing) {
+                    const timingMessage = `⏱️ Réponse générée en ${apiResponse.timing.total_time.toFixed(2)}s${apiResponse.ai_used ? ' (avec IA)' : ''}`;
+                    this.addMessage(timingMessage, 'bot');
+                }
+            }
+
+            formatBooksMessage(books) {
+                let message = '📚 Livres trouvés :\n\n';
+                
+                books.forEach((book, index) => {
+                    message += `${index + 1}. **${book.title}**\n`;
+                    if (book.author) message += `   Auteur: ${book.author}\n`;
+                    if (book.genre) message += `   Genre: ${book.genre}\n`;
+                    if (book.language) message += `   Langue: ${book.language}\n`;
+                    if (book.score) message += `   Pertinence: ${(book.score * 100).toFixed(1)}%\n`;
+                    message += '\n';
+                });
+
+                return message;
+            }
+
+            showTyping() {
+                this.isTyping = true;
+                this.typingIndicator.style.display = 'block';
+                this.scrollToBottom();
+            }
+
+            hideTyping() {
+                this.isTyping = false;
+                this.typingIndicator.style.display = 'none';
+            }
+
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                }, 100);
+            }
+        }
+
+        // Initialiser le chatbot
+        document.addEventListener('DOMContentLoaded', () => {
+            new RagTimeChatbot();
+        });
+    </script>
+</body>
+</html> 
