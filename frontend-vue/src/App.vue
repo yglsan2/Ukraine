@@ -220,7 +220,7 @@ function startFooterAnimations() {
         <div class="footer-bottom">
           <div class="footer-bottom-content">
             <p class="copyright">
-              © 2024 Lumières d'Ukraine. {{ t('footer.allRightsReserved') }}.
+              © 2025 Les Lumières d'Ukraine. {{ t('footer.allRightsReserved') }}.
             </p>
             <div class="footer-bottom-links">
               <a href="#" class="footer-bottom-link">{{ t('footer.legalNotices') }}</a>

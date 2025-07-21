@@ -26,7 +26,7 @@
               Notre <span class="text-gradient">Mission</span>
             </h2>
             <p class="text-lg text-gray-600 mb-6">
-              L'association Lumières d'Ukraine a pour mission de promouvoir et partager la richesse
+              L'association Les Lumières d'Ukraine a pour mission de promouvoir et partager la richesse
               de la culture ukrainienne à travers la littérature et les échanges culturels.
             </p>
             <p class="text-lg text-gray-600 mb-8">

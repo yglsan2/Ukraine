@@ -21,7 +21,32 @@
     <div class="bg-white border-b border-gray-200 sticky top-16 z-40">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
-          <!-- Barre de recherche -->
+          <!-- Recherche par géolocalisation (PRIORITÉ) -->
+          <div class="flex-1 max-w-md">
+            <div class="relative">
+              <button
+                @click="getUserLocation"
+                :disabled="isLoadingLocation"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ukraine-blue focus:border-transparent bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-between"
+              >
+                <span class="flex items-center">
+                  <span class="absolute left-3 text-gray-400">📍</span>
+                  <span class="ml-6">
+                    {{ isLoadingLocation ? t('books.geolocation.loading') : userLocation ? `Livres près de ${userLocation}` : t('books.geolocation.search') }}
+                  </span>
+                </span>
+                <span v-if="isLoadingLocation" class="animate-spin">⏳</span>
+              </button>
+            </div>
+            <div v-if="userLocation" class="mt-2 text-sm text-gray-600">
+              <span class="flex items-center">
+                <span class="mr-2">📍</span>
+                {{ userLocation }} - {{ nearbyBooksCount }} {{ t('books.geolocation.nearby') }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Barre de recherche textuelle -->
           <div class="relative flex-1 max-w-md">
             <input
               v-model="searchQuery"
@@ -136,6 +161,16 @@
             <p class="text-sm text-gray-500 mb-4 line-clamp-2">
               {{ book.description }}
             </p>
+
+            <!-- Distance (si géolocalisation activée) -->
+            <div v-if="userCoordinates && book.location" class="mb-4">
+              <div class="flex items-center text-sm text-gray-600">
+                <span class="mr-2">📍</span>
+                <span>{{ book.location.city }}</span>
+                <span class="mx-2">•</span>
+                <span>{{ getDistanceFromUser(book) }} km</span>
+              </div>
+            </div>
 
             <!-- Actions -->
             <div class="flex items-center justify-between">
@@ -428,6 +463,12 @@ const selectedBook = ref(null)
 const currentPage = ref(1)
 const itemsPerPage = 12
 
+// Variables pour la géolocalisation
+const userLocation = ref('')
+const isLoadingLocation = ref(false)
+const userCoordinates = ref(null)
+const nearbyBooksCount = ref(0)
+
 // Nouveau livre
 const newBook = ref({
   title: '',
@@ -453,6 +494,10 @@ const books = ref([
       "Un roman poignant sur la famine en Ukraine dans les années 1930, connu sous le nom d'Holodomor. L'auteur décrit avec une précision historique et une sensibilité littéraire les souffrances du peuple ukrainien.",
     reserved: false,
     addedDate: '2024-01-15',
+    location: {
+      city: 'Paris',
+      coordinates: { lat: 48.8566, lng: 2.3522 }
+    }
   },
   {
     id: 2,
@@ -466,6 +511,10 @@ const books = ref([
       "Recueil de poèmes célébrant la liberté et l'indépendance ukrainienne. Chevtchenko, considéré comme le père de la littérature ukrainienne moderne, exprime l'âme et les aspirations du peuple ukrainien.",
     reserved: false,
     addedDate: '2024-01-10',
+    location: {
+      city: 'Lyon',
+      coordinates: { lat: 45.7578, lng: 4.8320 }
+    }
   },
   {
     id: 3,
@@ -479,6 +528,10 @@ const books = ref([
       "Une histoire complète de l'Ukraine de ses origines à nos jours. Cette œuvre monumentale reste une référence incontournable pour comprendre l'histoire ukrainienne.",
     reserved: true,
     addedDate: '2024-01-05',
+    location: {
+      city: 'Marseille',
+      coordinates: { lat: 43.2965, lng: 5.3698 }
+    }
   },
   {
     id: 4,
@@ -492,6 +545,10 @@ const books = ref([
       'Recueil de contes traditionnels ukrainiens pour enfants. Ces histoires transmettent les valeurs et la culture ukrainienne aux plus jeunes.',
     reserved: false,
     addedDate: '2024-01-20',
+    location: {
+      city: 'Toulouse',
+      coordinates: { lat: 43.6047, lng: 1.4442 }
+    }
   },
   {
     id: 5,
@@ -505,6 +562,10 @@ const books = ref([
       "Exploration approfondie de la culture et des traditions ukrainiennes. L'auteur analyse les influences byzantines, slaves et européennes sur la culture ukrainienne.",
     reserved: false,
     addedDate: '2024-01-12',
+    location: {
+      city: 'Nice',
+      coordinates: { lat: 43.7102, lng: 7.2620 }
+    }
   },
   {
     id: 6,
@@ -518,6 +579,10 @@ const books = ref([
       "Poèmes inspirés par la région du Donbass et ses habitants. L'auteur célèbre la beauté de cette terre et la résilience de son peuple.",
     reserved: false,
     addedDate: '2024-01-18',
+    location: {
+      city: 'Nantes',
+      coordinates: { lat: 47.2184, lng: -1.5536 }
+    }
   },
   {
     id: 7,
@@ -528,9 +593,13 @@ const books = ref([
     condition: 'Bon',
     year: 1860,
     description:
-      "Analyse des relations entre l'Ukraine et l'Europe à travers l'histoire. L'auteur examine les influences mutuelles et les perspectives d'avenir.",
+      "Analyse des relations historiques et culturelles entre l'Ukraine et l'Europe. L'auteur examine les influences mutuelles et les perspectives d'avenir.",
     reserved: false,
     addedDate: '2024-01-08',
+    location: {
+      city: 'Strasbourg',
+      coordinates: { lat: 48.5734, lng: 7.7521 }
+    }
   },
   {
     id: 8,
@@ -544,22 +613,12 @@ const books = ref([
       "Présentation de l'art ukrainien moderne et de ses représentants. L'ouvrage inclut de nombreuses reproductions d'œuvres d'art.",
     reserved: false,
     addedDate: '2024-01-22',
+    location: {
+      city: 'Montpellier',
+      coordinates: { lat: 43.6108, lng: 3.8767 }
+    }
   },
 ])
-
-const filteredBooks = computed(() => {
-  return books.value.filter((book) => {
-    const matchesSearch =
-      !searchQuery.value ||
-      book.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchQuery.value.toLowerCase())
-
-    const matchesCategory = !selectedCategory.value || book.category === selectedCategory.value
-    const matchesLanguage = !selectedLanguage.value || book.language === selectedLanguage.value
-
-    return matchesSearch && matchesCategory && matchesLanguage
-  })
-})
 
 const paginatedBooks = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
@@ -615,6 +674,161 @@ function formatDate(dateString) {
     day: 'numeric',
   })
 }
+
+// Fonctions de géolocalisation
+async function getUserLocation() {
+  if (!navigator.geolocation) {
+    alert('La géolocalisation n\'est pas supportée par votre navigateur.')
+    return
+  }
+
+  isLoadingLocation.value = true
+
+  try {
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      })
+    })
+
+    userCoordinates.value = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    }
+
+    // Simuler des données de localisation pour les livres
+    await simulateNearbyBooks()
+    
+    // Obtenir le nom de la ville (simulation)
+    userLocation.value = await getCityName(userCoordinates.value.lat, userCoordinates.value.lng)
+    
+    // Mettre à jour le compteur de livres à proximité
+    updateNearbyBooksCount()
+
+  } catch (error) {
+    console.error('Erreur de géolocalisation:', error)
+    alert('Impossible d\'obtenir votre position. Vérifiez les permissions de géolocalisation.')
+  } finally {
+    isLoadingLocation.value = false
+  }
+}
+
+async function getCityName(lat, lng) {
+  try {
+    // Utiliser l'API Nominatim (OpenStreetMap) pour obtenir le nom de la ville
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=10`
+    )
+    const data = await response.json()
+    return data.address?.city || data.address?.town || data.address?.village || 'Votre position'
+  } catch (error) {
+    console.error('Erreur lors de la récupération du nom de ville:', error)
+    return 'Votre position'
+  }
+}
+
+async function simulateNearbyBooks() {
+  // Simuler des données de localisation pour les livres existants
+  const cities = ['Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice', 'Nantes', 'Strasbourg', 'Montpellier']
+  
+  books.value.forEach((book, index) => {
+    // Assigner une ville aléatoire à chaque livre
+    book.location = {
+      city: cities[index % cities.length],
+      coordinates: {
+        lat: 48.8566 + (Math.random() - 0.5) * 0.1, // Autour de Paris
+        lng: 2.3522 + (Math.random() - 0.5) * 0.1
+      }
+    }
+  })
+}
+
+function updateNearbyBooksCount() {
+  if (!userCoordinates.value) return
+
+  // Compter les livres dans un rayon de 50km
+  const nearbyBooks = books.value.filter(book => {
+    if (!book.location) return false
+    
+    const distance = calculateDistance(
+      userCoordinates.value.lat,
+      userCoordinates.value.lng,
+      book.location.coordinates.lat,
+      book.location.coordinates.lng
+    )
+    
+    return distance <= 50 // 50km
+  })
+
+  nearbyBooksCount.value = nearbyBooks.length
+}
+
+function getDistanceFromUser(book) {
+  if (!userCoordinates.value || !book.location) return null
+  
+  const distance = calculateDistance(
+    userCoordinates.value.lat,
+    userCoordinates.value.lng,
+    book.location.coordinates.lat,
+    book.location.coordinates.lng
+  )
+  
+  return Math.round(distance)
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371 // Rayon de la Terre en km
+  const dLat = (lat2 - lat1) * Math.PI / 180
+  const dLon = (lon2 - lon1) * Math.PI / 180
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  return R * c
+}
+
+// Modifier le computed filteredBooks pour inclure la géolocalisation
+const filteredBooks = computed(() => {
+  let filtered = books.value.filter((book) => {
+    const matchesSearch =
+      !searchQuery.value ||
+      book.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchQuery.value.toLowerCase())
+
+    const matchesCategory = !selectedCategory.value || book.category === selectedCategory.value
+    const matchesLanguage = !selectedLanguage.value || book.language === selectedLanguage.value
+
+    return matchesSearch && matchesCategory && matchesLanguage
+  })
+
+  // Si l'utilisateur a activé la géolocalisation, trier par proximité
+  if (userCoordinates.value && userLocation.value) {
+    filtered.sort((a, b) => {
+      if (!a.location || !b.location) return 0
+      
+      const distanceA = calculateDistance(
+        userCoordinates.value.lat,
+        userCoordinates.value.lng,
+        a.location.coordinates.lat,
+        a.location.coordinates.lng
+      )
+      
+      const distanceB = calculateDistance(
+        userCoordinates.value.lat,
+        userCoordinates.value.lng,
+        b.location.coordinates.lat,
+        b.location.coordinates.lng
+      )
+      
+      return distanceA - distanceB
+    })
+  }
+
+  return filtered
+})
 </script>
 
 <style scoped>

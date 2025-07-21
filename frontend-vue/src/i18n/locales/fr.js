@@ -20,7 +20,7 @@ export default {
   // Page d'accueil
   home: {
     hero: {
-      title: "Lumières d'Ukraine",
+      title: "Les Lumières d'Ukraine",
       subtitle:
         "Découvrez la richesse culturelle et la beauté de l'Ukraine à travers nos livres, nos événements et notre communauté passionnée",
       exploreButton: 'Explorer',
@@ -73,6 +73,13 @@ export default {
     subtitle: 'Découvrez notre collection de livres ukrainiens partagés par la communauté',
     search: 'Rechercher un livre...',
     addBook: 'Ajouter un livre',
+    geolocation: {
+      search: '🔍 Rechercher par géolocalisation',
+      loading: 'Localisation...',
+      nearby: 'livre(s) à proximité',
+      error: 'Impossible d\'obtenir votre position',
+      notSupported: 'La géolocalisation n\'est pas supportée'
+    },
     filters: {
       allCategories: 'Toutes les catégories',
       allLanguages: 'Toutes les langues',
@@ -284,7 +291,7 @@ export default {
 
   // Footer
   footer: {
-    title: "Lumières d'Ukraine",
+    title: "Les Lumières d'Ukraine",
     subtitle: 'Promotion de la culture ukrainienne',
     description:
       "Notre association se consacre à la promotion de la culture ukrainienne à travers la littérature, l'art et les échanges culturels.",
